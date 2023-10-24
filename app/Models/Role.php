@@ -26,9 +26,9 @@ class Role extends SpatieRole
         'deleted_at' => 'timestamp',
     ];
 
-    public $rule = [
+    public $rules = [
         'parent_id' => 'required|uuid',
-        'role_name' => 'required|string|between:1,254',
+        'name' => 'required|string|between:1,254',
         'guard_name' => 'required|string|between:1,254',
     ];
 

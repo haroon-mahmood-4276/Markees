@@ -17,7 +17,8 @@ class PermissionSeeder extends Seeder
     {
         $data = [
 
-            [
+             // Roles Routes
+             [
                 'name' => 'admin.roles.index',
                 'guard_name' => 'admin',
                 'show_name' => 'Roles - Can View',
@@ -28,9 +29,19 @@ class PermissionSeeder extends Seeder
                 'show_name' => 'Roles - Can Create',
             ],
             [
+                'name' => 'admin.roles.store',
+                'guard_name' => 'admin',
+                'show_name' => 'Roles - Can Store',
+            ],
+            [
                 'name' => 'admin.roles.edit',
                 'guard_name' => 'admin',
                 'show_name' => 'Roles - Can Edit',
+            ],
+            [
+                'name' => 'admin.roles.update',
+                'guard_name' => 'admin',
+                'show_name' => 'Roles - Can Update',
             ],
             [
                 'name' => 'admin.roles.destroy',
@@ -43,16 +54,61 @@ class PermissionSeeder extends Seeder
                 'show_name' => 'Roles - Can Export',
             ],
 
-            // Permissions Permissions
+            // Permissions Routes
             [
                 'name' => 'admin.permissions.index',
                 'guard_name' => 'admin',
                 'show_name' => 'Permissions - Can View',
             ],
+            // [
+            //     'name' => 'admin.permissions.view_all',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can View All Site Roles Permissions',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.create',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Create Permissions',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.store',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Store Permissions',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.edit',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Edit Permissions',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.update',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Update Permissions',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.destroy',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Delete Permission',
+            // ],
+            // [
+            //     'name' => 'admin.permissions.destroy',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Can Delete Selected Permissions',
+            // ],
             [
                 'name' => 'admin.permissions.assign-permission',
                 'guard_name' => 'admin',
                 'show_name' => 'Permissions - Can Assign',
+            ],
+            [
+                'name' => 'admin.permissions.revoke-permission',
+                'guard_name' => 'admin',
+                'show_name' => 'Permissions - Can Revoke',
+            ],
+            [
+                'name' => 'admin.permissions.edit-own-permission',
+                'guard_name' => 'admin',
+                'show_name' => 'Permissions - Can Edit Own',
             ],
 
             // Sites Routes

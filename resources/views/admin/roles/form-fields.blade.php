@@ -8,7 +8,7 @@
                     @foreach ($roles as $roleRow)
                         @continue(isset($role) && $roleRow->id == $role->id)
                         <option data-icon="fa-solid fa-angle-right"
-                            value="{{ $roleRow['id'] }}" {{ (isset($role) ? $role->parent_id : old('type')) == $roleRow['id'] ? 'selected' : '' }}>
+                            value="{{ $roleRow['id'] }}"{{ (isset($role) ? $role->parent_id : old('type')) == $roleRow['id'] ? 'selected' : '' }}>
                             {{ $roleRow['tree'] }}</option>
                     @endforeach
                 </select>

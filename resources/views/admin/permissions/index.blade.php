@@ -1,13 +1,13 @@
-@extends('admin.layout.layout')
+@extends('layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'admin.permissions.index') }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'permissions.index') }}
 @endsection
 
 @section('page-title', 'Permissions')
 
 @section('page-vendor')
-    {{ view('admin.layout.datatables.css') }}
+    {{ view('layout.libs.datatables.css') }}
 @endsection
 
 @section('page-css')
@@ -19,7 +19,7 @@
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
         <h2 class="content-header-title float-start mb-0 mx-3">Permissions</h2>
-        {{ Breadcrumbs::render('admin.permissions.index') }}
+        {{ Breadcrumbs::render('permissions.index') }}
     </div>
 @endsection
 
@@ -38,7 +38,7 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('admin.layout.datatables.js') }}
+    {{ view('layout.libs.datatables.js') }}
 @endsection
 
 @section('page-js')
@@ -89,9 +89,9 @@
 
             var url = "";
             if (checkBoxState) {
-                url = "{{ route('admin.permissions.assign-permission') }}";
+                url = "{{ route('permissions.assign-permission') }}";
             } else {
-                url = "{{ route('admin.permissions.revoke-permission') }}";
+                url = "{{ route('permissions.revoke-permission') }}";
             }
 
             $.ajax({
