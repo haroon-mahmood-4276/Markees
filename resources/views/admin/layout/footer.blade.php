@@ -3,7 +3,7 @@
         <div class="footer-container d-flex align-items-center justify-content-between py-2 flex-md-row flex-column">
             <div>
                 <a href="https://bellhaven.com.au/" target="_blank"
-                    class="text-primary fw-semibold">{{ settings('app_name') }}</a> © {{ date('Y') }}, Hand-crafted &
+                    class="text-primary fw-semibold">{{ env('APP_NAME') }}</a> © {{ date('Y') }}, Hand-crafted &
                 Made with ❤️ in <a href="https://www.google.com/search?q=Pakistan" target="_blank"
                     class="text-success fw-semibold">
                     Pakistan</a>

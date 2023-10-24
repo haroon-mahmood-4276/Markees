@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="{{ asset('assets') }}/vendor/libs/rateyo/jquery.rateyo.min.css">
-<script src="{{ asset('assets') }}/vendor/libs/rateyo/jquery.rateyo.min.js"></script>
+<link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/rateyo/jquery.rateyo.min.css">
+<script src="{{ asset('theme-assets') }}/vendor/libs/rateyo/jquery.rateyo.min.js"></script>
 
 <script>
     function StarRating(elemntQuery, average_rating, num_star = 1) {

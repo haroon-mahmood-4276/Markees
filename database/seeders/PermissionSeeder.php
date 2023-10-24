@@ -60,8 +60,6 @@ class PermissionSeeder extends Seeder
                 'name' => 'admin.cache.flush',
                 'guard_name' => 'admin',
                 'show_name' => 'Site Cache - Can Refresh',
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
 
             // // Commands Routes

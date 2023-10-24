@@ -7,7 +7,7 @@
 @section('page-title', 'Dashboard')
 
 @section('page-vendor')
-<link rel="stylesheet" href="{{ asset('assets') }}/vendor/libs/apex-charts/apex-charts.css" />
+<link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/apex-charts/apex-charts.css" />
 @endsection
 
 @section('page-css')
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-5 text-center text-sm-left">
                     <div class="card-body pb-0 px-0 px-md-4">
-                        <img src="{{ asset('assets') }}/img/illustrations/card-advance-sale.png"
+                        <img src="{{ asset('theme-assets') }}/img/illustrations/card-advance-sale.png"
                             height="140" alt="view sales">
                     </div>
                 </div>
@@ -337,7 +337,7 @@
                 <ul class="p-0 m-0">
                     <li class="d-flex mb-4 pb-1">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/iphone.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/iphone.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -353,7 +353,7 @@
                     </li>
                     <li class="d-flex mb-4 pb-1">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/nike-air-jordan.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/nike-air-jordan.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -369,7 +369,7 @@
                     </li>
                     <li class="d-flex mb-4 pb-1">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/headphones.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/headphones.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -385,7 +385,7 @@
                     </li>
                     <li class="d-flex mb-4 pb-1">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/apple-watch.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/apple-watch.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -401,7 +401,7 @@
                     </li>
                     <li class="d-flex mb-4 pb-1">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/amazon-echo.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/amazon-echo.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -417,7 +417,7 @@
                     </li>
                     <li class="d-flex">
                         <div class="me-3">
-                            <img src="{{ asset('assets') }}/img/products/play-station.png"
+                            <img src="{{ asset('theme-assets') }}/img/products/play-station.png"
                                 alt="User" class="rounded" width="46">
                         </div>
                         <div
@@ -833,11 +833,11 @@
 @endsection
 
 @section('vendor-js')
-<script src="{{ asset('assets') }}/vendor/libs/apex-charts/apexcharts.js"></script>
+<script src="{{ asset('theme-assets') }}/vendor/libs/apex-charts/apexcharts.js"></script>
 @endsection
 
 @section('page-js')
-<script src="{{ asset('assets') }}/js/dashboards-ecommerce.js"></script>
+<script src="{{ asset('theme-assets') }}/js/dashboards-ecommerce.js"></script>
 @endsection
 
 @section('custom-js')
