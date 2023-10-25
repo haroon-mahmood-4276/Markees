@@ -33,7 +33,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h6 class="fw-normal mb-2">Total 4 users</h6>
+                            <h6 class="fw-normal mb-2">Total {{ $role->users_count }} users</h6>
                             <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Vinnie Mostowy" class="avatar avatar-sm pull-up">

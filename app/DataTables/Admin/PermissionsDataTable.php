@@ -9,6 +9,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Str;
 
 class PermissionsDataTable extends DataTable
 {
@@ -31,6 +32,12 @@ class PermissionsDataTable extends DataTable
             })
             ->editColumn('updated_at', function ($permission) {
                 return editDateColumn($permission->updated_at);
+            })
+            ->editColumn('show_name', function ($permission) {
+                return explode(' - ', $permission->show_name, 2)[1];
+            })
+            ->editColumn('class', function ($permission) {
+                return Str::of(explode('.', $permission->name)[1])->headline();
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
@@ -80,13 +87,12 @@ class PermissionsDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('permissions-table')
-            ->addTableClass('table-borderless table-striped table-hover class-datatable-for-event')
+            ->addTableClass(['table-striped'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
             ->pagingType('full_numbers')
             ->lengthMenu([
                 [30, 50, 70, 100, 120, 150, -1],
@@ -95,6 +101,7 @@ class PermissionsDataTable extends DataTable
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
             ->scrollX()
+            ->rowGroupDataSrc('class')
             ->fixedColumns([
                 'left' => 2,
                 'right' => 0,
@@ -117,21 +124,22 @@ class PermissionsDataTable extends DataTable
         unset($roles[0]['pivot']);
 
         $colArray = [
-            Column::computed('DT_RowIndex')->title('#'),
-            Column::make('show_name')->title('Permission Name')->addClass('text-nowrap')->ucfirst(),
+            Column::computed('DT_RowIndex')->title('#')->width(10),
+            Column::make('show_name')->title('Permission Name')->addClass('text-nowrap align-middle'),
+            Column::computed('class')->visible(false),
         ];
 
         foreach ($roles as $key => $role) {
 
             $colArray[] = Column::computed('roles')
                 ->title($role['name'])
+                ->addClass('text-nowrap text-center align-middle')
                 ->searchable(false)
                 ->exportable(false)
                 ->printable(false)
-                ->addClass('text-center')
                 ->render('function () {
                     var checkbox = "<div class=\'form-check d-flex justify-content-center\'>";
-                    if(data.roles.includes(' . $role['id'] . ')) {
+                    if(data.roles.includes("' . $role['id'] . '")) {
                         checkbox += "<input class=\'form-check-input\' type=\'checkbox\' onchange=\'changeRolePermission(\"' . $role['id'] . '\", \"" + data.permission_id + "\")\'  id=\'chkRolePermission_' . $role['id']  . '__' . '" + data.permission_id + "\' checked />";
                     } else {
                         checkbox += "<input class=\'form-check-input\' type=\'checkbox\' onchange=\'changeRolePermission(\"' . $role['id'] . '\", \"" + data.permission_id + "\")\'  id=\'chkRolePermission_' . $role['id']  . '__' . '" + data.permission_id + "\' />";

@@ -30,7 +30,7 @@ class RoleController extends Controller
             return $dataTable->ajax();
         }
 
-        $roles = (new Role())->inRandomOrder()->limit(5)->get();
+        $roles = (new Role())->inRandomOrder()->withCount('users')->limit(5)->get();
 
         return $dataTable->render('admin.roles.index', ['roles' => $roles]);
     }

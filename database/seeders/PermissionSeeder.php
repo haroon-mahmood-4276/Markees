@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\{Role, Permission};
+use Illuminate\Support\Facades\Artisan;
 
 class PermissionSeeder extends Seeder
 {
@@ -17,8 +18,8 @@ class PermissionSeeder extends Seeder
     {
         $data = [
 
-             // Roles Routes
-             [
+            // Roles Routes
+            [
                 'name' => 'admin.roles.index',
                 'guard_name' => 'admin',
                 'show_name' => 'Roles - Can View',
@@ -105,15 +106,15 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'admin',
                 'show_name' => 'Permissions - Can Revoke',
             ],
-            [
-                'name' => 'admin.permissions.edit-own-permission',
-                'guard_name' => 'admin',
-                'show_name' => 'Permissions - Can Edit Own',
-            ],
+            // [
+            //     'name' => 'admin.permissions.edit-own-permission',
+            //     'guard_name' => 'admin',
+            //     'show_name' => 'Permissions - Can Edit Own',
+            // ],
 
             // Sites Routes
             [
-                'name' => 'admin.cache.flush',
+                'name' => 'admin.site-cache.flush',
                 'guard_name' => 'admin',
                 'show_name' => 'Site Cache - Can Refresh',
             ],
@@ -229,6 +230,8 @@ class PermissionSeeder extends Seeder
             //     'updated_at' => now(),
             // ],
         ];
+        Artisan::call('cache:clear');
+        Permission::truncate();
 
         $role = (new Role())->first();
 
