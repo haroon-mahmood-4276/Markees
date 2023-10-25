@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\{
+    AuthController,
+    DashboardController,
+    PermissionController,
+    RoleController,
+};
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -38,7 +41,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
                 Route::post('store', 'store')->name('store');
             });
 
-            Route::group(['prefix' => '/{id}', 'middleware' => 'permission:admin.roles.edit'], function () {
+            Route::group(['prefix' => '/{role}', 'middleware' => 'permission:admin.roles.edit'], function () {
                 Route::get('edit', 'edit')->whereUuid('id')->name('edit');
                 Route::put('update', 'update')->whereUuid('id')->name('update');
             });

@@ -7,7 +7,7 @@
 @section('page-title', 'Roles')
 
 @section('page-vendor')
-    {{ view('admin.layout.datatables.css') }}
+    @include('admin.layout.libs.datatables.css')
 @endsection
 
 @section('page-css')
@@ -18,7 +18,7 @@
 
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
-        <h2 class="content-header-title float-start mb-0 me-3">Roles</h2>
+        <h2 class="content-header-title float-start mb-0 mx-3">Roles</h2>
         {{ Breadcrumbs::render('admin.roles.index') }}
     </div>
 @endsection
@@ -33,31 +33,31 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between">
-                            <h6 class="fw-normal mb-2">Total 4 users</h6>
+                            <h6 class="fw-normal mb-2">Total {{ $role->users_count }} users</h6>
                             <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ asset('admin-assets') }}/img/avatars/5.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/5.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ asset('admin-assets') }}/img/avatars/12.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/12.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ asset('admin-assets') }}/img/avatars/6.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/6.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Kaith D'souza" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ asset('admin-assets') }}/img/avatars/3.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/3.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="John Doe" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ asset('admin-assets') }}/img/avatars/1.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/1.png"
                                         alt="Avatar">
                                 </li>
                             </ul>
@@ -66,8 +66,8 @@
                         <div class="d-flex justify-content-between align-items-end mt-1">
                             <div class="role-heading">
                                 <h4 class="mb-1">{{ $role->name }}</h4>
-                                <a href="{{ route('admin.roles.edit', ['id' => $role->id]) }}"
-                                    class="role-edit-modal"><span>Edit Role</span></a>
+                                <a href="{{ route('admin.roles.edit', $role) }}" class="role-edit-modal"><span>Edit
+                                        Role</span></a>
                             </div>
                             {{-- <a href="javascript:void(0);" class="text-muted"><i class="ti ti-copy ti-md"></i></a> --}}
                         </div>
@@ -83,7 +83,7 @@
                     <div class="row h-100">
                         <div class="col-sm-5">
                             <div class="d-flex align-items-end h-100 justify-content-center mt-sm-0 mt-3">
-                                <img src="{{ asset('admin-assets') }}/img/illustrations/add-new-roles.png"
+                                <img src="{{ asset('theme-assets') }}/img/illustrations/add-new-roles.png"
                                     class="img-fluid mt-sm-4 mt-md-0" alt="add-new-roles" width="83">
                             </div>
                         </div>
@@ -114,7 +114,7 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('admin.layout.datatables.js') }}
+    @include('admin.layout.libs.datatables.js')
 @endsection
 
 @section('page-js')

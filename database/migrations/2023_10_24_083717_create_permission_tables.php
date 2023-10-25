@@ -47,6 +47,7 @@ return new class extends Migration
             $table->uuid('parent_id')->nullable()->default(null);
             $table->integer('created_at')->nullable();
             $table->integer('updated_at')->nullable();
+            $table->integer('deleted_at')->nullable();
 
             if ($teams || config('permission.testing')) {
                 $table->unique([$columnNames['team_foreign_key'], 'name', 'guard_name']);
