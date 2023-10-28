@@ -9,11 +9,8 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    use WithoutModelEvents;
+
     public function run()
     {
 

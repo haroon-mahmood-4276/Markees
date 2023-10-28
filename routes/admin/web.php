@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\{
     DashboardController,
     PermissionController,
     RoleController,
+    SubscriptionController,
 };
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -55,6 +56,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::post('assign-permission', 'assignPermissionToRole')->name('assign-permission');
             Route::post('revoke-permission', 'revokePermissionToRole')->name('revoke-permission');
+        });
+
+        //Subscriptions Routes
+        Route::controller(SubscriptionController::class)->name('subscriptions.')->prefix('subscriptions')->group(function () {
+            Route::get('/', 'index')->middleware('permission:admin.subscriptions.index')->name('index');
+
+            Route::group(['middleware' => 'permission:admin.subscriptions.create'], function () {
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+            });
+
+            Route::group(['prefix' => '/{subscription}', 'middleware' => 'permission:admin.subscriptions.edit'], function () {
+                Route::get('edit', 'edit')->name('edit');
+                Route::put('update', 'update')->name('update');
+            });
+
+            Route::get('delete', 'destroy')->name('destroy');
         });
     });
 });

@@ -26,7 +26,8 @@
         </li>
 
 
-        @if (auth('admin')->user()->can('admin.permissions.index') || auth('admin')->user()->can('admin.roles.index'))
+        @if (auth('admin')->user()->can('admin.permissions.index') ||
+                auth('admin')->user()->can('admin.roles.index'))
             <li class="menu-header small text-uppercase">
                 <span class="menu-header-text">Administration</span>
             </li>
@@ -55,6 +56,40 @@
                         <li class="menu-item {{ request()->routeIs('admin.permissions.index') ? 'active' : null }}">
                             <a href="{{ route('admin.permissions.index') }}" class="menu-link">
                                 <div>Permissions</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcanany
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Others</span>
+        </li>
+
+        {{-- subscriptions --}}
+        @canany(['admin.subscriptions.index', 'admin.subscriptions.create'])
+
+            <li
+                class="menu-item {{ in_array(request()->route()->getName(),['admin.subscriptions.index', 'admin.subscriptions.create'])? 'open active': null }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="fa-solid fa-bolt menu-icon"></i>
+                    <div>Subscriptions</div>
+                </a>
+                <ul class="menu-sub">
+
+                    @can('admin.subscriptions.index')
+                        <li class="menu-item {{ request()->routeIs('admin.subscriptions.index') ? 'active' : null }}">
+                            <a href="{{ route('admin.subscriptions.index') }}" class="menu-link">
+                                <div>View All</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('admin.subscriptions.create')
+                        <li class="menu-item {{ request()->routeIs('admin.subscriptions.create') ? 'active' : null }}">
+                            <a href="{{ route('admin.subscriptions.create') }}" class="menu-link">
+                                <div>Add New</div>
                             </a>
                         </li>
                     @endcan

@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\Role;
+use App\Models\Subscription;
 use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
@@ -12,25 +12,29 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class RolesDataTable extends DataTable
+class SubscriptionsDataTable extends DataTable
 {
     use DataTableTrait;
-
+    /**
+     * Build DataTable class.
+     *
+     * @param QueryBuilder $query Results from query() method.
+     * @return \Yajra\DataTables\EloquentDataTable
+     */
     public function dataTable(QueryBuilder $query)
     {
         return (new EloquentDataTable($query))
-            ->editColumn('check', function ($role) {
-                return $role;
+            ->editColumn('check', function ($model) {
+                return $model;
             })
-            ->editColumn('parent_id', function ($role) {
-                return Str::of(getRoleParentByParentId($role->parent_id))->ucfirst();
+            ->editColumn('active', function ($model) {
+                return editStatusColumn($model->active);
             })
-            ->editColumn('updated_at', function ($role) {
-                return editDateTimeColumn($role->updated_at);
+            ->editColumn('updated_at', function ($model) {
+                return editDateTimeColumn($model->updated_at);
             })
-            ->editColumn('actions', function ($role) {
-                if ($role->name != 'Admin')
-                    return view('admin.roles.actions', ['role' => $role]);
+            ->editColumn('actions', function ($model) {
+                return view('admin.subscriptions.actions', ['subscription' => $model->id]);
             })
             ->setRowId('id')
             ->rawColumns(array_column($this->getColumns(), 'data'));
@@ -39,10 +43,10 @@ class RolesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\Role $model
+     * @param \App\Models\Subscription $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Role $model): QueryBuilder
+    public function query(Subscription $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -51,7 +55,16 @@ class RolesDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth('admin')->user()->can('admin.roles.export')) {
+        if (auth('admin')->user()->can('admin.subscriptions.create')) {
+            $buttons[] = Button::raw('add-new')
+                ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
+                ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
+                ->attr([
+                    'onclick' => 'addNew()',
+                ]);
+        }
+
+        if (auth('admin')->user()->can('admin.subscriptions.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -68,7 +81,7 @@ class RolesDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('admin')->user()->can('admin.roles.destroy')) {
+        if (auth('admin')->user()->can('admin.subscriptions.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -93,7 +106,7 @@ class RolesDataTable extends DataTable
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
             ->scrollX()
-            ->rowGroupDataSrc('parent_id')
+            // ->rowGroupDataSrc('parent_id')
             ->columnDefs([
                 [
                     'targets' => 0,
@@ -115,7 +128,7 @@ class RolesDataTable extends DataTable
                 ],
             ])
             ->fixedColumns([
-                'left' => 0,
+                'left' => 1,
                 'right' => 1,
             ])
             ->orders([
@@ -131,15 +144,19 @@ class RolesDataTable extends DataTable
     protected function getColumns(): array
     {
 
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60);
-        if (auth('admin')->user()->can('admin.roles.destroy')) {
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
+
+        if (auth()->user()->can('admin.subscriptions.destroy')) {
             $checkColumn->addClass('disabled');
         }
 
         $columns = [
             $checkColumn,
             Column::make('name')->addClass('text-nowrap text-center align-middle'),
-            Column::make('parent_id')->title('Parent')->addClass('text-nowrap text-center align-middle'),
+            Column::make('no_of_days')->addClass('text-nowrap text-center align-middle'),
+            Column::make('price')->addClass('text-nowrap text-center align-middle'),
+            Column::make('no_of_halls')->addClass('text-nowrap text-center align-middle'),
+            Column::make('active')->addClass('text-nowrap text-center align-middle'),
             Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
             Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
         ];

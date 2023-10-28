@@ -11,11 +11,8 @@ use Illuminate\Support\Str;
 
 class AdminSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    use WithoutModelEvents;
+
     public function run()
     {
         $roles = (new Role())->all();
