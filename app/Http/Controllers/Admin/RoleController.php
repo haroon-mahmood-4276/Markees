@@ -65,9 +65,9 @@ class RoleController extends Controller
             $inputs = $request->validated();
             $record = $this->roleInterface->store($inputs);
 
-            return redirect()->route('admin.roles.index')->withSuccess('Data saved!');
+            return redirect()->route('admin.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('admin.roles.index')->withDanger('Something went wrong! ' . $ex->getMessage());
+            return redirect()->route('admin.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -100,7 +100,7 @@ class RoleController extends Controller
 
             return view('admin.roles.edit', $data);
         } catch (Exception $ex) {
-            return redirect()->route('admin.roles.index')->withDanger('Something went wrong! ' . $ex->getMessage());
+            return redirect()->route('admin.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -118,30 +118,25 @@ class RoleController extends Controller
 
             $inputs = $request->validated();
             $this->roleInterface->update($role->id, $inputs);
-            return redirect()->route('admin.roles.index')->withSuccess('Data saved!');
-
+            return redirect()->route('admin.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('admin.roles.index')->withDanger('Something went wrong! ' . $ex->getMessage());
+            return redirect()->route('admin.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
     public function destroy(Request $request)
     {
         abort_if(request()->ajax(), 403);
+
         try {
 
             if ($request->has('checkForDelete')) {
-
                 $record = $this->roleInterface->destroy($request->checkForDelete);
-
-                if (!$record) {
-                    return redirect()->route('admin.roles.index')->withDanger('Data not found!');
-                }
             }
 
-            return redirect()->route('admin.roles.index')->withSuccess('Data deleted!');
+            return redirect()->route('admin.roles.index')->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('admin.roles.index')->withDanger('Something went wrong! ' . $ex->getMessage());
+            return redirect()->route('admin.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

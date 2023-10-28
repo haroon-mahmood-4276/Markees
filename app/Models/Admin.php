@@ -8,11 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticatable implements Authorizable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasUuids;
+    use HasApiTokens, HasFactory, LogsActivity, Notifiable, HasRoles, HasUuids;
 
     protected string $guard = 'admin';
 
@@ -41,4 +43,9 @@ class Admin extends Authenticatable implements Authorizable
         'email' => ['required', 'email', 'exists:admins,email'],
         'password' => ['required'],
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName(self::class)->logFillable();
+    }
 }

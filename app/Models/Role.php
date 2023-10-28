@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole
 {
-    use HasUuids, SoftDeletes;
+    use HasUuids, SoftDeletes, LogsActivity;
 
     protected $dateFormat = 'U';
 
@@ -33,4 +35,8 @@ class Role extends SpatieRole
         'guard_name' => 'required|string|between:1,254',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName(self::class)->logFillable();
+    }
 }

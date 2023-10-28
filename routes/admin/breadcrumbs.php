@@ -15,7 +15,7 @@ Breadcrumbs::for('admin.roles.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('admin.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.roles.index');
-    $trail->push('Create Role', route('admin.roles.create'));
+    $trail->push('Create Role');
 });
 
 Breadcrumbs::for('admin.roles.edit', function (BreadcrumbTrail $trail) {
@@ -27,4 +27,20 @@ Breadcrumbs::for('admin.roles.edit', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('admin.permissions.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
     $trail->push('Permissions', route('admin.permissions.index'));
+});
+
+// Subscriptions Breadcrumbs
+Breadcrumbs::for('admin.subscriptions.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Subscriptions', route('admin.subscriptions.index'));
+});
+
+Breadcrumbs::for('admin.subscriptions.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.subscriptions.index');
+    $trail->push('Create Subscription');
+});
+
+Breadcrumbs::for('admin.subscriptions.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.subscriptions.index');
+    $trail->push('Edit Subscription');
 });

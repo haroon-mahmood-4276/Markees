@@ -3,6 +3,7 @@
 namespace App\DataTables\Admin;
 
 use App\Models\{Role, Permission};
+use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\{Button, Column};
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
@@ -13,12 +14,8 @@ use Illuminate\Support\Str;
 
 class PermissionsDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
+    use DataTableTrait;
+
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
@@ -151,27 +148,5 @@ class PermissionsDataTable extends DataTable
 
         // $colArray[] = Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center');
         return $colArray;
-    }
-
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Permissions_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }
