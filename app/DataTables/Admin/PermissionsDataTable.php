@@ -128,12 +128,13 @@ class PermissionsDataTable extends DataTable
 
         foreach ($roles as $key => $role) {
 
+            if ($role['guard_name'] != 'admin')
+                continue;
+
             $colArray[] = Column::computed('roles')
                 ->title($role['name'])
                 ->addClass('text-nowrap text-center align-middle')
-                ->searchable(false)
-                ->exportable(false)
-                ->printable(false)
+                ->searchable(false)->exportable(false)->printable(false)
                 ->render('function () {
                     var checkbox = "<div class=\'form-check d-flex justify-content-center\'>";
                     if(data.roles.includes("' . $role['id'] . '")) {

@@ -19,10 +19,6 @@ class Role extends SpatieRole
         'guard_name',
     ];
 
-    protected $hidden = [
-        'guard_name',
-    ];
-
     protected $casts = [
         'created_at' => 'timestamp',
         'updated_at' => 'timestamp',
