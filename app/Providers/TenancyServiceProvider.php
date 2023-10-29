@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\{Event, Route};
 use Illuminate\Support\ServiceProvider;
 use Stancl\JobPipeline\JobPipeline;
-use Stancl\Tenancy\Events;
-use Stancl\Tenancy\Jobs;
-use Stancl\Tenancy\Listeners;
-use Stancl\Tenancy\Middleware;
+use Stancl\Tenancy\Events\{TenancyEnded, TenancyBootstrapped};
+use Stancl\Tenancy\{Events, Jobs, Listeners, Middleware};
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 
 class TenancyServiceProvider extends ServiceProvider
@@ -90,6 +87,18 @@ class TenancyServiceProvider extends ServiceProvider
 
             // Fired only when a synced resource is changed in a different DB than the origin DB (to avoid infinite loops)
             Events\SyncedResourceChangedInForeignDatabase::class => [],
+
+            Events\TenancyBootstrapped::class => [
+                function (TenancyBootstrapped $event) {
+                    \Spatie\Permission\PermissionRegistrar::$cacheKey = 'spatie.permission.cache.tenant.' . $event->tenancy->tenant->id;
+                }
+            ],
+
+            Events\TenancyEnded::class => [
+                function (TenancyEnded $event) {
+                    \Spatie\Permission\PermissionRegistrar::$cacheKey = 'spatie.permission.cache';
+                }
+            ],
         ];
     }
 
@@ -125,9 +134,11 @@ class TenancyServiceProvider extends ServiceProvider
 
     protected function mapRoutes()
     {
-        if (file_exists(base_path('routes/tenant.php'))) {
-            Route::namespace(static::$controllerNamespace)
-                ->group(base_path('routes/tenant.php'));
+        if (file_exists(base_path('routes/tenants/web.php'))) {
+            Route::namespace(static::$controllerNamespace)->group([
+                base_path('routes/tenants/web.php'),
+                base_path('routes/tenants/api.php')
+            ]);
         }
     }
 
