@@ -15,5 +15,15 @@ return [
         'no_cancel' => 'No! cancel.',
         'yes_delete' => 'Yes! delete it.',
         'please_select_at_least_one_item' => 'Please select at least one item!',
-    ]
+    ],
+    'leftbar' => [
+        'dashboard' => 'Dashboard',
+        'users' => 'Users',
+        'roles' => 'Roles',
+        'permissions' => 'Permissions',
+        'settings' => 'Settings',
+        'logout' => 'Logout',
+        'roles_and_permissions' => 'Roles & Permissions',
+        'administration' => 'Administration',
+    ],
 ];
