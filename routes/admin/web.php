@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\{
     AuthController,
     DashboardController,
+    HallOwnerController,
     PermissionController,
     RoleController,
     SubscriptionController,
@@ -73,6 +74,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
             });
 
             Route::get('delete', 'destroy')->name('destroy');
+        });
+
+        //Hall Owner Routes
+        Route::controller(HallOwnerController::class)->name('hall-owners.')->prefix('hall-owners')->group(function () {
+
+            Route::get('/', 'index')->middleware('permission:admin.hall-owners.index')->name('index');
+
+            Route::group(['middleware' => 'permission:admin.hall-owners.create'], function () {
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+            });
+
+            Route::get('delete', 'destroy')->name('destroy');
+
+            Route::group(['prefix' => '/{hall-owner}', 'middleware' => 'permission:admin.hall-owners.edit'], function () {
+                Route::get('edit', 'edit')->name('edit');
+                Route::put('update', 'update')->name('update');
+            });
         });
     });
 });

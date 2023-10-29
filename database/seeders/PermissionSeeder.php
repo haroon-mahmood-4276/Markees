@@ -103,56 +103,42 @@ class PermissionSeeder extends Seeder
                 'updated_at' => now(),
             ],
 
-            // // Hall Owner Routes
-            // [
-            //     'name' => 'admin.hall-owners.index',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can View Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.create',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Create Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.store',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Store Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.edit',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Edit Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.update',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Update Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.destroy',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Delete Selected Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
-            // [
-            //     'name' => 'admin.hall-owners.export',
-            //     'guard_name' => 'admin',
-            //     'show_name' => 'Can Export Subscriptions',
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ],
+            // Hall Owner Routes
+            [
+                'name' => 'admin.hall-owners.index',
+                'guard_name' => 'admin',
+                'show_name' => 'Can View Subscriptions',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'admin.hall-owners.create',
+                'guard_name' => 'admin',
+                'show_name' => 'Can Create Subscriptions',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'admin.hall-owners.edit',
+                'guard_name' => 'admin',
+                'show_name' => 'Can Edit Subscriptions',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'admin.hall-owners.destroy',
+                'guard_name' => 'admin',
+                'show_name' => 'Can Delete Selected Subscriptions',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'admin.hall-owners.export',
+                'guard_name' => 'admin',
+                'show_name' => 'Can Export Subscriptions',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
         Artisan::call('cache:clear');
         Permission::truncate();
