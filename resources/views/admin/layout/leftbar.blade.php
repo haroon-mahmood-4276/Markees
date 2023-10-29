@@ -96,5 +96,33 @@
                 </ul>
             </li>
         @endcanany
+
+        @canany(['admin.hall-owners.index', 'admin.hall-owners.create'])
+            <li
+                class="menu-item {{ in_array(request()->route()->getName(),['admin.hall-owners.index', 'admin.hall-owners.create'])? 'open active': null }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="fa-brands fa-mizuni menu-icon"></i>
+                    <div>Hall Owners</div>
+                </a>
+                <ul class="menu-sub">
+
+                    @can('admin.hall-owners.index')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-owners.index') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-owners.index') }}" class="menu-link">
+                                <div>View All</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('admin.hall-owners.create')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-owners.create') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-owners.create') }}" class="menu-link">
+                                <div>Add New</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcanany
     </ul>
 </aside>

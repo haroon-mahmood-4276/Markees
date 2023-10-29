@@ -44,3 +44,19 @@ Breadcrumbs::for('admin.subscriptions.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.subscriptions.index');
     $trail->push('Edit Subscription');
 });
+
+// Hall Owner Breadcrumbs
+Breadcrumbs::for('admin.hall-owners.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Hall Owners', route('admin.hall-owners.index'));
+});
+
+Breadcrumbs::for('admin.hall-owners.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.hall-owners.index');
+    $trail->push('Create Owner');
+});
+
+Breadcrumbs::for('admin.hall-owners.edit', function (BreadcrumbTrail $trail, $hallOwner_id) {
+    $trail->parent('admin.hall-owners.index');
+    $trail->push('Edit Owner');
+});

@@ -17,11 +17,12 @@ class CreateDomainsTable extends Migration
     {
         Schema::create('domains', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('tenant_id')->foreignId('tenant_id')->constrained()->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('domain', 255)->unique();
-            $table->string('tenant_id');
 
-            $table->timestamps();
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('created_at')->nullable();
+            $table->integer('updated_at')->nullable();
+            $table->integer('deleted_at')->nullable();
         });
     }
 
