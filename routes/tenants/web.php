@@ -25,8 +25,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class, ScopeSessions::class])->group(function () {
 
     Route::group([
-        'prefix' => LaravelLocalization::setLocale(),
-        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+        // 'prefix' => LaravelLocalization::setLocale(),
+        // 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ], function () {
         Route::group(['as' => 'tenant.'], function () {
 

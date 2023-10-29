@@ -45,10 +45,10 @@ return [
             'provider' => 'admins',
         ],
 
-        // 'tenant' => [
-        //     'driver' => 'session',
-        //     'provider' => 'tenants',
-        // ],
+        'tenant' => [
+            'driver' => 'session',
+            'provider' => 'tenants',
+        ],
     ],
 
     /*
@@ -79,10 +79,10 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        // 'tenants' => [
-        //     'driver' => 'eloquent',
-        //     'model' => App\Models\Tenants\TenantUser::class,
-        // ],
+        'tenants' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Tenants\TenantUser::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -116,16 +116,16 @@ return [
         'admins' => [
             'provider' => 'admins',
             'table' => 'password_reset_tokens',
-            'expire' => 15,
+            'expire' => 60,
             'throttle' => 60,
         ],
 
-        // 'tenants' => [
-        //     'provider' => 'tenants',
-        //     'table' => 'password_reset_tokens',
-        //     'expire' => 15,
-        //     'throttle' => 60,
-        // ],
+        'tenants' => [
+            'provider' => 'tenants',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*
