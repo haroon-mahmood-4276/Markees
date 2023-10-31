@@ -1,13 +1,13 @@
-@extends('admin.app.layout.layout')
+@extends('tenant.app.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'admin.permissions.index') }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.permissions.index') }}
 @endsection
 
 @section('page-title', __('lang.permissions.permission_plural'))
 
 @section('page-vendor')
-    {{ view('admin.app.layout.datatables.css') }}
+    {{ view('tenant.app.layout.libs.datatables.css') }}
 @endsection
 
 @section('page-css')
@@ -19,7 +19,7 @@
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
         <h2 class="content-header-title float-start mb-0 mx-3">Permissions</h2>
-        {{ Breadcrumbs::render('admin.permissions.index') }}
+        {{ Breadcrumbs::render('tenant.permissions.index') }}
     </div>
 @endsection
 
@@ -28,9 +28,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="javascript:void(0);" id="permissions-table-form" method="get">
-                        {{ $dataTable->table() }}
-                    </form>
+                    {{ $dataTable->table() }}
                 </div>
             </div>
         </div>
@@ -38,7 +36,7 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('admin.app.layout.datatables.js') }}
+    {{ view('tenant.app.layout.libs.datatables.js') }}
 @endsection
 
 @section('page-js')
@@ -89,9 +87,9 @@
 
             var url = "";
             if (checkBoxState) {
-                url = '{{ route('admin.permissions.assign-permission') }}';
+                url = '{{ route('tenant.permissions.assign-permission') }}';
             } else {
-                url = '{{ route('admin.permissions.revoke-permission') }}';
+                url = '{{ route('tenant.permissions.revoke-permission') }}';
             }
 
             $.ajax({

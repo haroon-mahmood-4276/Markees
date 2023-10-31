@@ -2,24 +2,24 @@
 
 namespace App\Http\Controllers\Tenants;
 
+use App\Models\Role;
 use App\DataTables\Tenants\RolesDataTable;
-use App\Services\Tenants\Roles\RoleInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Roles\{storeRequest, updateRequest};
-use Exception;
+use App\Services\Tenants\Roles\RoleInterface;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
-
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Exception;
 
 class RoleController extends Controller
 {
-
     private $roleInterface;
 
     public function __construct(RoleInterface $roleInterface)
     {
         $this->roleInterface = $roleInterface;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +27,12 @@ class RoleController extends Controller
      */
     public function index(RolesDataTable $dataTable)
     {
-        $roles = (new Role())->inRandomOrder()->limit(5)->get();
+        if (request()->ajax()) {
+            return $dataTable->ajax();
+        }
+
+        $roles = (new Role())->inRandomOrder()->withCount('users')->limit(5)->get();
+
         return $dataTable->render('tenant.app.roles.index', ['roles' => $roles]);
     }
 
@@ -41,7 +46,8 @@ class RoleController extends Controller
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'roles' => $this->roleInterface->getAllWithTree(),
+            'roles' => $this->roleInterface->get(with_tree: true),
+            'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
         ];
         return view('tenant.app.roles.create', $data);
     }
@@ -54,12 +60,11 @@ class RoleController extends Controller
      */
     public function store(storeRequest $request)
     {
+        abort_if(request()->ajax(), 403);
+
         try {
-            $record = (new Role())->create([
-                'name' => $request->role_name,
-                'guard_name' => $request->guard_name,
-                'parent_id' => $request->parent_id,
-            ]);
+            $inputs = $request->validated();
+            $this->roleInterface->store($inputs);
 
             return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
@@ -84,21 +89,18 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
+        abort_if(request()->ajax(), 403);
+
         try {
-            $role = (new Role())->find(decryptParams($id));
+            $data = [
+                'role' => $role,
+                'roles' => $this->roleInterface->get(with_tree: true),
+                'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
+            ];
 
-            if ($role && !empty($role)) {
-                $data = [
-                    'roles' => $this->roleInterface->getAllWithTree(),
-                    'role' => $role,
-                ];
-
-                return view('tenant.app.roles.edit', $data);
-            }
-
-            return redirect()->route('tenant.roles.index')->withWarning(__('lang.commons.data_not_found'));
+            return view('tenant.app.roles.edit', $data);
         } catch (Exception $ex) {
             return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
@@ -111,15 +113,12 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(updateRequest $request, $id)
+    public function update(updateRequest $request, Role $role)
     {
+        abort_if(request()->ajax(), 403);
         try {
-            $record = (new Role())->where('id', decryptParams($id))->update([
-                'name' => $request->role_name,
-                'guard_name' => $request->guard_name,
-                'parent_id' => $request->parent_id,
-            ]);
-
+            $inputs = $request->validated();
+            $this->roleInterface->update($role->id, $inputs);
             return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
             return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
@@ -128,15 +127,15 @@ class RoleController extends Controller
 
     public function destroy(Request $request)
     {
+        abort_if(request()->ajax(), 403);
+
         try {
-            if ($request->has('chkRole')) {
 
-                (new Role())->whereIn('id', $request->chkRole)->delete();
-
-                return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_deleted'));
-            } else {
-                return redirect()->route('tenant.roles.index')->withWarning(__('lang.commons.please_select_at_least_one_item'));
+            if ($request->has('checkForDelete')) {
+                $record = $this->roleInterface->destroy($request->checkForDelete);
             }
+
+            return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
             return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
