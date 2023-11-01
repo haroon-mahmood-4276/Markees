@@ -25,18 +25,14 @@ return [
                 'rolecard_total_users' => 'Total :value users',
                 'rolecard_total_permissions' => 'Total :value permissions',
             ],
-            'fields' => [
-                'role_name' => 'Role name',
-                'role_name_description' => '',
-                'guard_name' => 'Guard name',
-                'guard_name_description' => '',
+            'create' => [
+                'create_role' => 'Create Role',
+                'save_role' => 'Save Role',
             ],
-            'extras' => [
-                'add_role_if_it_does_not_exist' => 'Add role, if it does not exist',
-                'role_name_description' => '',
-                'guard_name' => 'Guard name',
-                'guard_name_description' => '',
-            ],
+            'edit' => [
+                'edit_role' => 'Edit Role',
+                'update_role' => 'Update Role',
+            ]
         ],
     ],
     'permissions' => [

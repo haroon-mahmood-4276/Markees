@@ -15,7 +15,7 @@ Breadcrumbs::for('tenant.roles.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.roles.index');
-    $trail->push(__('lang.commons.create') . ' ' . __('lang.roles.role_singular'), route('tenant.roles.create'));
+    $trail->push(__('lang.roles.pages.create.create_role'), route('tenant.roles.create'));
 });
 
 Breadcrumbs::for('tenant.roles.edit', function (BreadcrumbTrail $trail) {

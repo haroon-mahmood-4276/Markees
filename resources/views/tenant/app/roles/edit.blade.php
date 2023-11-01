@@ -17,22 +17,21 @@
 
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
-        <h2 class="content-header-title float-start mb-0 mx-3">Roles</h2>
-        {{ Breadcrumbs::render('tenant.roles.edit', encryptParams($role->id)) }}
+        <h2 class="content-header-title float-start mb-0 mx-3">Edit Role</h2>
+        {{ Breadcrumbs::render('tenant.roles.edit') }}
     </div>
 @endsection
 
 @section('content')
-    <form class="form form-vertical" action="{{ route('tenant.roles.update', ['id' => encryptParams($role->id)]) }}"
-        method="POST" enctype="multipart/form-data">
+    <form class="form form-vertical" action="{{ route('tenant.roles.update', [$role]) }}" method="POST"
+        enctype="multipart/form-data">
 
         <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
                 @csrf
                 @method('PUT')
-
-                {{ view('tenant.app.roles.form-fields', ['roles' => $roles, 'role' => $role]) }}
+                @include('tenant.app.roles.form-fields')
 
             </div>
 

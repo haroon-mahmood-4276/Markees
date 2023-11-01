@@ -15,7 +15,8 @@ class CreateActivityLogTable extends Migration
             $table->nullableUuidMorphs('subject', 'subject');
             $table->nullableUuidMorphs('causer', 'causer');
             $table->json('properties')->nullable();
-            $table->timestamps();
+            $table->integer('created_at')->nullable();
+            $table->integer('updated_at')->nullable();
             $table->index('log_name');
         });
     }

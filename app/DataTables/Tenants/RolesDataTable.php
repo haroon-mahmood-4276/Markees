@@ -3,53 +3,44 @@
 namespace App\DataTables\Tenants;
 
 use App\Models\Role;
-use Illuminate\Http\Response;
+use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class RolesDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return EloquentDataTable
-     */
-    public function dataTable(QueryBuilder $query): EloquentDataTable
+    use DataTableTrait;
+
+    public function dataTable(QueryBuilder $query)
     {
-        $columns = array_column($this->getColumns(), 'data');
         return (new EloquentDataTable($query))
-            ->editColumn('parent_id', function ($role) {
-                return Str::of(getRoleParentByParentId($role->parent_id))->ucfirst();
+            ->editColumn('check', function ($model) {
+                return $model;
             })
-            ->editColumn('created_at', function ($role) {
-                return editDateColumn($role->created_at);
+            ->editColumn('parent_id', function ($model) {
+                return Str::of(getRoleParentByParentId($model->parent_id))->ucfirst();
             })
-            ->editColumn('updated_at', function ($role) {
-                return editDateColumn($role->updated_at);
+            ->editColumn('updated_at', function ($model) {
+                return editDateTimeColumn($model->updated_at);
             })
-            ->editColumn('actions', function ($role) {
-                return view('tenant.app.roles.actions', ['id' => $role->id]);
-            })
-            ->editColumn('check', function ($role) {
-                return $role;
+            ->editColumn('actions', function ($model) {
+                if ($model->name != 'Admin')
+                    return view('tenant.app.roles.actions', ['role' => $model]);
             })
             ->setRowId('id')
-            ->rawColumns(array_merge($columns, ['action', 'check']));
+            ->rawColumns(array_column($this->getColumns(), 'data'));
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param Role $model
-     * @return QueryBuilder
+     * @param \App\Models\Role $model
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Role $model): QueryBuilder
     {
@@ -93,8 +84,11 @@ class RolesDataTable extends DataTable
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
-            ->lengthMenu([10, 20, 30, 50, 70, 100])
+            ->pagingType('full_numbers')
+            ->lengthMenu([
+                [30, 50, 70, 100, 120, 150, -1],
+                [30, 50, 70, 100, 120, 150, "All"],
+            ])
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
             ->scrollX()
@@ -108,16 +102,20 @@ class RolesDataTable extends DataTable
                     'searchable' => false,
                     'responsivePriority' => 3,
                     'render' => "function (data, type, full, setting) {
-                        var role = JSON.parse(data);
-                        return '<div class=\"form-check\"> <input class=\"form-check-input dt-checkboxes\" onchange=\"changeTableRowColor(this)\" type=\"checkbox\" value=\"' + role.id + '\" name=\"chkRole[]\" id=\"chkRole_' + role.id + '\" /><label class=\"form-check-label\" for=\"chkRole_' + role.id + '\"></label></div>';
-                    }",
+                    var role = JSON.parse(data);
+                    if(role.name != 'Admin') {
+                        return '<div class=\"form-check\"> <input class=\"form-check-input dt-checkboxes\" onchange=\"changeTableRowColor(this)\" type=\"checkbox\" value=\"' + role.id + '\" name=\"checkForDelete[]\" id=\"checkForDelete_' + role.id + '\" /><label class=\"form-check-label\" for=\"chkRole_' + role.id + '\"></label></div>';
+                    }
+                    return null;
+                }",
                     'checkboxes' => [
                         'selectAllRender' =>  '<div class="form-check"> <input class="form-check-input" onchange="changeAllTableRowColor()" type="checkbox" value="" id="checkboxSelectAll" /><label class="form-check-label" for="checkboxSelectAll"></label></div>',
                     ]
                 ],
             ])
-            ->select([
-                'style' => 'multi',
+            ->fixedColumns([
+                'left' => 0,
+                'right' => 1,
             ])
             ->orders([
                 [1, 'asc'],
@@ -137,33 +135,13 @@ class RolesDataTable extends DataTable
             $checkColumn->addClass('disabled');
         }
 
-        return [
+        $columns = [
             $checkColumn,
-            Column::make('name')->title('Role Name'),
-            Column::make('parent_id')->title('Parent'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
-            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center'),
+            Column::make('name')->addClass('text-nowrap text-center align-middle'),
+            Column::make('parent_id')->title('Parent')->addClass('text-nowrap text-center align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
+            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
         ];
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Roles_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     */
-    public function pdf(): Response|StreamedResponse|string
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
+        return $columns;
     }
 }

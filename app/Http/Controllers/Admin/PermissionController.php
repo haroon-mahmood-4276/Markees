@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\PermissionsDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Permissions\storeRequest;
-use App\Http\Requests\Admin\Permissions\updateRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Exception;
@@ -15,6 +13,9 @@ class PermissionController extends Controller
 {
     public function index(PermissionsDataTable $dataTable)
     {
+        if (request()->ajax()) {
+            return $dataTable->ajax();
+        }
         return $dataTable->render('admin.permissions.index');
     }
 
@@ -28,7 +29,7 @@ class PermissionController extends Controller
                 'message' => 'Permission Assigned Sucessfully',
             ], 200);
         } catch (Exception $ex) {
-            return response()->json(__('lang.commons.something_went_wrong').' '.$ex->getMessage());
+            return response()->json(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -42,7 +43,7 @@ class PermissionController extends Controller
                 'message' => 'Permission Revoked Sucessfully',
             ], 200);
         } catch (Exception $ex) {
-            return response()->json(__('lang.commons.something_went_wrong').' '.$ex->getMessage());
+            return response()->json(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 

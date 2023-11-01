@@ -84,7 +84,6 @@ class RolesDataTable extends DataTable
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
             ->pagingType('full_numbers')
             ->lengthMenu([
                 [30, 50, 70, 100, 120, 150, -1],

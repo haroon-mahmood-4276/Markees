@@ -13,6 +13,7 @@ use App\Http\Controllers\Tenants\{
     RoleController,
     PermissionController
 };
+
 use App\Http\Controllers\Tenants\Users\{
     AjaxController,
     HomeController as UserHomeController,
@@ -20,7 +21,6 @@ use App\Http\Controllers\Tenants\Users\{
 };
 use Stancl\Tenancy\Middleware\{InitializeTenancyByDomain, PreventAccessFromCentralDomains, ScopeSessions};
 use Illuminate\Support\Facades\Route;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCentralDomains::class, ScopeSessions::class])->group(function () {
 
@@ -40,23 +40,23 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
 
                 Route::get('cachew/flush', [DashboardController::class, 'cacheFlush'])->name('cache.flush');
 
-
                 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
                 //Role Routes
-                Route::group(['prefix' => 'roles', 'as' => 'roles.'], function () {
-                    Route::get('/', [RoleController::class, 'index'])->middleware('permission:tenant.roles.index')->name('index');
+                Route::controller(RoleController::class)->name('roles.')->prefix('roles')->group(function () {
+
+                    Route::get('/', 'index')->middleware('permission:tenant.roles.index')->name('index');
 
                     Route::group(['middleware' => 'permission:tenant.roles.create'], function () {
-                        Route::get('create', [RoleController::class, 'create'])->name('create');
-                        Route::post('store', [RoleController::class, 'store'])->name('store');
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
                     });
 
-                    Route::get('delete', [RoleController::class, 'destroy'])->middleware('permission:tenant.roles.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.roles.destroy')->name('destroy');
 
-                    Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.roles.edit'], function () {
-                        Route::get('edit', [RoleController::class, 'edit'])->name('edit');
-                        Route::put('update', [RoleController::class, 'update'])->name('update');
+                    Route::group(['prefix' => '/{role}', 'middleware' => 'permission:tenant.roles.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
                     });
                 });
 
@@ -205,7 +205,7 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
             Route::post('store', [UserBookingController::class, 'store'])->name('store');
 
             Route::get('delete', [UserBookingController::class, 'destroy'])
-            ->name('destroy');
+                ->name('destroy');
 
             Route::group(['prefix' => '/{id}'], function () {
                 Route::get('edit', [UserBookingController::class, 'edit'])->name('edit');

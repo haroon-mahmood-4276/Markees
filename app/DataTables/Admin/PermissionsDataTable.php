@@ -9,7 +9,6 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 
 class PermissionsDataTable extends DataTable
@@ -56,7 +55,7 @@ class PermissionsDataTable extends DataTable
         $buttons = [];
 
 
-        if (auth()->user()->can('admin.permissions.export')) {
+        if (auth('admin')->user()->can('admin.permissions.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -72,15 +71,6 @@ class PermissionsDataTable extends DataTable
             Button::make('reset')->addClass('btn btn-danger waves-effect waves-float waves-light m-1'),
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
-
-        if (auth()->user()->can('admin.permissions.destroy')) {
-            $buttons[] = Button::raw('delete-selected')
-                ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
-                ->text('<i class="icon material-icons md-delete"></i><span id="delete_selected_count" style="display:none">0</span> Delete Selected')
-                ->attr([
-                    'onclick' => 'deleteSelected()',
-                ]);
-        }
 
         return $this->builder()
             ->setTableId('permissions-table')
@@ -121,8 +111,8 @@ class PermissionsDataTable extends DataTable
         unset($roles[0]['pivot']);
 
         $colArray = [
-            Column::computed('DT_RowIndex')->title('#')->width(10),
-            Column::make('show_name')->title('Permission Name')->addClass('text-nowrap align-middle'),
+            Column::computed('DT_RowIndex')->title('#'),
+            Column::make('show_name')->title('Permission Name')->addClass('text-nowrap')->ucfirst(),
             Column::computed('class')->visible(false),
         ];
 
@@ -146,8 +136,6 @@ class PermissionsDataTable extends DataTable
                     return checkbox;
                 }');
         }
-
-        // $colArray[] = Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center');
         return $colArray;
     }
 }
