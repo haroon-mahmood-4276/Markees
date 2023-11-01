@@ -30,7 +30,7 @@
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
                 @csrf
-                {{ view('tenant.app.hallTypes.form-fields', ['hallTypes' => $hallTypes]) }}
+                @include('tenant.app.hallTypes.form-fields')
 
             </div>
 
@@ -82,25 +82,5 @@
 @endsection
 
 @section('custom-js')
-    <script>
-        $(document).ready(function() {
-            e = $("#hallType");
-            e.wrap('<div class="position-relative"></div>');
-            e.select2({
-                dropdownAutoWidth: !0,
-                dropdownParent: e.parent(),
-                width: "100%",
-                containerCssClass: "select-lg",
-                templateResult: c,
-                templateSelection: c,
-                escapeMarkup: function(e) {
-                    return e
-                }
-            });
-        });
-
-        function c(e) {
-            return e.id ? "<i class='" + $(e.element).data("icon") + " me-2'></i>" + e.text : e.text
-        }
-    </script>
+    @include('tenant.app.hallTypes.form-fields-js', ['from' => 'create'])
 @endsection

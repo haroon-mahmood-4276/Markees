@@ -5,8 +5,8 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-lg-12 col-md-12 col-sm-12 position-relative">
-                <label class="form-label" style="font-size: 15px" for="hallType">Hall Types</label>
-                <select class="select2-size-lg form-select" id="hallType" name="hallType">
+                <label class="form-label" style="font-size: 15px" for="parent_hall_type">Hall Types</label>
+                <select class="select2-size-lg form-select" id="parent_hall_type" name="parent_hall_type">
                     <option data-icon="fa-solid fa-angle-{{ $dir }}" value="0" selected>Parent Hall Type
                     </option>
                     @foreach ($hallTypes as $row)
@@ -16,7 +16,7 @@
                             {{ $row['tree'] }}</option>
                     @endforeach
                 </select>
-                @error('hallType')
+                @error('parent_hall_type')
                     <div class="invalid-tooltip">{{ $message }}</div>
                 @else
                     <div id="name-help" class="form-text">Select parent hall type </div>

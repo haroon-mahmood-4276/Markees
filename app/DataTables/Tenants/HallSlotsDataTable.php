@@ -74,7 +74,7 @@ class HallSlotsDataTable extends DataTable
 
         // auth('tenant')->user()->tenantSubscription->no_of_halls
         if (auth('tenant')->user()->can('tenant.halls.slots.create')) {
-            $buttons[] = Button::raw('delete-selected')
+            $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary ')
                 ->text('<i class="bi bi-plus"></i> Add New')
                 ->attr([

@@ -1,18 +1,3 @@
-{{--
-                <li class="nav-item d-none d-lg-block">
-                    @php
-                        $trashedDataCount = getTrashedDataCount();
-                    @endphp
-
-                    <a class="nav-link" href="javascript:void(0)" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="Restore deleted data">
-                        <i class="ficon {{ $trashedDataCount > 0 ? 'bounce text-danger' : '' }} "
-                            data-feather="trash"></i>
-                        <span
-                            class="badge rounded-pill {{ $trashedDataCount > 0 ? 'bg-danger' : 'bg-primary' }} badge-up cart-item-count">{{ $trashedDataCount }}</span>
-                    </a>
-                </li>
- --}}
 <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
     id="layout-navbar">
 
@@ -37,156 +22,18 @@
         </div>
         <!-- /Search -->
 
-
-
-
-
         <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-            <!-- Language -->
-            <li class="nav-item dropdown-language dropdown me-2 me-xl-0">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
-                </a>
-                <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                        <a class="dropdown-item selected" href="javascript:void(0);" data-language="en">
-                            <i class="fi fi-us fis rounded-circle me-1 fs-3"></i>
-                            <span class="align-middle">English</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="fr">
-                            <i class="fi fi-fr fis rounded-circle me-1 fs-3"></i>
-                            <span class="align-middle">French</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="de">
-                            <i class="fi fi-de fis rounded-circle me-1 fs-3"></i>
-                            <span class="align-middle">German</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="javascript:void(0);" data-language="pt">
-                            <i class="fi fi-pt fis rounded-circle me-1 fs-3"></i>
-                            <span class="align-middle">Portuguese</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <!--/ Language -->
-
-            <!-- Style Switcher -->
-            <li class="nav-item me-2 me-xl-0">
-                <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
-                    <i class="ti ti-md ti-moon-stars"></i>
-                </a>
-            </li>
-            <!--/ Style Switcher -->
-
-            @can('admin.cache.flush')
+            @can('cache.flush')
                 <li class="nav-item d-none d-lg-block">
-                    <a class="nav-link" href="{{ route('admin.cache.flush') }}" data-bs-toggle="tooltip"
+                    <a class="nav-link" href="{{ route('cache.flush') }}" data-bs-toggle="tooltip"
                         data-bs-placement="bottom" title="Click to clear cache (Automatically resets in 10 minutes)">
                         <i class="ti ti-refresh ti-md"></i>
                     </a>
                 </li>
             @endcan
 
-            <!-- Quick links  -->
-            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
-                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
-                    data-bs-auto-close="outside" aria-expanded="false">
-                    <i class="ti ti-layout-grid-add ti-md"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end py-0">
-                    <div class="dropdown-menu-header border-bottom">
-                        <div class="dropdown-header d-flex align-items-center py-3">
-                            <h5 class="text-body mb-0 me-auto">Shortcuts</h5>
-                            <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body"
-                                data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Add shortcuts"
-                                data-bs-original-title="Add shortcuts"><i class="ti ti-sm ti-apps"></i></a>
-                        </div>
-                    </div>
-                    <div class="dropdown-shortcuts-list scrollable-container ps">
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-calendar fs-4"></i>
-                                </span>
-                                <a href="app-calendar.html" class="stretched-link">Calendar</a>
-                                <small class="text-muted mb-0">Appointments</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-file-invoice fs-4"></i>
-                                </span>
-                                <a href="app-invoice-list.html" class="stretched-link">Invoice App</a>
-                                <small class="text-muted mb-0">Manage Accounts</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-users fs-4"></i>
-                                </span>
-                                <a href="app-user-list.html" class="stretched-link">User App</a>
-                                <small class="text-muted mb-0">Manage Users</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-lock fs-4"></i>
-                                </span>
-                                <a href="app-access-roles.html" class="stretched-link">Role Management</a>
-                                <small class="text-muted mb-0">Permission</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-chart-bar fs-4"></i>
-                                </span>
-                                <a href="index.html" class="stretched-link">Dashboard</a>
-                                <small class="text-muted mb-0">User Profile</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-settings fs-4"></i>
-                                </span>
-                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
-                                <small class="text-muted mb-0">Account Settings</small>
-                            </div>
-                        </div>
-                        <div class="row row-bordered overflow-visible g-0">
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-help fs-4"></i>
-                                </span>
-                                <a href="pages-help-center-landing.html" class="stretched-link">Help Center</a>
-                                <small class="text-muted mb-0">FAQs &amp; Articles</small>
-                            </div>
-                            <div class="dropdown-shortcuts-item col">
-                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
-                                    <i class="ti ti-square fs-4"></i>
-                                </span>
-                                <a href="modal-examples.html" class="stretched-link">Modals</a>
-                                <small class="text-muted mb-0">Useful Popups</small>
-                            </div>
-                        </div>
-                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
-                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
-                        </div>
-                        <div class="ps__rail-y" style="top: 0px; right: 0px;">
-                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <!-- Quick links -->
-
             <!-- Notification -->
-            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
+            {{-- <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
                     data-bs-auto-close="outside" aria-expanded="false">
                     <i class="ti ti-bell ti-md"></i>
@@ -411,7 +258,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <!--/ Notification -->
 
             <!-- User -->
@@ -421,9 +268,9 @@
                         <img src="{{ global_asset('theme-assets') }}/img/avatars/1.png" alt="" class="h-auto rounded-circle">
                     </div>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end">
+                <ul class="dropdown-menu dropdown-menu-end pb-1">
                     <li>
-                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                        <a class="dropdown-item" href="javascript:void(0);">
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
@@ -431,9 +278,11 @@
                                             class="h-auto rounded-circle">
                                     </div>
                                 </div>
+
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    <span class="fw-semibold d-block">{{ auth('tenant')->user()->name }}</span>
+                                    {{-- <small
+                                        class="text-muted">{{ implode(', ',auth('tenant')->user()->roles->pluck('name')->toArray()) }}</small> --}}
                                 </div>
                             </div>
                         </a>
@@ -441,54 +290,17 @@
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-profile-user.html">
-                            <i class="ti ti-user-check me-2 ti-sm"></i>
-                            <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                    {{-- <li>
+                        <a class="dropdown-item" href="{{ route('settings.index', ['tab' => 'general']) }}">
                             <i class="ti ti-settings me-2 ti-sm"></i>
                             <span class="align-middle">Settings</span>
                         </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-account-settings-billing.html">
-                            <span class="d-flex align-items-center align-middle">
-                                <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                                <span class="flex-grow-1 align-middle">Billing</span>
-                                <span
-                                    class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                            </span>
-                        </a>
-                    </li>
+                    </li> --}}
                     <li>
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="pages-help-center-landing.html">
-                            <i class="ti ti-lifebuoy me-2 ti-sm"></i>
-                            <span class="align-middle">Help</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-faq.html">
-                            <i class="ti ti-help me-2 ti-sm"></i>
-                            <span class="align-middle">FAQ</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="pages-pricing.html">
-                            <i class="ti ti-currency-dollar me-2 ti-sm"></i>
-                            <span class="align-middle">Pricing</span>
-                        </a>
-                    </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="{{ route('tenant.logout') }}">
+                        <a class="dropdown-item btn-danger" href="{{ route('tenant.logout') }}">
                             <i class="ti ti-logout me-2 ti-sm"></i>
                             <span class="align-middle">Log Out</span>
                         </a>
@@ -499,15 +311,16 @@
         </ul>
     </div>
 
-
     <!-- Search Small Screens -->
     <div class="navbar-search-wrapper search-input-wrapper d-none">
-        <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input type="text"
-                class="form-control search-input container-xxl border-0 tt-input" placeholder="Search..."
-                aria-label="Search..." autocomplete="off" spellcheck="false" dir="auto"
+        <span class="twitter-typeahead" style="position: relative; display: inline-block;">
+            <input type="text" class="form-control search-input container-xxl border-0 tt-input"
+                placeholder="Search..." aria-label="Search..." autocomplete="off" spellcheck="false" dir="auto"
                 style="position: relative; vertical-align: top;">
+
             <pre aria-hidden="true"
                 style="position: absolute; visibility: hidden; white-space: pre; font-family: &quot;Public Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 15px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: auto; text-transform: none;"></pre>
+
             <div class="tt-menu navbar-search-suggestion ps"
                 style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;">
                 <div class="tt-dataset tt-dataset-pages"></div>
@@ -523,7 +336,4 @@
         </span>
         <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
     </div>
-
-
-
 </nav>

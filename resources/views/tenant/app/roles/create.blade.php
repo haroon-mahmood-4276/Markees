@@ -81,5 +81,5 @@
 @endsection
 
 @section('custom-js')
-    @include('tenant.app.roles.form-fields-js')
+    @include('tenant.app.roles.form-fields-js', ['from' => 'create'])
 @endsection

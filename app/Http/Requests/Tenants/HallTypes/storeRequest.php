@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Tenants\HallTypes;
 
+use App\Models\Tenants\HallType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class storeRequest extends FormRequest
@@ -23,10 +24,6 @@ class storeRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'hallType' => 'required|numeric',
-            'name' => 'required|string|between:1,254',
-            'description' => 'nullable',
-        ];
+        return (new HallType())->rules;
     }
 }

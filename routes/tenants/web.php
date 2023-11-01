@@ -61,27 +61,27 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                 });
 
                 //Permissions Routes
-                Route::group(['prefix' => 'permissions', 'as' => 'permissions.'], function () {
-                    Route::get('/', [PermissionController::class, 'index'])->middleware('permission:tenant.permissions.index')->name('index');
+                Route::controller(PermissionController::class)->name('permissions.')->prefix('permissions')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.permissions.index')->name('index');
 
-                    Route::post('assign-permission', [PermissionController::class, 'assignPermissionToRole'])->middleware('permission:tenant.permissions.assign-permission')->name('assign-permission');
-                    Route::post('revoke-permission', [PermissionController::class, 'revokePermissionToRole'])->middleware('permission:tenant.permissions.revoke-permission')->name('revoke-permission');
+                    Route::post('assign-permission', 'assignPermissionToRole')->middleware('permission:tenant.permissions.assign-permission')->name('assign-permission');
+                    Route::post('revoke-permission', 'revokePermissionToRole')->middleware('permission:tenant.permissions.assign-permission')->name('revoke-permission');
                 });
 
                 //HallTypes Routes
-                Route::group(['prefix' => 'hall-types', 'as' => 'hallTypes.'], function () {
-                    Route::get('/', [HallTypeController::class, 'index'])->middleware('permission:tenant.hallTypes.index')->name('index');
+                Route::controller(HallTypeController::class)->name('hallTypes.')->prefix('hall-types')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.hallTypes.index')->name('index');
 
                     Route::group(['middleware' => 'permission:tenant.hallTypes.create'], function () {
-                        Route::get('create', [HallTypeController::class, 'create'])->name('create');
-                        Route::post('store', [HallTypeController::class, 'store'])->name('store');
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
                     });
 
-                    Route::get('delete', [HallTypeController::class, 'destroy'])->middleware('permission:tenant.hallTypes.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.hallTypes.destroy')->name('destroy');
 
-                    Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.hallTypes.edit'], function () {
-                        Route::get('edit', [HallTypeController::class, 'edit'])->name('edit');
-                        Route::put('update', [HallTypeController::class, 'update'])->name('update');
+                    Route::group(['prefix' => '/{hall_type}', 'middleware' => 'permission:tenant.hallTypes.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
                     });
                 });
 

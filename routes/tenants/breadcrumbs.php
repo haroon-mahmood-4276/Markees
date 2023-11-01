@@ -50,9 +50,9 @@ Breadcrumbs::for('tenant.hallTypes.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Hall Type', route('tenant.hallTypes.create'));
 });
 
-Breadcrumbs::for('tenant.hallTypes.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.hallTypes.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.hallTypes.index');
-    $trail->push('Edit Hall Type', route('tenant.hallTypes.edit', ['id' => $id]));
+    $trail->push('Edit Hall Type');
 });
 
 // Decorations Breadcrumbs

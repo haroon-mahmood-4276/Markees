@@ -25,23 +25,23 @@ class HallTypesDataTable extends DataTable
         $columns = array_column($this->getColumns(), 'data');
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->editColumn('description', function ($hallType) {
-                return Str::of($hallType->description)->ucfirst()->words(15);
+            ->editColumn('description', function ($row) {
+                return Str::of($row->description)->ucfirst()->words(15);
             })
-            ->editColumn('parent_id', function ($hallType) {
-                return Str::of(getHallTypeParentByParentId($hallType->parent_id))->ucfirst();
+            ->editColumn('parent_id', function ($row) {
+                return Str::of(getHallTypeParentByParentId($row->parent_id))->ucfirst();
             })
-            ->editColumn('created_at', function ($hallType) {
-                return editDateColumn($hallType->created_at);
+            ->editColumn('created_at', function ($row) {
+                return editDateTimeColumn($row->created_at);
             })
-            ->editColumn('updated_at', function ($hallType) {
-                return editDateColumn($hallType->updated_at);
+            ->editColumn('updated_at', function ($row) {
+                return editDateTimeColumn($row->updated_at);
             })
-            ->editColumn('actions', function ($hallType) {
-                return view('tenant.app.hallTypes.actions', ['id' => $hallType->id]);
+            ->editColumn('actions', function ($row) {
+                return view('tenant.app.hallTypes.actions', ['hall_type' => $row]);
             })
-            ->editColumn('check', function ($hallType) {
-                return $hallType;
+            ->editColumn('check', function ($row) {
+                return $row;
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
@@ -63,7 +63,7 @@ class HallTypesDataTable extends DataTable
         $buttons = [];
 
         if (auth()->user()->can('tenant.hallTypes.create')) {
-            $buttons[] = Button::raw('delete-selected')
+            $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
                 ->attr([
@@ -99,17 +99,20 @@ class HallTypesDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('hall-types-table')
-            ->addTableClass('table-borderless table-striped table-hover')
+            ->addTableClass(['table-striped'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
-            ->scrollX()
-            ->lengthMenu([10, 20, 30, 50, 70, 100])
+            ->pagingType('full_numbers')
+            ->lengthMenu([
+                [30, 50, 70, 100, 120, 150, -1],
+                [30, 50, 70, 100, 120, 150, "All"],
+            ])
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
+            ->scrollX()
             ->rowGroupDataSrc('parent_id')
             ->columnDefs([
                 [
@@ -128,8 +131,12 @@ class HallTypesDataTable extends DataTable
                     ]
                 ],
             ])
+            ->fixedColumns([
+                'left' => 1,
+                'right' => 0,
+            ])
             ->orders([
-                [3, 'asc'],
+                [3, 'desc'],
             ]);
     }
 
@@ -140,7 +147,7 @@ class HallTypesDataTable extends DataTable
      */
     protected function getColumns(): array
     {
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowarp');
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
 
         if (auth('tenant')->user()->can('tenant.hallTypes.destroy')) {
             $checkColumn->addClass('disabled');
@@ -148,34 +155,13 @@ class HallTypesDataTable extends DataTable
 
         $columns = [
             $checkColumn,
-            Column::make('name')->title('Type')->addClass('text-nowarp'),
-            Column::make('description')->addClass('text-nowarp'),
-            Column::make('parent_id')->addClass('text-nowarp'),
-            Column::make('created_at')->addClass('text-nowarp'),
-            Column::make('updated_at')->addClass('text-nowarp'),
+            Column::make('name')->title('Type')->addClass('text-nowrap align-middle'),
+            Column::make('description')->addClass('text-nowrap align-middle'),
+            Column::make('parent_id')->exportable(false)->printable(false)->orderable(false)->visible(false)->addClass('text-nowrap text-center align-middle'),
+            Column::make('created_at')->addClass('text-nowrap text-center align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
             Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
         ];
         return $columns;
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'HallType_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }

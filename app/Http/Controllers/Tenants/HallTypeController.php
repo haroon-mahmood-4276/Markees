@@ -6,9 +6,11 @@ use App\DataTables\Tenants\HallTypesDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\HallTypes\{storeRequest, updateRequest};
+use App\Models\Tenants\HallType;
 use App\Services\Tenants\HallTypes\HallTypeInterface;
 use Illuminate\Http\Request;
 use Exception;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HallTypeController extends Controller
 {
@@ -20,7 +22,7 @@ class HallTypeController extends Controller
         $this->hallTypeInterface = $hallTypeInterface;
     }
 
-    public function index(Request $request, HallTypesDataTable $dataTable)
+    public function index(HallTypesDataTable $dataTable)
     {
         if (request()->ajax()) {
             return $dataTable->ajax();
@@ -34,7 +36,8 @@ class HallTypeController extends Controller
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getAllWithTree(),
+            'hallTypes' => $this->hallTypeInterface->getWithTree(),
+            'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
         ];
 
         return view('tenant.app.hallTypes.create', $data);
@@ -46,67 +49,49 @@ class HallTypeController extends Controller
             abort_if(request()->ajax(), 403);
 
             $inputs = $request->validated();
-            $record = $this->hallTypeInterface->store($inputs);
+            $this->hallTypeInterface->store($inputs);
             return redirect()->route('tenant.hallTypes.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(HallType $hallType)
     {
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getAllWithTree(),
-            'hallType' => $this->hallTypeInterface->getById($id),
+            'hallTypes' => $this->hallTypeInterface->getWithTree(),
+            'hallType' => $hallType,
+            'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection()),
         ];
 
         return view('tenant.app.hallTypes.edit', $data);
     }
 
-    public function update(updateRequest $request, $id)
+    public function update(updateRequest $request, HallType $hallType)
     {
         try {
             abort_if(request()->ajax(), 403);
 
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->hallTypeInterface->update($id, $inputs);
-
+            $this->hallTypeInterface->update($hallType->id, $inputs);
             return redirect()->route('tenant.hallTypes.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
     public function destroy(Request $request)
     {
+        abort_if(request()->ajax(), 403);
         try {
-            abort_if(request()->ajax(), 403);
-
             if ($request->has('checkForDelete')) {
-
-                $record = $this->hallTypeInterface->destroy($request->checkForDelete);
-
-                if ($record) {
-                    return redirect()->route('tenant.hallTypes.index')->withSuccess(__('lang.commons.data_deleted'));
-                } else {
-                    return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.data_not_found'));
-                }
+                $this->hallTypeInterface->destroy($request->checkForDelete);
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('tenant.hallTypes.index')->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

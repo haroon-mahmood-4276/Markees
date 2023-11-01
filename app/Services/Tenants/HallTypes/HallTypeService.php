@@ -25,7 +25,7 @@ class HallTypeService implements HallTypeInterface
         return $this->model()->with($relationships)->find($id);
     }
 
-    public function getAllWithTree($relationships = [])
+    public function getWithTree($relationships = [])
     {
         $hallTypes = $this->model()->all();
         return getTreeData(collect($hallTypes), $this->model());
@@ -34,48 +34,32 @@ class HallTypeService implements HallTypeInterface
     // Store
     public function store($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
-            $data = [
+        return DB::transaction(function () use ($inputs) {
+            return $this->model()->create([
                 'name' => $inputs['name'],
                 'description' => $inputs['description'],
-                'parent_id' => $inputs['hallType'],
-            ];
-
-            $hallType = $this->model()->create($data);
-            return $hallType;
+                'parent_id' => $inputs['parent_hall_type'],
+            ]);
         });
-
-        return $returnData;
     }
 
     public function update($id, $inputs)
     {
-        $returnData = DB::transaction(function () use ($id, $inputs) {
-            $data = [
+        return DB::transaction(function () use ($id, $inputs) {
+            return $this->model()->find($id)->update([
                 'name' => $inputs['name'],
                 'description' => $inputs['description'],
-                'parent_id' => $inputs['hallType'],
-            ];
-
-            $hallType = $this->model()->find($id)->update($data);
-
-            return $hallType;
+                'parent_id' => $inputs['parent_hall_type'],
+            ]);
         });
-
-        return $returnData;
     }
 
     public function destroy($id)
     {
-        $returnData = DB::transaction(function () use ($id) {
-
-            $hallType = $this->model()->whereIn('id', $id)->get()->each(function ($hallType) {
+        return DB::transaction(function () use ($id) {
+            return $this->model()->whereIn('id', $id)->get()->each(function ($hallType) {
                 $hallType->delete();
             });
-
-            return $hallType;
         });
-
-        return $returnData;
     }
 }
