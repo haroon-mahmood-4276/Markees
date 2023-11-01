@@ -53,11 +53,6 @@ class PermissionSeeder extends Seeder
                 'show_name' => 'Permissions - Can Assign',
                 'guard_name' => 'tenant',
             ],
-            [
-                'name' => 'tenant.permissions.revoke-permission',
-                'show_name' => 'Permissions - Can Revoke',
-                'guard_name' => 'tenant',
-            ],
 
             // HallType Routes
             [

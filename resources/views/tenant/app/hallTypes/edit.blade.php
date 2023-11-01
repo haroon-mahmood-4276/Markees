@@ -1,7 +1,7 @@
 @extends('tenant.app.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.hallTypes.edit', encryptParams($hallType->id)) }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.hallTypes.edit') }}
 @endsection
 
 @section('page-title', 'Edit Hall Type')
@@ -18,23 +18,19 @@
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
         <h2 class="content-header-title float-start mb-0 mx-3">Edit Hall Type</h2>
-        {{ Breadcrumbs::render('tenant.hallTypes.edit', encryptParams($hallType->id)) }}
+        {{ Breadcrumbs::render('tenant.hallTypes.edit') }}
     </div>
 @endsection
 
 @section('content')
-    <form class="form form-vertical"
-        action="{{ route('tenant.hallTypes.update', ['id' => encryptparams($hallType->id)]) }}" method="POST">
+    <form class="form form-vertical" action="{{ route('tenant.hallTypes.update', [$hallType]) }}" method="POST">
 
         <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
                 @method('PUT')
                 @csrf
-                {{ view('tenant.app.hallTypes.form-fields', [
-                    'hallTypes' => $hallTypes,
-                    'hallType' => $hallType,
-                ]) }}
+                @include('tenant.app.hallTypes.form-fields')
 
             </div>
 
@@ -85,25 +81,5 @@
 @endsection
 
 @section('custom-js')
-    <script>
-        $(document).ready(function() {
-            e = $("#hallType");
-            e.wrap('<div class="position-relative"></div>');
-            e.select2({
-                dropdownAutoWidth: !0,
-                dropdownParent: e.parent(),
-                width: "100%",
-                containerCssClass: "select-lg",
-                templateResult: c,
-                templateSelection: c,
-                escapeMarkup: function(e) {
-                    return e
-                }
-            });
-        });
-
-        function c(e) {
-            return e.id ? "<i class='" + $(e.element).data("icon") + " me-2'></i>" + e.text : e.text
-        }
-    </script>
+    @include('tenant.app.hallTypes.form-fields-js', ['from' => 'edit'])
 @endsection

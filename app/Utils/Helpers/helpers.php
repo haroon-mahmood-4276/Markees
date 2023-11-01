@@ -1,47 +1,9 @@
 <?php
 
-use App\Models\{Role, Setting};
+use App\Models\{Role};
+use App\Models\Tenants\{HallType};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\{Collection};
-use Illuminate\Support\Facades\{Crypt, File};
-use Illuminate\Support\Str;
-
-// if (!function_exists('settings')) {
-//     function settings($key, $overrideCache = false)
-//     {
-//         if ($overrideCache) {
-//             return (new Setting())->firstWhere('key', $key)?->value;
-//         }
-
-//         return Cache::remember($key, now()->addSeconds(env('CACHE_TIME_TO_LIVE', 3600)), function () use ($key) {
-//             return (new Setting())->firstWhere('key', $key)?->value;
-//         });
-//     }
-// }
-
-// if (!function_exists('settings_update')) {
-//     function settings_update(array|string $keys, array|string $values)
-//     {
-//         if (is_array($keys) && is_array($values)) {
-//             $settings = array_combine($keys, $values);
-//             foreach ($settings as $key => $value) {
-//                 (new Setting())->updateOrCreate([
-//                     'key' => $key
-//                 ], [
-//                     'value' => $value
-//                 ]);
-//             }
-//         } else {
-//             (new Setting())->updateOrCreate([
-//                 'key' => $keys
-//             ], [
-//                 'value' => $values
-//             ]);
-//         }
-//         cache()->flush();
-//         return true;
-//     }
-// }
 
 if (!function_exists('filter_strip_tags')) {
 
@@ -101,48 +63,6 @@ if (!function_exists('englishCounting')) {
     }
 }
 
-if (!function_exists('encryptParams')) {
-    function encryptParams($params): array|string
-    {
-        if (is_array($params)) {
-            $data = [];
-            foreach ($params as $key => $item) {
-                if (Str::isUuid($params)) {
-                    $data[$key] = $params;
-                } else {
-                    $data[$key] = Crypt::encryptString($params);
-                }
-            }
-            return $data;
-        }
-        if (Str::isUuid($params)) {
-            return $params;
-        }
-        return Crypt::encryptString($params);
-    }
-}
-
-if (!function_exists('decryptParams')) {
-    function decryptParams($params): array|string
-    {
-        if (is_array($params)) {
-            $data = [];
-            foreach ($params as $key => $item) {
-                if (Str::isUuid($params)) {
-                    $data[$key] = $params;
-                } else {
-                    $data[$key] = Crypt::decryptString($params);
-                }
-            }
-            return $data;
-        }
-        if (Str::isUuid($params)) {
-            return $params;
-        }
-        return Crypt::decryptString($params);
-    }
-}
-
 if (!function_exists('getAllModels')) {
     function getAllModels($path = null): array
     {
@@ -197,51 +117,6 @@ if (!function_exists('getTreeData')) {
         // dd($typesTmp);
     }
 }
-if (!function_exists('getStakeholderTreeData')) {
-    function getStakeholderTreeData(collection $collectionData, $model, $getFromDB = false): array
-    {
-        $stakeholderTmp = [];
-
-        $dbTypes = ($getFromDB ? $model::all() : $collectionData);
-
-        foreach ($collectionData as $key => $row) {
-            $stakeholderTmp[] = $row;
-            $stakeholderTmp[$key]["tree"] = ($getFromDB ? getStakholderParentTreeElequent($model, $row, $row->full_name, $collectionData, $dbTypes) : getStakeholderParentTreeCollection($row, $row->full_name, $collectionData));
-        }
-        return $stakeholderTmp;
-    }
-}
-
-if (!function_exists('getStakholderParentTreeElequent')) {
-    function getStakholderParentTreeElequent($model, $row, $name, collection $parent, $dbTypes)
-    {
-        if ($row->parent_id == 0) {
-            return $name;
-        }
-
-        $nextRow = $model::find($row->parent_id);
-        $name = $nextRow->full_name . ' > ' . $name;
-
-        return getStakholderParentTreeElequent($model, $nextRow, $name, $parent, $dbTypes);
-    }
-}
-
-if (!function_exists('getStakeholderParentTreeCollection')) {
-    function getStakeholderParentTreeCollection($row, $name, collection $parent): string
-    {
-        if ($row->parent_id == 0) {
-            return $name;
-        }
-
-        $nextRow = $parent->firstWhere('id', $row->parent_id);
-        $name = (is_null($nextRow) ?? empty($nextRow) ? '' : $nextRow->full_name) . ' > ' . $name;
-        if (is_null($nextRow) ?? empty($nextRow)) {
-            return $name;
-        }
-
-        return getStakeholderParentTreeCollection($nextRow, $name, $parent, $parent);
-    }
-}
 
 if (!function_exists('getTypeParentTreeElequent')) {
     function getTypeParentTreeElequent($model, $row, $name, collection $parent, $dbTypes)
@@ -282,119 +157,6 @@ if (!function_exists('getLinkedTreeData')) {
             return array_merge($id, getLinkedTreeData($model, array_column($id, 'id')));
         }
         return $id;
-    }
-}
-
-if (!function_exists('base64ToImage')) {
-    function base64ToImage($image): string
-    {
-        ini_set('memory_limit', '256M');
-        $filename = 'TelK7BnW63IAN6zuTTwJkqZeuM0YI5aNc7aFqOyz.jpg';
-        if (!empty($image)) {
-            $dir = $_SERVER['DOCUMENT_ROOT'] . config('app.asset_url') . DIRECTORY_SEPARATOR . 'public_assets/admin/sites_images';
-            $image_parts = explode(";base64,", $image);
-            $image_type_aux = explode("image/", $image_parts[0]);
-            $image_type = $image_type_aux[1];
-            $image_base64 = base64_decode($image_parts[1]);
-            $filename = uniqid() . '.' . $image_type;
-            $file = $dir . DIRECTORY_SEPARATOR . $filename;
-            file_put_contents($file, $image_base64);
-        }
-        return $filename;
-    }
-}
-
-// if (!function_exists('makeImageThumbs')) {
-//     function makeImageThumbs($request, $key = ""): string
-//     {
-//         $publicPath = public_path('public_assets/admin/sites_images') . DIRECTORY_SEPARATOR;
-//         if (!is_string($request)) {
-//             if (is_array($request)) {
-//                 $image = $request[$key];
-//             } else {
-//                 $image = $request->file($key);
-//             }
-//             $imageHashedName = $image->hashName();
-//         } else {
-//             $image = $publicPath . $request;
-//         }
-
-//         $imgExplodedName = explode(".", $imageHashedName);
-
-//         $img = Image::make($image)->backup();
-
-//         $img->resize(1000, null, function ($constraint) {
-//             $constraint->aspectRatio();
-//             $constraint->upsize();
-//         })->save($publicPath . $imgExplodedName[0] . '-thumbs1000.' . $imgExplodedName[1]);
-//         $img->reset();
-
-//         $img->resize(600, null, function ($constraint) {
-//             $constraint->aspectRatio();
-//             $constraint->upsize();
-//         })->save($publicPath . $imgExplodedName[0] . '.' . $imgExplodedName[1]);
-//         $img->reset();
-
-//         $img->resize(350, null, function ($constraint) {
-//             $constraint->aspectRatio();
-//             $constraint->upsize();
-//         })->save($publicPath . $imgExplodedName[0] . '-thumbs350.' . $imgExplodedName[1]);
-//         $img->reset();
-
-//         $img->resize(200, null, function ($constraint) {
-//             $constraint->aspectRatio();
-//             $constraint->upsize();
-//         })->save($publicPath . $imgExplodedName[0] . '-thumbs200.' . $imgExplodedName[1]);
-//         $img->reset();
-
-//         $img->destroy();
-
-//         return $imgExplodedName[0] . '.' . $imgExplodedName[1];
-//     }
-// }
-
-if (!function_exists('deleteImageThumbs')) {
-    function deleteImageThumbs($imgName,  $imageDirectory = 'admin'): string
-    {
-        $publicServerPath = public_path('public_assets/' . $imageDirectory . '/sites_images') . DIRECTORY_SEPARATOR;
-        if (File::exists($publicServerPath . $imgName)) {
-            $imageExplodedName = explode(".", $imgName);
-            // dd($imageExplodedName);
-            File::delete([
-                $publicServerPath . $imageExplodedName[0] . "." . $imageExplodedName[1],
-                $publicServerPath . $imageExplodedName[0] . "-thumbs1000." . $imageExplodedName[1],
-                $publicServerPath . $imageExplodedName[0] . "-thumbs350." . $imageExplodedName[1],
-                $publicServerPath . $imageExplodedName[0] . "-thumbs200." . $imageExplodedName[1],
-            ]);
-
-            return true;
-        }
-        return false;
-    }
-}
-
-if (!function_exists('getImageByName')) {
-    function getImageByName($imgName, $imageDirectory = 'admin'): array
-    {
-        $img = "";
-        $imgThumb = "";
-        $publicServerPath = public_path('public_assets/' . $imageDirectory . '/sites_images') . DIRECTORY_SEPARATOR;
-        $publicLinkPath = asset('public_assets/' . $imageDirectory . '/sites_images') . DIRECTORY_SEPARATOR;
-
-        $imageExplodedName = explode('.', (!is_null($imgName) && !empty($imgName) ? $imgName : 'TelK7BnW63IAN6zuTTwJkqZeuM0YI5aNc7aFqOyz.jpg'));
-
-        if (File::exists($publicServerPath . ($imageExplodedName[0] . "-thumbs200." . $imageExplodedName[1]))) {
-            $img = $publicLinkPath . $imageExplodedName[0] . "-thumbs1000." . $imageExplodedName[1];
-            $imgThumb = $publicLinkPath . $imageExplodedName[0] . "-thumbs200." . $imageExplodedName[1];
-        } else if (File::exists($publicServerPath . ($imageExplodedName[0] . "." . $imageExplodedName[1]))) {
-            $img = $publicLinkPath . $imageExplodedName[0] . "." . $imageExplodedName[1];
-            $imgThumb = $publicLinkPath . $imageExplodedName[0] . "." . $imageExplodedName[1];
-        } else {
-            $img = $publicLinkPath . "do_not_delete/do_not_delete.png";
-            $imgThumb = $publicLinkPath . "do_not_delete/do_not_delete.png";
-        }
-
-        return [$img, $imgThumb];
     }
 }
 
@@ -499,5 +261,16 @@ if (!function_exists('getIconDirection')) {
             return 'right';
         else
             return 'left';
+    }
+}
+
+if (!function_exists('getHallTypeParentByParentId')) {
+    function getHallTypeParentByParentId($parent_id)
+    {
+        $hallType = (new HallType())->where('id', $parent_id)->first();
+        if ($hallType) {
+            return $hallType->name;
+        }
+        return 'parent';
     }
 }
