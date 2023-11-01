@@ -4,10 +4,10 @@
     {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.permissions.index') }}
 @endsection
 
-@section('page-title', __('lang.permissions.permission_plural'))
+@section('page-title', 'Permissions')
 
 @section('page-vendor')
-    {{ view('tenant.app.layout.libs.datatables.css') }}
+    @include('tenant.app.layout.libs.datatables.css')
 @endsection
 
 @section('page-css')
@@ -28,7 +28,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    {{ $dataTable->table() }}
+                    <form action="javascript:void(0);" id="permissions-table-form" method="get">
+                        {{ $dataTable->table() }}
+                    </form>
                 </div>
             </div>
         </div>
@@ -36,7 +38,7 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('tenant.app.layout.libs.datatables.js') }}
+    @include('tenant.app.layout.libs.datatables.js')
 @endsection
 
 @section('page-js')
@@ -45,51 +47,15 @@
 @section('custom-js')
     {{ $dataTable->scripts() }}
     <script>
-        function deleteSelected() {
-            var selectedCheckboxes = $('.dt-checkboxes:checked').length;
-            if (selectedCheckboxes > 0) {
-
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Warning',
-                    text: '{{ __('lang.commons.are_you_sure_you_want_to_delete_the_selected_items') }}',
-                    showCancelButton: true,
-                    cancelButtonText: '{{ __('lang.commons.no_cancel') }}',
-                    confirmButtonText: '{{ __('lang.commons.yes_delete') }}',
-                    confirmButtonClass: 'btn-danger',
-                    buttonsStyling: false,
-                    customClass: {
-                        confirmButton: 'btn btn-danger  me-1',
-                        cancelButton: 'btn btn-success  me-1'
-                    },
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#permissions-table-form').submit();
-                    }
-                });
-            } else {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Warning',
-                    text: '{{ __('lang.commons.please_select_at_least_one_item') }}',
-                    buttonsStyling: false,
-                    customClass: {
-                        confirmButton: 'btn btn-danger  me-1',
-                        cancelButton: 'btn btn-success  me-1'
-                    },
-                });
-            }
-        }
-
         function changeRolePermission(role_id, permission_id) {
 
-            var checkBoxState = $('#chkRolePermission_' + role_id + '_' + permission_id).is(':checked');
+            var checkBoxState = $('#chkRolePermission_' + role_id + '__' + permission_id).is(':checked');
 
             var url = "";
             if (checkBoxState) {
-                url = '{{ route('tenant.permissions.assign-permission') }}';
+                url = "{{ route('tenant.permissions.assign-permission') }}";
             } else {
-                url = '{{ route('tenant.permissions.revoke-permission') }}';
+                url = "{{ route('tenant.permissions.revoke-permission') }}";
             }
 
             $.ajax({
@@ -104,8 +70,8 @@
                     if (response.success) {
                         toastr.success(response.message,
                             "Success!", {
-                                showMethod: "slideDown",
-                                hideMethod: "slideUp",
+                                // showMethod: "slideDown",
+                                // hideMethod: "slideUp",
                                 timeOut: 2e3,
                                 closeButton: !0,
                                 tapToDismiss: !1,

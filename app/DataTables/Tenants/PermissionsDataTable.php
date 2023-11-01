@@ -116,8 +116,6 @@ class PermissionsDataTable extends DataTable
     {
         $currentAuthRoles = auth()->user()->roles;
         $roles = getLinkedTreeData(new Role(), $currentAuthRoles->pluck('id'));
-        // $roles = array_merge($currentAuthRoles->toArray(), $roles); // Add current role to the list
-        unset($roles[0]['pivot']);
 
         $colArray = [
             Column::computed('DT_RowIndex')->title('#'),
@@ -127,7 +125,7 @@ class PermissionsDataTable extends DataTable
 
         foreach ($roles as $key => $role) {
 
-            if ($role['guard_name'] != 'admin')
+            if ($role['guard_name'] != 'tenant')
                 continue;
 
             $colArray[] = Column::computed('roles')
