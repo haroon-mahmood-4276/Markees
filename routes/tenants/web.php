@@ -86,19 +86,19 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                 });
 
                 //Decorations Routes
-                Route::group(['prefix' => 'decorations', 'as' => 'decorations.'], function () {
-                    Route::get('/', [DecorationController::class, 'index'])->middleware('permission:tenant.decorations.index')->name('index');
+                Route::controller(DecorationController::class)->name('decorations.')->prefix('decorations')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.decorations.index')->name('index');
 
                     Route::group(['middleware' => 'permission:tenant.decorations.create'], function () {
-                        Route::get('create', [DecorationController::class, 'create'])->name('create');
-                        Route::post('store', [DecorationController::class, 'store'])->name('store');
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
                     });
 
-                    Route::get('delete', [DecorationController::class, 'destroy'])->middleware('permission:tenant.decorations.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.decorations.destroy')->name('destroy');
 
-                    Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.decorations.edit'], function () {
-                        Route::get('edit', [DecorationController::class, 'edit'])->name('edit');
-                        Route::put('update', [DecorationController::class, 'update'])->name('update');
+                    Route::group(['prefix' => '/{decoration}', 'middleware' => 'permission:tenant.decorations.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
                     });
                 });
 

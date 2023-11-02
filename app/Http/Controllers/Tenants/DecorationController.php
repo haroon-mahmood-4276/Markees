@@ -6,6 +6,7 @@ use App\DataTables\Tenants\DecorationsDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Decorations\{storeRequest, updateRequest};
+use App\Models\Tenants\Decoration;
 use App\Services\Tenants\Decorations\DecorationInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class DecorationController extends Controller
         $this->decorationInterface = $decorationInterface;
     }
 
-    public function index(Request $request, DecorationsDataTable $dataTable)
+    public function index(DecorationsDataTable $dataTable)
     {
         if (request()->ajax()) {
             return $dataTable->ajax();
@@ -28,7 +29,7 @@ class DecorationController extends Controller
         return $dataTable->render('tenant.app.decorations.index');
     }
 
-    public function create(Request $request)
+    public function create()
     {
         abort_if(request()->ajax(), 403);
 
@@ -41,26 +42,21 @@ class DecorationController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
             $inputs = $request->validated();
-
-            $record = $this->decorationInterface->store($inputs);
+            $this->decorationInterface->store($inputs);
             return redirect()->route('tenant.decorations.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Decoration $decoration)
     {
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         $data = [
-            'decoration' => $this->decorationInterface->getById($id),
+            'decoration' => $decoration,
+            'images' => $decoration->getMedia('decorations'),
         ];
 
         return view('tenant.app.decorations.edit', $data);
@@ -70,18 +66,11 @@ class DecorationController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->decorationInterface->update($id, $inputs);
-
+            $this->decorationInterface->update($id, $inputs);
             return redirect()->route('tenant.decorations.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 

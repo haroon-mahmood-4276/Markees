@@ -25,35 +25,26 @@ class DecorationsDataTable extends DataTable
         $columns = array_column($this->getColumns(), 'data');
         return (new EloquentDataTable($query))
             ->setRowId('id')
-            ->editColumn('description', function ($decoration) {
-                return strlen($decoration->description) > 0 ? Str::of($decoration->description)->ucfirst()->words(15) : '-';
+            ->editColumn('check', function ($decoration) {
+                return $decoration;
             })
             ->editColumn('image', function ($decoration) {
                 $image = $decoration->getFirstMedia('decorations');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';
             })
-            ->editColumn('created_at', function ($decoration) {
-                return editDateColumn($decoration->created_at);
+            ->editColumn('description', function ($decoration) {
+                return strlen($decoration->description) > 0 ? Str::of($decoration->description)->ucfirst()->words(15) : '-';
             })
             ->editColumn('updated_at', function ($decoration) {
-                return editDateColumn($decoration->updated_at);
+                return editDateTimeColumn($decoration->updated_at);
             })
             ->editColumn('actions', function ($decoration) {
-                return view('tenant.app.decorations.actions', ['id' => $decoration->id]);
-            })
-            ->editColumn('check', function ($decoration) {
-                return $decoration;
+                return view('tenant.app.decorations.actions', ['decoration' => $decoration]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Decoration $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Decoration $model): QueryBuilder
     {
         return $model->newQuery();
@@ -99,19 +90,21 @@ class DecorationsDataTable extends DataTable
         }
 
         return $this->builder()
-            ->setTableId('hall-types-table')
-            ->addTableClass('table-borderless table-striped table-hover')
+            ->setTableId('decorations-table')
+            ->addTableClass(['table-striped', 'overflow-hidden', 'table-hover'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
-            ->scrollX()
-            ->lengthMenu([10, 20, 30, 50, 70, 100])
+            ->pagingType('full_numbers')
+            ->lengthMenu([
+                [30, 50, 70, 100, 120, 150, -1],
+                [30, 50, 70, 100, 120, 150, "All"],
+            ])
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
-            // ->rowGroupDataSrc('parent_id')
+            ->scrollX()
             ->columnDefs([
                 [
                     'targets' => 0,
@@ -129,19 +122,18 @@ class DecorationsDataTable extends DataTable
                     ]
                 ],
             ])
+            ->fixedColumns([
+                'left' => 1,
+                'right' => 0,
+            ])
             ->orders([
-                [3, 'asc'],
+                [3, 'desc'],
             ]);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns(): array
     {
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowarp');
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
 
         if (auth('tenant')->user()->can('tenant.decorations.destroy')) {
             $checkColumn->addClass('disabled');
@@ -149,34 +141,12 @@ class DecorationsDataTable extends DataTable
 
         $columns = [
             $checkColumn,
-            Column::make('image')->title('Image')->addClass('text-nowarp'),
-            Column::make('name')->title('Type')->addClass('text-nowarp'),
-            Column::make('description')->addClass('text-nowarp'),
-            Column::make('created_at')->addClass('text-nowarp'),
-            Column::make('updated_at')->addClass('text-nowarp'),
-            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
+            Column::make('image')->addClass('text-nowrap text-center align-middle'),
+            Column::make('name')->title('Type')->addClass('text-nowrap align-middle'),
+            Column::make('description')->addClass('text-nowrap align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
+            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
         ];
         return $columns;
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Decorations_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }

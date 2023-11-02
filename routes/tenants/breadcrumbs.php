@@ -66,9 +66,9 @@ Breadcrumbs::for('tenant.decorations.create', function (BreadcrumbTrail $trail) 
     $trail->push('Create Decoration', route('tenant.decorations.create'));
 });
 
-Breadcrumbs::for('tenant.decorations.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.decorations.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.decorations.index');
-    $trail->push('Edit Decoration', route('tenant.decorations.edit', ['id' => $id]));
+    $trail->push('Edit Decoration');
 });
 
 // Cuisine Breadcrumbs

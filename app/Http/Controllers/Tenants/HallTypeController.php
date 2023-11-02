@@ -3,18 +3,16 @@
 namespace App\Http\Controllers\Tenants;
 
 use App\DataTables\Tenants\HallTypesDataTable;
-use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\HallTypes\{storeRequest, updateRequest};
-use App\Models\Tenants\HallType;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Services\Tenants\HallTypes\HallTypeInterface;
+use App\Models\Tenants\HallType;
 use Illuminate\Http\Request;
 use Exception;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class HallTypeController extends Controller
 {
-
     private $hallTypeInterface;
 
     public function __construct(HallTypeInterface $hallTypeInterface)

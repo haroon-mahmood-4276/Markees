@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css"
-    href="{{ asset('theme-assets') }}/vendor/libs/filepond/filepond.min.css">
+    href="{{ global_asset('theme-assets') }}/vendor/libs/filepond/filepond.min.css">
 <link rel="stylesheet" type="text/css"
-    href="{{ asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.preview.min.css">
+    href="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.preview.min.css">
 
 <style>
     .filepond--drop-label {

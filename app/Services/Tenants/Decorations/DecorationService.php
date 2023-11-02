@@ -8,34 +8,29 @@ use Illuminate\Support\Facades\DB;
 
 class DecorationService implements DecorationInterface
 {
-
     private function model()
     {
         return new Decoration();
     }
 
-    // Get
-    public function getAll($relationships = [])
+    public function get($relationships = [])
     {
         return $this->model()->with($relationships)->get();
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
         return $this->model()->with($relationships)->find($id);
     }
 
-    // Store
     public function store($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
-            $data = [
+        return DB::transaction(function () use ($inputs) {
+            $decoration = $this->model()->create([
                 'name' => $inputs['name'],
                 'description' => $inputs['description'],
                 'price' => $inputs['price'],
-            ];
-
-            $decoration = $this->model()->create($data);
+            ]);
 
             if (isset($inputs['attachment'])) {
                 foreach ($inputs['attachment'] as $attachment) {
@@ -45,21 +40,18 @@ class DecorationService implements DecorationInterface
 
             return $decoration;
         });
-
-        return $returnData;
     }
 
     public function update($id, $inputs)
     {
         $returnData = DB::transaction(function () use ($id, $inputs) {
             $decoration = $this->model()->find($id);
-            $data = [
+
+            $decoration->update([
                 'name' => $inputs['name'],
                 'description' => $inputs['description'],
                 'price' => $inputs['price'],
-            ];
-
-            $decoration->update($data);
+            ]);
 
             $decoration->clearMediaCollection('decorations');
 
@@ -77,15 +69,10 @@ class DecorationService implements DecorationInterface
 
     public function destroy($id)
     {
-        $returnData = DB::transaction(function () use ($id) {
-
-            $decoration = $this->model()->whereIn('id', $id)->get()->each(function ($decoration) {
+        return DB::transaction(function () use ($id) {
+            return $this->model()->whereIn('id', $id)->get()->each(function ($decoration) {
                 $decoration->delete();
             });
-
-            return $decoration;
         });
-
-        return $returnData;
     }
 }
