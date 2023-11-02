@@ -100,7 +100,7 @@ class CuisinesDataTable extends DataTable
 
         return $this->builder()
             ->setTableId('hall-types-table')
-            ->addTableClass('table-borderless table-striped table-hover')
+            ->addTableClass(['table-striped', 'overflow-hidden', 'table-hover'])
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->serverSide()

@@ -1,7 +1,7 @@
 @extends('tenant.app.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.decorations.edit', encryptParams($decoration->id)) }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.decorations.edit') }}
 @endsection
 
 @section('page-title', 'Edit Decoration')
@@ -10,41 +10,21 @@
 @endsection
 
 @section('page-css')
-    <link rel="stylesheet" type="text/css" href="{{ global_asset('theme-assets') }}/vendor/libs/filepond/filepond.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.preview.min.css">
+    @include('tenant.app.layout.libs.filepond.css')
 @endsection
 
 @section('custom-css')
-    <style>
-        .filepond--drop-label {
-            color: #7367F0 !important;
-        }
-
-        .filepond--item-panel {
-            background-color: #7367F0;
-        }
-
-        .filepond--panel-root {
-            background-color: #e3e0fd;
-        }
-
-        /* .filepond--item {
-                    width: calc(20% - 0.5em);
-                } */
-    </style>
 @endsection
 
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
         <h2 class="content-header-title float-start mb-0 mx-3">Edit Decoration</h2>
-        {{ Breadcrumbs::render('tenant.decorations.edit', encryptParams($decoration->id)) }}
+        {{ Breadcrumbs::render('tenant.decorations.edit') }}
     </div>
 @endsection
 
 @section('content')
-    <form class="form form-vertical"
-        action="{{ route('tenant.decorations.update', ['id' => encryptParams($decoration->id)]) }}" method="POST"
+    <form class="form form-vertical" action="{{ route('tenant.decorations.update', [$decoration]) }}" method="POST"
         enctype="multipart/form-data">
 
 
@@ -110,77 +90,15 @@
             </div>
         </div>
     </form>
-    @php
-        $images = $decoration->getMedia('decorations');
-    @endphp
 @endsection
 
 @section('vendor-js')
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.preview.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.typevalidation.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.imagecrop.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.imagesizevalidation.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/plugins/filepond.filesizevalidation.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/filepond/filepond.min.js"></script>
+    @include('tenant.app.layout.libs.filepond.js')
 @endsection
 
 @section('page-js')
 @endsection
 
 @section('custom-js')
-    <script>
-        FilePond.registerPlugin(
-            FilePondPluginImagePreview,
-            FilePondPluginFileValidateType,
-            FilePondPluginFileValidateSize,
-            FilePondPluginImageValidateSize,
-            FilePondPluginImageCrop,
-        );
-
-        var files = [
-            @forelse ($images as $image)
-                {
-                    source: '{{ $image->getFullUrl() }}',
-                },
-            @empty
-            @endforelse
-        ];
-
-        FilePond.create(document.getElementById('attachment'), {
-            files: files,
-            styleButtonRemoveItemPosition: 'right',
-            imageCropAspectRatio: '1:1',
-            acceptedFileTypes: ['image/png', 'image/jpeg'],
-            maxFileSize: '1536KB',
-            ignoredFiles: ['.ds_store', 'thumbs.db', 'desktop.ini'],
-            storeAsFile: true,
-            allowMultiple: true,
-            maxFiles: 3,
-            checkValidity: true,
-            credits: {
-                label: '',
-                url: ''
-            }
-        });
-
-        $(document).ready(function() {
-            e = $("#hallType");
-            e.wrap('<div class="position-relative"></div>');
-            e.select2({
-                dropdownAutoWidth: !0,
-                dropdownParent: e.parent(),
-                width: "100%",
-                containerCssClass: "select-lg",
-                templateResult: c,
-                templateSelection: c,
-                escapeMarkup: function(e) {
-                    return e
-                }
-            });
-        });
-
-        function c(e) {
-            return e.id ? "<i class='" + $(e.element).data("icon") + " me-2'></i>" + e.text : e.text
-        }
-    </script>
+    @include('tenant.app.decorations.form-fields-js', ['from' => 'edit'])
 @endsection

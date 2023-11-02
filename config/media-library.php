@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Media;
+use App\Utils\Classes\TenantAwareUrlGenerator;
+
 return [
 
     /*
@@ -34,15 +37,7 @@ return [
     /*
      * The fully qualified class name of the media model.
      */
-    'media_model' => Spatie\MediaLibrary\MediaCollections\Models\Media::class,
-
-    /*
-     * When enabled, media collections will be serialised using the default
-     * laravel model serialization behaviour.
-     * 
-     * Keep this option disabled if using Media Library Pro components (https://medialibrary.pro)
-     */
-    'use_default_collection_serialization' => false,
+    'media_model' => Media::class,
 
     /*
      * The fully qualified class name of the model used for temporary uploads.

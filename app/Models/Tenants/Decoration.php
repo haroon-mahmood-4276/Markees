@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Decoration extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasUuids;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasUuids, LogsActivity;
 
     protected $dateFormat = 'U';
 
@@ -37,4 +37,9 @@ class Decoration extends Model implements HasMedia
         'attachment' => 'nullable|array',
         'attachment.*' => 'image|mimes:jpg,jpeg,png',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName(self::class)->logFillable();
+    }
 }
