@@ -82,9 +82,9 @@ Breadcrumbs::for('tenant.cuisines.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Cuisine', route('tenant.cuisines.create'));
 });
 
-Breadcrumbs::for('tenant.cuisines.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.cuisines.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.cuisines.index');
-    $trail->push('Edit Cuisine', route('tenant.cuisines.edit', ['id' => $id]));
+    $trail->push('Edit Cuisine');
 });
 
 // Menus Breadcrumbs

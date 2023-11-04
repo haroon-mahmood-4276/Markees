@@ -103,19 +103,19 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                 });
 
                 //Cuisines Routes
-                Route::group(['prefix' => 'cuisines', 'as' => 'cuisines.'], function () {
-                    Route::get('/', [CuisineController::class, 'index'])->middleware('permission:tenant.cuisines.index')->name('index');
+                Route::controller(CuisineController::class)->name('cuisines.')->prefix('cuisines')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.cuisines.index')->name('index');
 
                     Route::group(['middleware' => 'permission:tenant.cuisines.create'], function () {
-                        Route::get('create', [CuisineController::class, 'create'])->name('create');
-                        Route::post('store', [CuisineController::class, 'store'])->name('store');
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
                     });
 
-                    Route::get('delete', [CuisineController::class, 'destroy'])->middleware('permission:tenant.cuisines.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.cuisines.destroy')->name('destroy');
 
-                    Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.cuisines.edit'], function () {
-                        Route::get('edit', [CuisineController::class, 'edit'])->name('edit');
-                        Route::put('update', [CuisineController::class, 'update'])->name('update');
+                    Route::group(['prefix' => '/{cuisine}', 'middleware' => 'permission:tenant.cuisines.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
                     });
                 });
 

@@ -94,7 +94,7 @@ class PermissionsDataTable extends DataTable
                 'right' => 0,
             ])
             ->orders([
-                [1, 'asc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 

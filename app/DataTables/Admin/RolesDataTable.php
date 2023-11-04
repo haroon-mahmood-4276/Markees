@@ -114,11 +114,11 @@ class RolesDataTable extends DataTable
                 ],
             ])
             ->fixedColumns([
-                'left' => 0,
+                'left' => 1,
                 'right' => 1,
             ])
             ->orders([
-                [1, 'asc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 

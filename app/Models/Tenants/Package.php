@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\{HasMedia, InteractsWithMedia};
 
 class Package extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, LogsActivity, HasUuids;
+    use HasFactory, SoftDeletes, InteractsWithMedia, LogsActivity, HasUuids, LogsActivity;
 
     protected $dateFormat = 'U';
 

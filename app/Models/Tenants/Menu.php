@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Menu extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, InteractsWithMedia, HasUuids;
+    use HasFactory, SoftDeletes, InteractsWithMedia, HasUuids, LogsActivity;
 
     protected $dateFormat = 'U';
 
@@ -34,4 +34,9 @@ class Menu extends Model implements HasMedia
         'updated_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName(self::class)->logFillable();
+    }
 }

@@ -97,7 +97,6 @@ class SubscriptionsDataTable extends DataTable
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
             ->pagingType('full_numbers')
             ->lengthMenu([
                 [30, 50, 70, 100, 120, 150, -1],
@@ -132,7 +131,7 @@ class SubscriptionsDataTable extends DataTable
                 'right' => 1,
             ])
             ->orders([
-                [1, 'asc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 

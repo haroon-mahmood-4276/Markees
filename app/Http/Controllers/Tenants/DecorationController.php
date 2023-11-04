@@ -33,7 +33,9 @@ class DecorationController extends Controller
     {
         abort_if(request()->ajax(), 403);
 
-        $data = [];
+        $data = [
+            'images' => [],
+        ];
 
         return view('tenant.app.decorations.create', $data);
     }
