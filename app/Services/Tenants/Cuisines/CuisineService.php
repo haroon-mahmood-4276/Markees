@@ -14,62 +14,55 @@ class CuisineService implements CuisineInterface
         return new Cuisine();
     }
 
-    // Get
-    public function getAll($relationships = [])
+    public function get($relationships = [])
     {
         return $this->model()->with($relationships)->get();
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
         return $this->model()->with($relationships)->find($id);
     }
 
-    // Store
     public function store($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
-            $data = [
+        return DB::transaction(function () use ($inputs) {
+            $cuisune = $this->model()->create([
                 'name' => $inputs['name'],
-                'description' => $inputs['description'],
                 'price' => $inputs['price'],
-            ];
-
-            $cuisine = $this->model()->create($data);
+                'description' => $inputs['description'],
+            ]);
 
             if (isset($inputs['attachment'])) {
                 foreach ($inputs['attachment'] as $attachment) {
-                    $cuisine->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('cuisines');
+                    $cuisune->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('cuisines');
                 }
             }
 
-            return $cuisine;
+            return $cuisune;
         });
-
-        return $returnData;
     }
 
     public function update($id, $inputs)
     {
         $returnData = DB::transaction(function () use ($id, $inputs) {
-            $cuisine = $this->model()->find($id);
-            $data = [
+            $cuisune = $this->model()->find($id);
+
+            $cuisune->update([
                 'name' => $inputs['name'],
-                'description' => $inputs['description'],
                 'price' => $inputs['price'],
-            ];
+                'description' => $inputs['description'],
+            ]);
 
-            $cuisine->update($data);
-
-            $cuisine->clearMediaCollection('cuisines');
+            $cuisune->clearMediaCollection('cuisines');
 
             if (isset($inputs['attachment'])) {
                 foreach ($inputs['attachment'] as $attachment) {
-                    $cuisine->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('cuisines');
+                    $cuisune->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('cuisines');
                 }
             }
 
-            return $cuisine;
+            return $cuisune;
         });
 
         return $returnData;
@@ -77,15 +70,10 @@ class CuisineService implements CuisineInterface
 
     public function destroy($id)
     {
-        $returnData = DB::transaction(function () use ($id) {
-
-            $cuisine = $this->model()->whereIn('id', $id)->get()->each(function ($cuisine) {
-                $cuisine->delete();
+        return DB::transaction(function () use ($id) {
+            return $this->model()->whereIn('id', $id)->get()->each(function ($cuisune) {
+                $cuisune->delete();
             });
-
-            return $cuisine;
         });
-
-        return $returnData;
     }
 }

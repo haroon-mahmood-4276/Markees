@@ -3,17 +3,19 @@
 namespace App\DataTables\Tenants;
 
 use App\Models\Tenants\Decoration;
+use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 
 class DecorationsDataTable extends DataTable
 {
+    use DataTableTrait;
+
     /**
      * Build DataTable class.
      *
@@ -124,10 +126,10 @@ class DecorationsDataTable extends DataTable
             ])
             ->fixedColumns([
                 'left' => 1,
-                'right' => 0,
+                'right' => 1,
             ])
             ->orders([
-                [3, 'desc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 

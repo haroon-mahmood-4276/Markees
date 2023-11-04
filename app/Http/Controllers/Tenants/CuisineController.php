@@ -6,6 +6,7 @@ use App\DataTables\Tenants\CuisinesDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Cuisines\{storeRequest, updateRequest};
+use App\Models\Tenants\Cuisine;
 use App\Services\Tenants\Cuisines\CuisineInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -32,7 +33,9 @@ class CuisineController extends Controller
     {
         abort_if(request()->ajax(), 403);
 
-        $data = [];
+        $data = [
+            'images' => [],
+        ];
 
         return view('tenant.app.cuisines.create', $data);
     }
@@ -41,28 +44,18 @@ class CuisineController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
             $inputs = $request->validated();
-
-            $record = $this->cuisineInterface->store($inputs);
+            $this->cuisineInterface->store($inputs);
             return redirect()->route('tenant.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Cuisine $cuisine)
     {
         abort_if(request()->ajax(), 403);
-
-        $id = decryptParams($id);
-
-        $data = [
-            'cuisine' => $this->cuisineInterface->getById($id),
-        ];
-
+        $data = ['cuisine' => $cuisine, 'images' => $cuisine->getMedia('cuisines')];
         return view('tenant.app.cuisines.edit', $data);
     }
 
@@ -70,18 +63,11 @@ class CuisineController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
             $record = $this->cuisineInterface->update($id, $inputs);
-
             return redirect()->route('tenant.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 

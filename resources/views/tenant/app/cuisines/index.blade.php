@@ -7,7 +7,7 @@
 @section('page-title', 'Cuisines')
 
 @section('page-vendor')
-    {{ view('tenant.app.layout.datatables.css') }}
+    @include('tenant.app.layout.libs.datatables.css')
 @endsection
 
 @section('page-css')
@@ -38,7 +38,7 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('tenant.app.layout.datatables.js') }}
+    @include('tenant.app.layout.libs.datatables.js')
 @endsection
 
 @section('page-js')
@@ -54,10 +54,10 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Warning',
-                    text: '{{ __('lang.commons.are_you_sure_you_want_to_delete_the_selected_items') }}',
+                    text: "{{ __('lang.commons.are_you_sure_you_want_to_delete_the_selected_items') }}",
                     showCancelButton: true,
-                    cancelButtonText: '{{ __('lang.commons.no_cancel') }}',
-                    confirmButtonText: '{{ __('lang.commons.yes_delete') }}',
+                    cancelButtonText: "{{ __('lang.commons.no_cancel') }}",
+                    confirmButtonText: "{{ __('lang.commons.yes_delete') }}",
                     confirmButtonClass: 'btn-danger',
                     buttonsStyling: false,
                     customClass: {
@@ -73,7 +73,7 @@
                 Swal.fire({
                     icon: 'warning',
                     title: 'Warning',
-                    text: '{{ __('lang.commons.please_select_at_least_one_item') }}',
+                    text: "{{ __('lang.commons.please_select_at_least_one_item') }}",
                     buttonsStyling: false,
                     customClass: {
                         confirmButton: 'btn btn-danger me-1',

@@ -3,23 +3,19 @@
 namespace App\DataTables\Tenants;
 
 use App\Models\Tenants\HallType;
+use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
+use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
-use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 
 class HallTypesDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
+    use DataTableTrait;
+
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
@@ -133,10 +129,10 @@ class HallTypesDataTable extends DataTable
             ])
             ->fixedColumns([
                 'left' => 1,
-                'right' => 0,
+                'right' => 1,
             ])
             ->orders([
-                [3, 'desc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 

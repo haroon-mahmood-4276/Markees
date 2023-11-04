@@ -3,28 +3,27 @@
 namespace App\DataTables\Tenants;
 
 use App\Models\Tenants\Cuisine;
+use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Str;
 
 class CuisinesDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
+    use DataTableTrait;
+
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
         return (new EloquentDataTable($query))
             ->setRowId('id')
+            ->editColumn('check', function ($cuisine) {
+                return $cuisine;
+            })
             ->editColumn('description', function ($cuisine) {
                 return strlen($cuisine->description) > 0 ? Str::of($cuisine->description)->ucfirst()->words(15) : '-';
             })
@@ -32,28 +31,16 @@ class CuisinesDataTable extends DataTable
                 $image = $cuisine->getFirstMedia('cuisines');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';
             })
-            ->editColumn('created_at', function ($cuisine) {
-                return editDateColumn($cuisine->created_at);
-            })
             ->editColumn('updated_at', function ($cuisine) {
-                return editDateColumn($cuisine->updated_at);
+                return editDateTimeColumn($cuisine->updated_at);
             })
             ->editColumn('actions', function ($cuisine) {
-                return view('tenant.app.cuisines.actions', ['id' => $cuisine->id]);
-            })
-            ->editColumn('check', function ($cuisine) {
-                return $cuisine;
+                return view('tenant.app.cuisines.actions', ['cuisine' => $cuisine]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Cuisine $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Cuisine $model): QueryBuilder
     {
         return $model->newQuery();
@@ -106,12 +93,10 @@ class CuisinesDataTable extends DataTable
             ->serverSide()
             ->processing()
             ->deferRender()
-            ->dom('BlfrtipC')
             ->scrollX()
             ->lengthMenu([10, 20, 30, 50, 70, 100])
             ->dom('<"card-header pt-0"<"head-label"><"dt-action-buttons text-end"B>><"d-flex justify-content-between align-items-center mx-0 row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>t<"d-flex justify-content-between mx-0 row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>> C<"clear">')
             ->buttons($buttons)
-            // ->rowGroupDataSrc('parent_id')
             ->columnDefs([
                 [
                     'targets' => 0,
@@ -129,54 +114,31 @@ class CuisinesDataTable extends DataTable
                     ]
                 ],
             ])
+            ->fixedColumns([
+                'left' => 1,
+                'right' => 1,
+            ])
             ->orders([
-                [3, 'asc'],
+                [count($this->getColumns()) - 2, 'desc'],
             ]);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns(): array
     {
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowarp');
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
         if (auth('tenant')->user()->can('tenant.cuisines.destroy')) {
             $checkColumn->addClass('disabled');
         }
 
         $columns = [
             $checkColumn,
-            Column::computed('image')->title('Image')->addClass('text-nowarp'),
-            Column::make('name')->title('Decrations')->addClass('text-nowarp'),
-            Column::make('price')->addClass('text-nowarp'),
-            Column::make('description')->addClass('text-nowarp'),
-            Column::make('created_at')->addClass('text-nowarp'),
-            Column::make('updated_at')->addClass('text-nowarp'),
+            Column::computed('image')->addClass('text-nowrap text-center align-middle'),
+            Column::make('name')->addClass('text-nowrap align-middle'),
+            Column::make('price')->addClass('text-nowrap align-middle'),
+            Column::make('description')->addClass('text-nowrap align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
             Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
         ];
         return $columns;
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Cuisines_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }

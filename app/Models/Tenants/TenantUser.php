@@ -10,10 +10,12 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class TenantUser extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, HasUuids;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes, HasUuids, LogsActivity;
 
     protected $dateFormat = 'U';
 
@@ -46,5 +48,10 @@ class TenantUser extends Authenticatable
     public function tenantSubscription()
     {
         return $this->belongsTo(TenantSubscription::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()->useLogName(self::class)->logFillable();
     }
 }
