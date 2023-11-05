@@ -14,8 +14,7 @@ class HallService implements HallInterface
         return new Hall();
     }
 
-    // Get
-    public function getAll($relationships = [], $withCountRelationship = [], $onlyCount = false, $withTrashed = false, $onlyTrashed = false)
+    public function get($relationships = [], $withCountRelationship = [], $onlyCount = false, $withTrashed = false, $onlyTrashed = false)
     {
         $query = $this->model();
 
@@ -42,17 +41,11 @@ class HallService implements HallInterface
         return $query->get();
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
-        return $this->model()->with($relationships)->find($id);
+        return $this->model()->with($relationships)->where('id', $id)->orWhere('short_label', $id)->first();
     }
 
-    public function getByShortLabel($short_label, $relationships = [])
-    {
-        return $this->model()->with($relationships)->where('short_label', $short_label)->first();
-    }
-
-    // Store
     public function store($inputs)
     {
         $returnData = DB::transaction(function () use ($inputs) {
@@ -81,11 +74,10 @@ class HallService implements HallInterface
 
     public function update($id, $inputs)
     {
-        $returnData = DB::transaction(function () use ($id, $inputs) {
+        return DB::transaction(function () use ($id, $inputs) {
             $hall = $this->model()->find($id);
             $data = [
                 "name" => $inputs['name'],
-                // "short_label" => $inputs['short_label'],
                 "min_capacity" => $inputs['min_capacity'],
                 "max_capacity" => $inputs['max_capacity'],
                 "description" => $inputs['description'],
@@ -95,7 +87,6 @@ class HallService implements HallInterface
             $hall->update($data);
 
             $hall->clearMediaCollection('halls');
-
             if (isset($inputs['attachment'])) {
                 foreach ($inputs['attachment'] as $attachment) {
                     $hall->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('halls');
@@ -104,21 +95,14 @@ class HallService implements HallInterface
 
             return $hall;
         });
-
-        return $returnData;
     }
 
     public function destroy($id)
     {
-        $returnData = DB::transaction(function () use ($id) {
-
-            $hall = $this->model()->whereIn('id', $id)->get()->each(function ($hall) {
+        return DB::transaction(function () use ($id) {
+            return $this->model()->whereIn('id', $id)->get()->each(function ($hall) {
                 $hall->delete();
             });
-
-            return $hall;
         });
-
-        return $returnData;
     }
 }

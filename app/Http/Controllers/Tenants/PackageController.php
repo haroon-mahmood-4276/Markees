@@ -118,8 +118,6 @@ class PackageController extends Controller
                     return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
             return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong'));
         }

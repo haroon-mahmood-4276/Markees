@@ -8,8 +8,6 @@
 
 @section('page-vendor')
     @include('tenant.app.layout.libs.datatables.css')
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
 @endsection
 
 @section('page-css')

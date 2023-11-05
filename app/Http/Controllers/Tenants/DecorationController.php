@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Tenants;
 
 use App\DataTables\Tenants\DecorationsDataTable;
-use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Decorations\{storeRequest, updateRequest};
 use App\Models\Tenants\Decoration;
@@ -91,10 +90,8 @@ class DecorationController extends Controller
                     return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

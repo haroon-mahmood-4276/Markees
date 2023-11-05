@@ -3,14 +3,12 @@
 
     var files = [];
 
-    @forelse ($images as $image)
+    @forelse ($images ?? [] as $image)
         files.push({
                 source: '{{ $image->getFullUrl() }}'
             }),
     @empty
     @endforelse
-
-    console.log(files)
 
     FilePond.create(document.getElementById('attachment'), {
         files: files,

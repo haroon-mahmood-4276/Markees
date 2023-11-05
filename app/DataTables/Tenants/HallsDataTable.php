@@ -4,6 +4,7 @@ namespace App\DataTables\Tenants;
 
 use App\Models\Tenants\Hall;
 use App\Services\Tenants\Halls\HallInterface;
+use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -15,6 +16,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class HallsDataTable extends DataTable
 {
+    use DataTableTrait;
 
     private $hallInterface;
 
@@ -23,12 +25,6 @@ class HallsDataTable extends DataTable
         $this->hallInterface = $hallInterface;
     }
 
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
@@ -47,7 +43,7 @@ class HallsDataTable extends DataTable
                 return editDateColumn($hall->updated_at);
             })
             ->editColumn('actions', function ($hall) {
-                return view('tenant.app.halls.actions', ['id' => $hall->id]);
+                return view('tenant.app.halls.actions', ['hall' => $hall]);
             })
             ->editColumn('check', function ($hall) {
                 return $hall;
@@ -56,12 +52,6 @@ class HallsDataTable extends DataTable
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Tenant\Hall $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Hall $model): QueryBuilder
     {
         return $model->newQuery();
@@ -71,35 +61,36 @@ class HallsDataTable extends DataTable
     {
         $buttons = [];
 
-        // auth('tenant')->user()->tenantSubscription->no_of_halls
-        if (auth('tenant')->user()->can('tenant.halls.create') && ($this->hallInterface->getAll(onlyCount: true) < auth('tenant')->user()->tenantSubscription->no_of_halls)) {
+        if (auth('tenant')->user()->can('tenant.halls.create') && ($this->hallInterface->get(onlyCount: true) < auth('tenant')->user()->tenantSubscription->no_of_halls)) {
             $buttons[] = Button::raw('add-new')
-                ->addClass('btn btn-primary ')
-                ->text('<i class="bi bi-plus"></i> Add New')
+                ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
+                ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
                 ->attr([
                     'onclick' => 'addNew()',
                 ]);
         }
 
         if (auth('tenant')->user()->can('tenant.halls.export')) {
-            $buttons[] =  Button::make('export')->addClass('btn btn-secondary  dropdown-toggle')->buttons([
-                Button::make('print')->addClass('dropdown-item'),
-                Button::make('copy')->addClass('dropdown-item'),
-                Button::make('csv')->addClass('dropdown-item'),
-                Button::make('excel')->addClass('dropdown-item'),
-                Button::make('pdf')->addClass('dropdown-item'),
-            ]);
+            $buttons[] = Button::make('export')
+                ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
+                ->buttons([
+                    Button::make('print')->addClass('dropdown-item')->text('<i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print'),
+                    Button::make('copy')->addClass('dropdown-item')->text('<i class="fa-solid fa-copy"></i>&nbsp;&nbsp;Copy'),
+                    Button::make('csv')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;CSV'),
+                    Button::make('excel')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel'),
+                    Button::make('pdf')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;PDF'),
+                ]);
         }
 
         $buttons = array_merge($buttons, [
-            Button::make('reset')->addClass('btn btn-danger '),
-            Button::make('reload')->addClass('btn btn-primary '),
+            Button::make('reset')->addClass('btn btn-danger waves-effect waves-float waves-light m-1'),
+            Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('tenant')->user()->can('tenant.halls.destroy')) {
+        if (auth()->user()->can('tenant.hallTypes.destroy')) {
             $buttons[] = Button::raw('delete-selected')
-                ->addClass('btn btn-danger ')
-                ->text('<i class="bi bi-trash3-fill"></i> Delete Selected')
+                ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
+                ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
                 ->attr([
                     'onclick' => 'deleteSelected()',
                 ]);
@@ -143,11 +134,6 @@ class HallsDataTable extends DataTable
             ]);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns(): array
     {
 
@@ -168,26 +154,5 @@ class HallsDataTable extends DataTable
             Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
         ];
         return $columns;
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'halls_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }

@@ -129,7 +129,7 @@
         );
 
         var files = [
-            @forelse ($images as $image)
+            @forelse ($images ?? [] as $image)
                 {
                     source: '{{ $image->getFullUrl() }}',
                 },

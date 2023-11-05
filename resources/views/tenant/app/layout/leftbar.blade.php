@@ -195,35 +195,6 @@
             </li>
         @endif
 
-        {{-- Packages Menu --}}
-        {{-- @if ($user->canAny(['tenant.packages.index', 'tenant.packages.create']))
-            <li
-                class="menu-item {{ in_array(request()->route()->getName(),['tenant.packages.index', 'tenant.packages.create'])? 'open active': null }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
-                    <div>Packages</div>
-                </a>
-                <ul class="menu-sub">
-
-                    @if ($user->can('tenant.packages.index'))
-                        <li class="menu-item {{ request()->routeIs('tenant.packages.index') ? 'active' : null }}">
-                            <a href="{{ route('tenant.packages.index') }}" class="menu-link">
-                                <div>View All</div>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if ($user->can('tenant.packages.create'))
-                        <li class="menu-item {{ request()->routeIs('tenant.packages.create') ? 'active' : null }}">
-                            <a href="{{ route('tenant.packages.create') }}" class="menu-link">
-                                <div>Add New</div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
-        @endif --}}
-
         {{-- Halls Menu --}}
         @if ($user->canAny(['tenant.halls.index', 'tenant.halls.create']))
             <li
@@ -244,7 +215,7 @@
 
                     @if ($user->can('tenant.halls.create'))
                         <li class="menu-item {{ request()->routeIs('tenant.halls.create') ? 'active' : null }}">
-                            <a href="{{ route('tenant.menus.create') }}" class="menu-link">
+                            <a href="{{ route('tenant.halls.create') }}" class="menu-link">
                                 <div>Add New</div>
                             </a>
                         </li>

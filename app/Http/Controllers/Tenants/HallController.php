@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Tenants;
 
 use App\DataTables\Tenants\HallsDataTable;
-use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Halls\{storeRequest, updateRequest};
+use App\Models\Tenants\Hall;
 use App\Services\Tenants\Halls\HallInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class HallController extends Controller
         $this->hallInterface = $hallInterface;
     }
 
-    public function index(Request $request, HallsDataTable $dataTable)
+    public function index(HallsDataTable $dataTable)
     {
         if (request()->ajax()) {
             return $dataTable->ajax();
@@ -47,24 +47,20 @@ class HallController extends Controller
             abort_if(request()->ajax(), 403);
 
             $inputs = $request->validated();
-            // dd($inputs);
-            $record = $this->hallInterface->store($inputs);
+            $this->hallInterface->store($inputs);
             return redirect()->route('tenant.halls.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Hall $hall)
     {
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         $data = [
-            'hall' => $this->hallInterface->getById($id),
+            'hall' => $hall,
+            'images' => $hall->getMedia('halls'),
         ];
 
         return view('tenant.app.halls.edit', $data);
@@ -74,18 +70,11 @@ class HallController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->hallInterface->update($id, $inputs);
-
+            $this->hallInterface->update($id, $inputs);
             return redirect()->route('tenant.halls.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -105,10 +94,8 @@ class HallController extends Controller
                 }
             }
             return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

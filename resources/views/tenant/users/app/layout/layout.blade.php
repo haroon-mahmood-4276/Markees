@@ -179,12 +179,6 @@
         function changeAllTableRowColor() {
             $('.dt-checkboxes').trigger('change');
         }
-
-        function convertToSlug(element) {
-            element.value = element.value.toLowerCase()
-                .replace(/[^\w ]+/g, '')
-                .replace(/ +/g, '-');
-        }
     </script>
 
     @yield('page-scripts')
