@@ -86,10 +86,8 @@ class CuisineController extends Controller
                     return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

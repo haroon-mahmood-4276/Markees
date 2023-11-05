@@ -120,19 +120,19 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                 });
 
                 //Menus Routes
-                Route::group(['prefix' => 'menus', 'as' => 'menus.'], function () {
-                    Route::get('/', [MenuController::class, 'index'])->middleware('permission:tenant.menus.index')->name('index');
+                Route::controller(MenuController::class)->name('menus.')->prefix('menus')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.menus.index')->name('index');
 
                     Route::group(['middleware' => 'permission:tenant.menus.create'], function () {
-                        Route::get('create', [MenuController::class, 'create'])->name('create');
-                        Route::post('store', [MenuController::class, 'store'])->name('store');
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
                     });
 
-                    Route::get('delete', [MenuController::class, 'destroy'])->middleware('permission:tenant.menus.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.menus.destroy')->name('destroy');
 
-                    Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.menus.edit'], function () {
-                        Route::get('edit', [MenuController::class, 'edit'])->name('edit');
-                        Route::put('update', [MenuController::class, 'update'])->name('update');
+                    Route::group(['prefix' => '/{menu}', 'middleware' => 'permission:tenant.menus.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
                     });
                 });
 

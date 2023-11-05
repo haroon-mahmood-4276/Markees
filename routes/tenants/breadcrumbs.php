@@ -98,9 +98,9 @@ Breadcrumbs::for('tenant.menus.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Menu', route('tenant.menus.create'));
 });
 
-Breadcrumbs::for('tenant.menus.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.menus.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.menus.index');
-    $trail->push('Edit Menu', route('tenant.menus.edit', ['id' => $id]));
+    $trail->push('Edit Menu');
 });
 
 // Packages Breadcrumbs

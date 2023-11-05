@@ -6,10 +6,12 @@ use App\DataTables\Tenants\MenusDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Menus\{storeRequest, updateRequest};
+use App\Models\Tenants\Menu;
 use App\Services\Tenants\Cuisines\CuisineInterface;
 use App\Services\Tenants\Menus\MenuInterface;
 use Exception;
 use Illuminate\Http\Request;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class MenuController extends Controller
 {
@@ -22,7 +24,7 @@ class MenuController extends Controller
         $this->cuisinesInterface = $cuisinesInterface;
     }
 
-    public function index(Request $request, MenusDataTable $dataTable)
+    public function index(MenusDataTable $dataTable)
     {
         if (request()->ajax()) {
             return $dataTable->ajax();
@@ -36,8 +38,10 @@ class MenuController extends Controller
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'menus' => $this->menuInterface->getAllWithTree(),
-            'cuisines' => $this->cuisinesInterface->getAll(),
+            'menus' => $this->menuInterface->get(with_tree: true),
+            'cuisines' => $this->cuisinesInterface->get(),
+            'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection()),
+            'images' => []
         ];
 
         return view('tenant.app.menus.create', $data);
@@ -47,51 +51,35 @@ class MenuController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
             $inputs = $request->validated();
-
-            // dd($inputs);
             $record = $this->menuInterface->store($inputs);
             return redirect()->route('tenant.menus.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Menu $menu)
     {
         abort_if(request()->ajax(), 403);
-
-        $id = decryptParams($id);
-
-        $data = [
-            'menus' => $this->menuInterface->getAllWithTree(),
-            'menu' => $this->menuInterface->getById($id),
-            'cuisines' => $this->cuisinesInterface->getAll(),
-        ];
-
-        // dd($data);
-        return view('tenant.app.menus.edit', $data);
+        return view('tenant.app.menus.edit', [
+            'menu' => $menu,
+            'images' => $menu->getMedia('menus'),
+            'menus' => $this->menuInterface->get(with_tree: true),
+            'cuisines' => $this->cuisinesInterface->get(),
+            'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
+        ]);
     }
 
-    public function update(updateRequest $request, $id)
+    public function update(updateRequest $request, Menu $menu)
     {
         try {
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->menuInterface->update($id, $inputs);
-
+            $this->menuInterface->update($menu->id, $inputs);
             return redirect()->route('tenant.menus.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -110,10 +98,8 @@ class MenuController extends Controller
                     return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.menus.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

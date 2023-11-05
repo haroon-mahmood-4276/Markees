@@ -8,35 +8,41 @@ use Illuminate\Support\Facades\DB;
 
 class MenuService implements MenuInterface
 {
-
     private function model()
     {
         return new Menu();
     }
 
-    // Get
-    public function getAll($relationships = [])
+    public function get($ignore = null, $with_tree = false, $relationships = [])
     {
-        return $this->model()->with($relationships)->get();
+        $model = $this->model();
+        if (is_array($ignore)) {
+            $model = $model->whereNotIn('id', $ignore);
+        } else if (is_string($ignore)) {
+            $model = $model->where('id', '!=', $ignore);
+        }
+        $model = $model->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->get();
+
+        if ($with_tree) {
+            return getTreeData(collect($model), $this->model());
+        }
+        return $model;
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
-        return $this->model()->with($relationships)->find($id);
+        return $this->model()->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->find($id);
     }
 
-    public function getAllWithTree($relationships = [])
-    {
-        $menus = $this->model()->all();
-        return getTreeData(collect($menus), $this->model());
-    }
-
-    // Store
     public function store($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
+        return DB::transaction(function () use ($inputs) {
             $data = [
-                "parent_id" => $inputs['menu'],
+                "parent_id" => $inputs['menu'] == 0 ? null : $inputs['menu'],
                 "name" => $inputs['name'],
                 "description" => $inputs['description'],
                 "has_sub_menu" => $inputs['has_sub_menu'],
@@ -59,8 +65,6 @@ class MenuService implements MenuInterface
 
             return $menu;
         });
-
-        return $returnData;
     }
 
     public function update($id, $inputs)
@@ -69,7 +73,7 @@ class MenuService implements MenuInterface
 
             $menu = $this->model()->find($id);
             $data = [
-                "parent_id" => $inputs['menu'],
+                "parent_id" => $inputs['menu'] == 0 ? null : $inputs['menu'],
                 "name" => $inputs['name'],
                 "description" => $inputs['description'],
                 "has_sub_menu" => $inputs['has_sub_menu'],
@@ -83,7 +87,6 @@ class MenuService implements MenuInterface
             }
 
             $menu->update($data);
-
             $menu->clearMediaCollection('menus');
 
             if (isset($inputs['attachment'])) {
@@ -94,19 +97,17 @@ class MenuService implements MenuInterface
 
             return $menu;
         });
-
-        return $returnData;
     }
 
-    public function destroy($id)
+    public function destroy($inputs)
     {
-        $returnData = DB::transaction(function () use ($id) {
+        $returnData = DB::transaction(function () use ($inputs) {
 
-            $menu = $this->model()->whereIn('id', $id)->get()->each(function ($menu) {
-                $menu->delete();
+            $model = $this->model()->whereIn('id', $inputs)->get()->each(function ($role) {
+                $role->delete();
             });
 
-            return $menu;
+            return $model;
         });
 
         return $returnData;

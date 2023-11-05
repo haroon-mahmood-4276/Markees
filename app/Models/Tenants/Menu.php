@@ -18,16 +18,16 @@ class Menu extends Model implements HasMedia
     protected $dateFormat = 'U';
 
     protected $fillable = [
-        'parent_id',
         'name',
         'description',
+        'price',
         'has_sub_menu',
         'cuisines',
-        'price',
+        'parent_id',
     ];
 
     protected $casts = [
-        'parent_id' => 'integer',
+        'menu' => 'uuid',
         'has_sub_menu' => 'boolean',
         'price' => 'float',
         'created_at' => 'datetime',
