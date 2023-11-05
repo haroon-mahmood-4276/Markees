@@ -69,8 +69,7 @@ class MenuService implements MenuInterface
 
     public function update($id, $inputs)
     {
-        $returnData = DB::transaction(function () use ($id, $inputs) {
-
+        return DB::transaction(function () use ($id, $inputs) {
             $menu = $this->model()->find($id);
             $data = [
                 "parent_id" => $inputs['menu'] == 0 ? null : $inputs['menu'],
@@ -101,15 +100,10 @@ class MenuService implements MenuInterface
 
     public function destroy($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
-
-            $model = $this->model()->whereIn('id', $inputs)->get()->each(function ($role) {
+        return DB::transaction(function () use ($inputs) {
+            return $this->model()->whereIn('id', $inputs)->get()->each(function ($role) {
                 $role->delete();
             });
-
-            return $model;
         });
-
-        return $returnData;
     }
 }
