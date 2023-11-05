@@ -22,8 +22,8 @@ if (!function_exists('editDateTimeColumn')) {
     }
 }
 
-if (!function_exists('editPaymentColumn')) {
-    function editPaymentColumn($amount, $decimals = 0, $symbol = '$')
+if (!function_exists('editCurrencyColumn')) {
+    function editCurrencyColumn($amount, $decimals = 0, $symbol = '$')
     {
         if ($amount < 1)
             return '-';
