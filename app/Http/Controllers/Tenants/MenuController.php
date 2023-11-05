@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Tenants;
 
 use App\DataTables\Tenants\MenusDataTable;
-use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Menus\{storeRequest, updateRequest};
 use App\Models\Tenants\Menu;

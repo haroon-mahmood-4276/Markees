@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Tenants;
 
 use App\DataTables\Tenants\HallSlotsDataTable;
-use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\HallSlots\{storeRequest, updateRequest};
 use App\Services\Tenants\HallSlots\HallSlotInterface;
@@ -49,10 +48,8 @@ class HallSlotController extends Controller
             // dd($inputs);
             $record = $this->hallSlotInterface->store($hall_id, $inputs);
             return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -83,10 +80,8 @@ class HallSlotController extends Controller
             $record = $this->hallSlotInterface->update($hall_id, $id, $inputs);
 
             return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -105,10 +100,8 @@ class HallSlotController extends Controller
                     return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

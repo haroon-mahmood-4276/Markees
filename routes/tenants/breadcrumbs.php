@@ -15,7 +15,7 @@ Breadcrumbs::for('tenant.roles.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.roles.index');
-    $trail->push(__('lang.roles.pages.create.create_role'), route('tenant.roles.create'));
+    $trail->push(__('lang.roles.pages.create.create_role'));
 });
 
 Breadcrumbs::for('tenant.roles.edit', function (BreadcrumbTrail $trail) {
@@ -47,7 +47,7 @@ Breadcrumbs::for('tenant.hallTypes.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.hallTypes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.hallTypes.index');
-    $trail->push('Create Hall Type', route('tenant.hallTypes.create'));
+    $trail->push('Create Hall Type');
 });
 
 Breadcrumbs::for('tenant.hallTypes.edit', function (BreadcrumbTrail $trail) {
@@ -63,7 +63,7 @@ Breadcrumbs::for('tenant.decorations.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.decorations.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.decorations.index');
-    $trail->push('Create Decoration', route('tenant.decorations.create'));
+    $trail->push('Create Decoration');
 });
 
 Breadcrumbs::for('tenant.decorations.edit', function (BreadcrumbTrail $trail) {
@@ -79,7 +79,7 @@ Breadcrumbs::for('tenant.cuisines.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.cuisines.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.cuisines.index');
-    $trail->push('Create Cuisine', route('tenant.cuisines.create'));
+    $trail->push('Create Cuisine');
 });
 
 Breadcrumbs::for('tenant.cuisines.edit', function (BreadcrumbTrail $trail) {
@@ -95,7 +95,7 @@ Breadcrumbs::for('tenant.menus.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.menus.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.menus.index');
-    $trail->push('Create Menu', route('tenant.menus.create'));
+    $trail->push('Create Menu');
 });
 
 Breadcrumbs::for('tenant.menus.edit', function (BreadcrumbTrail $trail) {
@@ -111,12 +111,12 @@ Breadcrumbs::for('tenant.packages.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.packages.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.dashboard');
-    $trail->push('Create Packages', route('tenant.packages.create'));
+    $trail->push('Create Packages');
 });
 
 Breadcrumbs::for('tenant.packages.edit', function (BreadcrumbTrail $trail, $id) {
     $trail->parent('tenant.packages.index');
-    $trail->push('Edit Packages', route('tenant.packages.edit', ['id' => $id]));
+    $trail->push('Edit Packages');
 });
 
 // Halls Breadcrumbs
@@ -127,12 +127,12 @@ Breadcrumbs::for('tenant.halls.index', function (BreadcrumbTrail $trail) {
 
 Breadcrumbs::for('tenant.halls.create', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.dashboard');
-    $trail->push('Create hall', route('tenant.halls.create'));
+    $trail->push('Create hall');
 });
 
-Breadcrumbs::for('tenant.halls.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.halls.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.halls.index');
-    $trail->push('Edit hall', route('tenant.halls.edit', ['id' => $id]));
+    $trail->push('Edit hall');
 });
 
 // Halls slots Breadcrumbs
@@ -143,10 +143,10 @@ Breadcrumbs::for('tenant.halls.slots.index', function (BreadcrumbTrail $trail, $
 
 Breadcrumbs::for('tenant.halls.slots.create', function (BreadcrumbTrail $trail, $hall_id) {
     $trail->parent('tenant.halls.slots.index', $hall_id);
-    $trail->push('Create Halls Slots', route('tenant.halls.slots.create', ['hall_id' => $hall_id]));
+    $trail->push('Create Halls Slots');
 });
 
 Breadcrumbs::for('tenant.halls.slots.edit', function (BreadcrumbTrail $trail, $hall_id, $id) {
     $trail->parent('tenant.halls.slots.index', $hall_id);
-    $trail->push('Edit Halls Slots', route('tenant.halls.slots.edit', ['hall_id' => $hall_id, 'id' => $id]));
+    $trail->push('Edit Halls Slots');
 });

@@ -1,7 +1,7 @@
 <script>
     var files = [];
 
-    @forelse ($images as $image)
+    @forelse ($images ?? [] as $image)
         files.push({
                 source: '{{ $image->getFullUrl() }}'
             }),
