@@ -76,15 +76,49 @@
         @endif
 
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Others</span>
+            <span class="menu-header-text">Halls</span>
         </li>
+
+        @php
+            $path = Request::segment(3);
+        @endphp
+
+        {{-- Halls Menu --}}
+        @if ($user->canAny(['tenant.halls.index', 'tenant.halls.create']))
+            <li
+                class="menu-item {{ $path == 'settings' ||in_array(request()->route()->getName(),['tenant.halls.index', 'tenant.halls.create'])? 'open active': null }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="fa-solid fa-hotel menu-icon"></i>
+                    <div>Halls</div>
+                </a>
+                <ul class="menu-sub">
+
+                    @if ($user->can('tenant.halls.index'))
+                        <li
+                            class="menu-item {{ request()->routeIs('tenant.halls.index') || $path == 'settings' ? 'active' : null }}">
+                            <a href="{{ route('tenant.halls.index') }}" class="menu-link">
+                                <div>View All</div>
+                            </a>
+                        </li>
+                    @endif
+
+                    @if ($user->can('tenant.halls.create'))
+                        <li class="menu-item {{ request()->routeIs('tenant.halls.create') ? 'active' : null }}">
+                            <a href="{{ route('tenant.halls.create') }}" class="menu-link">
+                                <div>Add New</div>
+                            </a>
+                        </li>
+                    @endif
+                </ul>
+            </li>
+        @endif
 
         {{-- Hall types Menu --}}
         @if ($user->canAny(['tenant.hallTypes.index', 'tenant.hallTypes.create']))
             <li
                 class="menu-item {{ in_array(request()->route()->getName(),['tenant.hallTypes.index', 'tenant.hallTypes.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
+                    <i class="fa-solid fa-hotel menu-icon"></i>
                     <div>Hall Types</div>
                 </a>
                 <ul class="menu-sub">
@@ -108,41 +142,16 @@
             </li>
         @endif
 
-        {{-- Decorations Menu --}}
-        @if ($user->canAny(['tenant.decorations.index', 'tenant.decorations.create']))
-            <li
-                class="menu-item {{ in_array(request()->route()->getName(),['tenant.decorations.index', 'tenant.decorations.create'])? 'open active': null }}">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
-                    <div>Decorations</div>
-                </a>
-                <ul class="menu-sub">
-
-                    @if ($user->can('tenant.decorations.index'))
-                        <li class="menu-item {{ request()->routeIs('tenant.decorations.index') ? 'active' : null }}">
-                            <a href="{{ route('tenant.decorations.index') }}" class="menu-link">
-                                <div>View All</div>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if ($user->can('tenant.decorations.create'))
-                        <li class="menu-item {{ request()->routeIs('tenant.decorations.create') ? 'active' : null }}">
-                            <a href="{{ route('tenant.decorations.create') }}" class="menu-link">
-                                <div>Add New</div>
-                            </a>
-                        </li>
-                    @endif
-                </ul>
-            </li>
-        @endif
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Catering</span>
+        </li>
 
         {{-- Cuisines Menu --}}
         @if ($user->canAny(['tenant.cuisines.index', 'tenant.cuisines.create']))
             <li
                 class="menu-item {{ in_array(request()->route()->getName(),['tenant.cuisines.index', 'tenant.cuisines.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
+                    <i class="fa-solid fa-plate-wheat menu-icon"></i>
                     <div>Cuisines</div>
                 </a>
                 <ul class="menu-sub">
@@ -171,7 +180,7 @@
             <li
                 class="menu-item {{ in_array(request()->route()->getName(),['tenant.menus.index', 'tenant.menus.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
+                    <i class="fa-solid fa-list-check menu-icon"></i>
                     <div>Menus</div>
                 </a>
                 <ul class="menu-sub">
@@ -195,31 +204,31 @@
             </li>
         @endif
 
-        @php
-            $path = Request::segment(3);
-        @endphp
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Others</span>
+        </li>
 
-        {{-- Halls Menu --}}
-        @if ($user->canAny(['tenant.halls.index', 'tenant.halls.create']))
+        {{-- Decorations Menu --}}
+        @if ($user->canAny(['tenant.decorations.index', 'tenant.decorations.create']))
             <li
-                class="menu-item {{ $path == 'settings' || in_array(request()->route()->getName(),['tenant.halls.index', 'tenant.halls.create'])? 'open active': null }}">
+                class="menu-item {{ in_array(request()->route()->getName(),['tenant.decorations.index', 'tenant.decorations.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="fa-solid fa-bolt menu-icon"></i>
-                    <div>Halls</div>
+                    <i class="fa-solid fa-holly-berry menu-icon"></i>
+                    <div>Decorations</div>
                 </a>
                 <ul class="menu-sub">
 
-                    @if ($user->can('tenant.halls.index'))
-                        <li class="menu-item {{ request()->routeIs('tenant.halls.index') || $path == 'settings' ? 'active' : null }}">
-                            <a href="{{ route('tenant.halls.index') }}" class="menu-link">
+                    @if ($user->can('tenant.decorations.index'))
+                        <li class="menu-item {{ request()->routeIs('tenant.decorations.index') ? 'active' : null }}">
+                            <a href="{{ route('tenant.decorations.index') }}" class="menu-link">
                                 <div>View All</div>
                             </a>
                         </li>
                     @endif
 
-                    @if ($user->can('tenant.halls.create'))
-                        <li class="menu-item {{ request()->routeIs('tenant.halls.create') ? 'active' : null }}">
-                            <a href="{{ route('tenant.halls.create') }}" class="menu-link">
+                    @if ($user->can('tenant.decorations.create'))
+                        <li class="menu-item {{ request()->routeIs('tenant.decorations.create') ? 'active' : null }}">
+                            <a href="{{ route('tenant.decorations.create') }}" class="menu-link">
                                 <div>Add New</div>
                             </a>
                         </li>

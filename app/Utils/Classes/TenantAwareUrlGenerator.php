@@ -8,7 +8,7 @@ class TenantAwareUrlGenerator extends DefaultUrlGenerator
 {
     public function getUrl(): string
     {
-        $url = global_asset($this->getPathRelativeToRoot());
+        $url = global_asset('app-assets/server-uploads/attachments/' . $this->getPathRelativeToRoot());
 
         $url = $this->versionUrl($url);
 
