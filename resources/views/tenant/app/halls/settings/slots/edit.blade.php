@@ -1,7 +1,7 @@
 @extends('tenant.app.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.halls.slots.edit', encryptParams($hallSlot->hall_id), encryptParams($hallSlot->id)) }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.halls.slots.edit', $hall->id) }}
 @endsection
 
 @section('page-title', 'Edit Halls Slots')
@@ -10,69 +10,48 @@
 @endsection
 
 @section('page-css')
-    {{-- <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendors/css/clockInput/jquery.clockinput.min.css"> --}}
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendors/js/feligx/timedropper/timedropper.css">
+    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper.css">
 @endsection
 
 @section('custom-css')
 @endsection
 
 @section('breadcrumbs')
-    <div class="content-header-left col-md-9 col-12 mb-2">
-        <div class="row breadcrumbs-top">
-            <div class="col-12">
-                <h2 class="content-header-title float-start mb-0">Edit Halls Slots</h2>
-                <div class="breadcrumb-wrapper">
-                    {{ Breadcrumbs::render('tenant.halls.slots.edit', encryptParams($hallSlot->hall_id), encryptParams($hallSlot->id)) }}
-                </div>
-            </div>
-        </div>
+    <div class="d-flex justify-content-start align-items-center mb-3">
+        <h2 class="content-header-title float-start mb-0 mx-3">Edit Halls Slots</h2>
+        {{ Breadcrumbs::render('tenant.halls.slots.edit', $hall->id) }}
     </div>
 @endsection
 
 @section('content')
-    <form class="form form-vertical"
-        action="{{ route('tenant.halls.slots.update', ['hall_id' => encryptParams($hallSlot->hall_id), 'id' => encryptParams($hallSlot->id)]) }}"
-        method="POST" enctype="multipart/form-data">
+    <form class="form form-vertical" action="{{ route('tenant.halls.slots.update', [$hall, $slot]) }}" method="POST"
+        enctype="multipart/form-data">
 
-        <div class="row">
+        <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
-                @method('PUT')
                 @csrf
-                {{ view('tenant.app.halls.settings.slots.form-fields', ['hallSlot' => $hallSlot]) }}
+                @method('PUT')
+                @include('tenant.app.halls.settings.slots.form-fields')
 
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 position-relative">
                 <div class="sticky-md-top top-lg-100px top-md-100px top-sm-0px" style="z-index: auto;">
-                    <div class="card" style="border: 2px solid #7367F0; border-style: dashed; border-radius: 0;">
+                    <div class="card mb-4">
                         <div class="card-body">
-                            {{-- <div class="row g-1">
+                            <div class="row g-3">
                                 <div class="col-md-12">
-                                    <label class="form-label fs-5" for="attachment">Hall Pictures</label>
-                                    <input id="attachment" type="file"
-                                        class="filepond @error('attachment') is-invalid @enderror" name="attachment[]"
-                                        multiple accept="image/png, image/jpeg, image/jpg" />
-                                    @error('attachment')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-                            </div>
-                            <hr> --}}
-                            <div class="row g-1">
-                                <div class="col-md-12">
-                                    <button type="submit"
-                                        class="btn btn-success w-100  buttonToBlockUI me-1">
-                                        <i data-feather='save'></i>
-                                        Update Slot
+                                    <button type="submit" class="btn btn-success w-100  buttonToBlockUI me-1">
+                                        <i class="fa-solid fa-floppy-disk icon mx-2"></i>
+                                        Update slots
                                     </button>
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="{{ route('tenant.halls.slots.index', ['hall_id' => encryptParams($hallSlot->hall_id)]) }}"
+                                    <a href="{{ route('tenant.halls.slots.index', [$hall]) }}"
                                         class="btn btn-danger w-100 ">
-                                        <i data-feather='x'></i>
+                                        <i class="fa-solid fa-xmark icon mx-2"></i>
                                         {{ __('lang.commons.cancel') }}
                                     </a>
                                 </div>
@@ -96,7 +75,7 @@
                                     </ol>
                                 </div>
                                 {{-- <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button> --}}
+                        aria-label="Close"></button> --}}
                             </div>
                         </div>
                     </div>
@@ -107,43 +86,13 @@
 @endsection
 
 @section('vendor-js')
+    <script src="{{ global_asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="{{ global_asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper-jquery.js"></script>
 @endsection
 
 @section('page-js')
-    {{-- <script src="{{ global_asset('theme-assets') }}/vendors/js/clockInput/jquery.clockinput.min.js"></script> --}}
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/feligx/timedropper/timedropper-jquery.js"></script>
-    {{-- <script src="{{ global_asset('theme-assets') }}/vendors/js/feligx/datedropper/datedropper-jquery.js"></script> --}}
 @endsection
 
 @section('custom-js')
-    <script>
-        $("#date_range").flatpickr({
-            defaultDate: ["{{ $hallSlot->start_date }}", "{{ $hallSlot->end_date }}"],
-            minDate: "today",
-            altInput: !0,
-            altFormat: "F j, Y",
-            dateFormat: "Y-m-d",
-            mode: "range",
-        });
-
-        // $("input[type=time]").clockInput(true);
-
-        $('#start_time').timeDropper({
-            autoswitch: true,
-            meridians: true,
-            mousewheel: true,
-            minutesSteps: 5,
-            init_animation: 'fadeIn',
-            format: 'HH:mm'
-        });
-
-        $('#end_time').timeDropper({
-            autoswitch: true,
-            meridians: true,
-            mousewheel: true,
-            minutesSteps: 5,
-            init_animation: 'fadeIn',
-            format: 'HH:mm'
-        });
-    </script>
+    @include('tenant.app.halls.settings.slots.form-fields-js', ['from' => 'edit'])
 @endsection

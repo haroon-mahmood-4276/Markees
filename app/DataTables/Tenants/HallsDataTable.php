@@ -36,11 +36,8 @@ class HallsDataTable extends DataTable
                 $image = $hall->getFirstMedia('halls');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';
             })
-            ->editColumn('created_at', function ($hall) {
-                return editDateColumn($hall->created_at);
-            })
             ->editColumn('updated_at', function ($hall) {
-                return editDateColumn($hall->updated_at);
+                return editDateTimeColumn($hall->updated_at);
             })
             ->editColumn('actions', function ($hall) {
                 return view('tenant.app.halls.actions', ['hall' => $hall]);
@@ -137,21 +134,20 @@ class HallsDataTable extends DataTable
     protected function getColumns(): array
     {
 
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowarp');
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle');
         if (auth('tenant')->user()->can('tenant.halls.destroy')) {
             $checkColumn->addClass('disabled');
         }
 
         $columns = [
             $checkColumn,
-            Column::computed('image')->title('Image')->addClass('text-nowarp'),
-            Column::make('name')->title('Halls')->addClass('text-nowarp'),
-            Column::make('short_label')->title('Label')->addClass('text-nowarp'),
-            Column::make('price')->addClass('text-nowarp'),
-            Column::make('description')->addClass('text-nowarp'),
-            Column::make('created_at')->addClass('text-nowarp'),
-            Column::make('updated_at')->addClass('text-nowarp'),
-            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
+            Column::computed('image')->addClass('text-nowrap text-center align-middle'),
+            Column::make('name')->addClass('text-nowrap text-center align-middle'),
+            Column::make('short_label')->addClass('text-nowrap text-center align-middle'),
+            Column::make('price')->addClass('text-nowrap text-center align-middle'),
+            Column::make('description')->addClass('text-nowrap text-center align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
+            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
         ];
         return $columns;
     }

@@ -15,8 +15,7 @@ class HallSlotService implements HallSlotInterface
         return new HallSlot();
     }
 
-    // Get
-    public function getAll($hall_id, $relationships = [], $withCountRelationship = [], $onlyCount = false, $withTrashed = false, $onlyTrashed = false)
+    public function get($hall_id, $relationships = [], $withCountRelationship = [], $onlyCount = false, $withTrashed = false, $onlyTrashed = false)
     {
         $query = $this->model()->where('hall_id', $hall_id);
 
@@ -43,18 +42,17 @@ class HallSlotService implements HallSlotInterface
         return $query->get();
     }
 
-    public function getById($hall_id, $id, $relationships = [])
+    public function find($id, $relationships = [])
     {
         return $this->model()->with($relationships)->find($id);
     }
 
-    // Store
     public function store($hall_id, $inputs)
     {
-        $returnData = DB::transaction(function () use ($hall_id, $inputs) {
+        return DB::transaction(function () use ($hall_id, $inputs) {
 
             $overnigt = ($inputs['start_time'] > $inputs['end_time']);
-            $dates  = explode(' ', $inputs['date_range']);
+            $dates  = explode('-', $inputs['date_range']);
             $start_date = Carbon::parse($dates[0]);
 
             $end_date = Carbon::parse(isset($dates[2]) ? $dates[2] : $dates[0]);
@@ -80,18 +78,15 @@ class HallSlotService implements HallSlotInterface
                 'active' => $inputs['active'],
             ];
 
-            // dd($data);
             $hallSlot = $this->model()->create($data);
 
             return $hallSlot;
         });
-
-        return $returnData;
     }
 
     public function update($hall_id, $id, $inputs)
     {
-        $returnData = DB::transaction(function () use ($hall_id, $id, $inputs) {
+        return DB::transaction(function () use ($hall_id, $id, $inputs) {
 
             $overnigt = ($inputs['start_time'] > $inputs['end_time']);
             $dates  = explode(' ', $inputs['date_range']);
@@ -115,8 +110,8 @@ class HallSlotService implements HallSlotInterface
                 'end_date' => $end_date,
                 'days' => $inputs['days'],
                 'start_time' => $inputs['start_time'],
-                'end_time' => $inputs['end_time'],
                 'interval' => 0,
+                'end_time' => $inputs['end_time'],
                 'overnight' => $overnigt,
                 'active' => $inputs['active'],
             ];
@@ -124,8 +119,6 @@ class HallSlotService implements HallSlotInterface
 
             return $hallSlot;
         });
-
-        return $returnData;
     }
 
     public function destroy($hall_id, $id)
