@@ -32,7 +32,7 @@ class HallController extends Controller
     {
         abort_if(request()->ajax(), 403);
 
-        if (($this->hallInterface->getAll(onlyCount: true) >= auth('tenant')->user()->tenantSubscription->no_of_halls)) {
+        if (($this->hallInterface->get(onlyCount: true) >= auth('tenant')->user()->tenantSubscription->no_of_halls)) {
             return redirect()->route('tenant.halls.index')->withWarning('You have reached the maximum number of halls allowed for your subscription plan.');
         }
 
