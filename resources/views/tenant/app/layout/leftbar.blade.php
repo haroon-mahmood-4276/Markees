@@ -195,10 +195,14 @@
             </li>
         @endif
 
+        @php
+            $path = Request::segment(3);
+        @endphp
+
         {{-- Halls Menu --}}
         @if ($user->canAny(['tenant.halls.index', 'tenant.halls.create']))
             <li
-                class="menu-item {{ in_array(request()->route()->getName(),['tenant.halls.index', 'tenant.halls.create'])? 'open active': null }}">
+                class="menu-item {{ $path == 'settings' || in_array(request()->route()->getName(),['tenant.halls.index', 'tenant.halls.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                     <i class="fa-solid fa-bolt menu-icon"></i>
                     <div>Halls</div>
@@ -206,7 +210,7 @@
                 <ul class="menu-sub">
 
                     @if ($user->can('tenant.halls.index'))
-                        <li class="menu-item {{ request()->routeIs('tenant.halls.index') ? 'active' : null }}">
+                        <li class="menu-item {{ request()->routeIs('tenant.halls.index') || $path == 'settings' ? 'active' : null }}">
                             <a href="{{ route('tenant.halls.index') }}" class="menu-link">
                                 <div>View All</div>
                             </a>

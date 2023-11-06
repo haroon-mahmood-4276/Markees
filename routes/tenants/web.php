@@ -153,25 +153,25 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                     });
 
                     // Hall Settings Routes
-                    // Route::group(['prefix' => '/{hall_id}/settings/'], function () {
+                    Route::group(['prefix' => '/{hall}/settings/'], function () {
 
-                    //     //Hall Shift Routes
-                    //     Route::group(['prefix' => 'slots', 'as' => 'slots.'], function () {
-                    //         Route::get('/', [HallSlotController::class, 'index'])->middleware('permission:tenant.halls.slots.index')->name('index');
+                        //Hall Shift Routes
+                        Route::controller(HallSlotController::class)->name('slots.')->prefix('slots')->group(function () {
+                            Route::get('/', 'index')->middleware('permission:tenant.halls.slots.index')->name('index');
 
-                    //         Route::group(['middleware' => 'permission:tenant.halls.slots.create'], function () {
-                    //             Route::get('create', [HallSlotController::class, 'create'])->name('create');
-                    //             Route::post('store', [HallSlotController::class, 'store'])->name('store');
-                    //         });
+                            Route::group(['middleware' => 'permission:tenant.halls.slots.create'], function () {
+                                Route::get('create', 'create')->name('create');
+                                Route::post('store', 'store')->name('store');
+                            });
 
-                    //         Route::get('delete', [HallSlotController::class, 'destroy'])->middleware('permission:tenant.halls.slots.destroy')->name('destroy');
+                            Route::get('delete', 'destroy')->middleware('permission:tenant.halls.slots.destroy')->name('destroy');
 
-                    //         Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.halls.slots.edit'], function () {
-                    //             Route::get('edit', [HallSlotController::class, 'edit'])->name('edit');
-                    //             Route::put('update', [HallSlotController::class, 'update'])->name('update');
-                    //         });
-                    //     });
-                    // });
+                            Route::group(['prefix' => '/{slot}', 'middleware' => 'permission:tenant.halls.slots.edit'], function () {
+                                Route::get('edit', 'edit')->name('edit');
+                                Route::put('update', 'update')->name('update');
+                            });
+                        });
+                    });
                 });
 
                 //Packages Routes

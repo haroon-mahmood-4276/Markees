@@ -138,7 +138,7 @@ Breadcrumbs::for('tenant.halls.edit', function (BreadcrumbTrail $trail) {
 // Halls slots Breadcrumbs
 Breadcrumbs::for('tenant.halls.slots.index', function (BreadcrumbTrail $trail, $hall_id) {
     $trail->parent('tenant.halls.index', $hall_id);
-    $trail->push('Halls Slots', route('tenant.halls.slots.index', ['hall_id' => $hall_id]));
+    $trail->push('Halls Slots', route('tenant.halls.slots.index', ['hall' => $hall_id]));
 });
 
 Breadcrumbs::for('tenant.halls.slots.create', function (BreadcrumbTrail $trail, $hall_id) {
@@ -146,7 +146,7 @@ Breadcrumbs::for('tenant.halls.slots.create', function (BreadcrumbTrail $trail, 
     $trail->push('Create Halls Slots');
 });
 
-Breadcrumbs::for('tenant.halls.slots.edit', function (BreadcrumbTrail $trail, $hall_id, $id) {
+Breadcrumbs::for('tenant.halls.slots.edit', function (BreadcrumbTrail $trail, $hall_id) {
     $trail->parent('tenant.halls.slots.index', $hall_id);
     $trail->push('Edit Halls Slots');
 });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Tenants;
 use App\DataTables\Tenants\HallSlotsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\HallSlots\{storeRequest, updateRequest};
+use App\Models\Tenants\Hall;
+use App\Models\Tenants\HallSlot;
 use App\Services\Tenants\HallSlots\HallSlotInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,90 +20,74 @@ class HallSlotController extends Controller
         $this->hallSlotInterface = $hallSlotInterface;
     }
 
-    public function index(Request $request, HallSlotsDataTable $dataTable, $hall_id)
+    public function index(HallSlotsDataTable $dataTable, Hall $hall)
     {
 
-        $data = ['hall_id' => $hall_id];
+        $data = ['hall' => $hall];
 
         if (request()->ajax()) {
-            return $dataTable->ajax();
+            return $dataTable->with($data)->ajax();
         }
 
         return $dataTable->with($data)->render('tenant.app.halls.settings.slots.index', $data);
     }
 
-    public function create(Request $request, $hall_id)
+    public function create(Hall $hall)
     {
         abort_if(request()->ajax(), 403);
 
-        $data = ['hall_id' => $hall_id];
+        $data = ['hall' => $hall];
 
         return view('tenant.app.halls.settings.slots.create', $data);
     }
 
-    public function store(storeRequest $request, $hall_id)
+    public function store(storeRequest $request, Hall $hall)
     {
         try {
             abort_if(request()->ajax(), 403);
 
             $inputs = $request->validated();
-            // dd($inputs);
-            $record = $this->hallSlotInterface->store($hall_id, $inputs);
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withSuccess(__('lang.commons.data_saved'));
+            $record = $this->hallSlotInterface->store($hall->id, $inputs);
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $hall_id, $id)
+    public function edit(Hall $hall, HallSlot $slot)
     {
-        abort(403);
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         $data = [
-            'hallSlot' => $this->hallSlotInterface->getById($hall_id, $id),
+            'hall' => $hall,
+            'slot' => $slot,
         ];
 
         return view('tenant.app.halls.settings.slots.edit', $data);
     }
 
-    public function update(updateRequest $request, $hall_id, $id)
+    public function update(updateRequest $request, Hall $hall, HallSlot $slot)
     {
         try {
-            abort(403);
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->hallSlotInterface->update($hall_id, $id, $inputs);
-
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withSuccess(__('lang.commons.data_saved'));
+            $record = $this->hallSlotInterface->update($hall->id, $slot->id, $inputs);
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function destroy(Request $request, $hall_id)
+    public function destroy(Request $request, Hall $hall)
     {
+        abort_if(request()->ajax(), 403);
         try {
-            abort_if(request()->ajax(), 403);
-
             if ($request->has('checkForDelete')) {
-
-                $record = $this->hallSlotInterface->destroy($hall_id, $request->checkForDelete);
-
-                if ($record) {
-                    return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withSuccess(__('lang.commons.data_deleted'));
-                } else {
-                    return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.data_not_found'));
-                }
+                $this->hallSlotInterface->destroy($hall->id, $request->checkForDelete);
             }
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall_id' => $hall_id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }
