@@ -34,7 +34,7 @@ class HallTypeController extends Controller
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getWithTree(),
+            'hallTypes' => $this->hallTypeInterface->get(with_tree: true),
             'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
         ];
 
@@ -59,7 +59,7 @@ class HallTypeController extends Controller
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getWithTree(),
+            'hallTypes' => $this->hallTypeInterface->get(with_tree: true),
             'hallType' => $hallType,
             'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection()),
         ];

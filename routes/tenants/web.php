@@ -175,21 +175,21 @@ Route::middleware(['web', InitializeTenancyByDomain::class, PreventAccessFromCen
                 });
 
                 //Packages Routes
-                // Route::group(['prefix' => 'packages', 'as' => 'packages.'], function () {
-                //     Route::get('/', [PackageController::class, 'index'])->middleware('permission:tenant.packages.index')->name('index');
+                Route::controller(PackageController::class)->name('packages.')->prefix('packages')->group(function () {
+                    Route::get('/', 'index')->middleware('permission:tenant.packages.index')->name('index');
 
-                //     Route::group(['middleware' => 'permission:tenant.packages.create'], function () {
-                //         Route::get('create', [PackageController::class, 'create'])->name('create');
-                //         Route::post('store', [PackageController::class, 'store'])->name('store');
-                //     });
+                    Route::group(['middleware' => 'permission:tenant.packages.create'], function () {
+                        Route::get('create', 'create')->name('create');
+                        Route::post('store', 'store')->name('store');
+                    });
 
-                //     Route::get('delete', [PackageController::class, 'destroy'])->middleware('permission:tenant.packages.destroy')->name('destroy');
+                    Route::get('delete', 'destroy')->middleware('permission:tenant.packages.destroy')->name('destroy');
 
-                //     Route::group(['prefix' => '/{id}', 'middleware' => 'permission:tenant.packages.edit'], function () {
-                //         Route::get('edit', [PackageController::class, 'edit'])->name('edit');
-                //         Route::put('update', [PackageController::class, 'update'])->name('update');
-                //     });
-                // });
+                    Route::group(['prefix' => '/{package}', 'middleware' => 'permission:tenant.packages.edit'], function () {
+                        Route::get('edit', 'edit')->name('edit');
+                        Route::put('update', 'update')->name('update');
+                    });
+                });
             });
         });
     });

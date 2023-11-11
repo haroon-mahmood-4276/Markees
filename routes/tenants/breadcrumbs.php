@@ -114,7 +114,7 @@ Breadcrumbs::for('tenant.packages.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Packages');
 });
 
-Breadcrumbs::for('tenant.packages.edit', function (BreadcrumbTrail $trail, $id) {
+Breadcrumbs::for('tenant.packages.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('tenant.packages.index');
     $trail->push('Edit Packages');
 });

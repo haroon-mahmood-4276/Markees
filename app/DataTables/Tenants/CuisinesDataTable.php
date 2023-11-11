@@ -27,6 +27,9 @@ class CuisinesDataTable extends DataTable
             ->editColumn('description', function ($cuisine) {
                 return strlen($cuisine->description) > 0 ? Str::of($cuisine->description)->ucfirst()->words(15) : '-';
             })
+            ->editColumn('price', function ($cuisine) {
+                return editCurrencyColumn($cuisine->price, symbol: 'Rs');
+            })
             ->editColumn('image', function ($cuisine) {
                 $image = $cuisine->getFirstMedia('cuisines');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';

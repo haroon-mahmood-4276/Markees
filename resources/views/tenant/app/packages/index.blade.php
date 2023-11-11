@@ -4,75 +4,44 @@
     {{ Breadcrumbs::view('breadcrumbs::json-ld', 'tenant.packages.index') }}
 @endsection
 
-@section('page-title', 'Packages')
+@section('page-title', 'Pakcages')
 
 @section('page-vendor')
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendors/css/tables/datatable/dataTables.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendors/css/tables/datatable/responsive.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendors/css/tables/datatable/buttons.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css"
-        href="{{ global_asset('theme-assets') }}/vendors/css/tables/datatable/rowGroup.bootstrap5.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ global_asset('theme-assets') }}/vendors/css/pickers/flatpickr/flatpickr.min.css">
-
+    @include('tenant.app.layout.libs.datatables.css')
 @endsection
 
 @section('page-css')
-    <link rel="stylesheet" type="text/css" href="{{ global_asset('theme-assets') }}/css/plugins/forms/form-validation.css">
 @endsection
 
 @section('custom-css')
 @endsection
 
 @section('breadcrumbs')
-    <div class="content-header-left col-md-9 col-12 mb-2">
-        <div class="row breadcrumbs-top">
-            <div class="col-12">
-                <h2 class="content-header-title float-start mb-0">Packages</h2>
-                <div class="breadcrumb-wrapper">
-                    {{ Breadcrumbs::render('tenant.packages.index') }}
+    <div class="d-flex justify-content-start align-items-center mb-3">
+        <h2 class="content-header-title float-start mb-0 mx-3">Pakcages</h2>
+        {{ Breadcrumbs::render('tenant.packages.index') }}
+    </div>
+@endsection
+
+@section('content')
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('tenant.packages.destroy') }}" id="hall-types-table-form" method="get">
+                        {{ $dataTable->table() }}
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 @endsection
 
-@section('content')
-    <p class="mb-2">
-        {{-- {{ __('lang.roles.pages.index.description') }} --}}
-    </p>
-
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('tenant.packages.destroy') }}" id="packages-table-form" method="get">
-                {{ $dataTable->table() }}
-            </form>
-        </div>
-    </div>
-
-@endsection
-
 @section('vendor-js')
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/jquery.dataTables.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/dataTables.bootstrap5.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/responsive.bootstrap5.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/datatables.checkboxes.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/datatables.buttons.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/buttons.colVis.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/jszip.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/pdfmake.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/vfs_fonts.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/buttons.html5.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/buttons.print.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/dataTables.rowGroup.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+    @include('tenant.app.layout.libs.datatables.js')
 @endsection
 
 @section('page-js')
-    <script src="{{ global_asset('theme-assets') }}/vendors/js/tables/datatable/buttons.server-side.js"></script>
 @endsection
 
 @section('custom-js')
@@ -92,12 +61,12 @@
                     confirmButtonClass: 'btn-danger',
                     buttonsStyling: false,
                     customClass: {
-                        confirmButton: 'btn btn-danger  me-1',
-                        cancelButton: 'btn btn-success  me-1'
+                        confirmButton: 'btn btn-danger me-1',
+                        cancelButton: 'btn btn-success me-1'
                     },
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#packages-table-form').submit();
+                        $('#hall-types-table-form').submit();
                     }
                 });
             } else {
@@ -107,8 +76,8 @@
                     text: "{{ __('lang.commons.please_select_at_least_one_item') }}",
                     buttonsStyling: false,
                     customClass: {
-                        confirmButton: 'btn btn-danger  me-1',
-                        cancelButton: 'btn btn-success  me-1'
+                        confirmButton: 'btn btn-danger me-1',
+                        cancelButton: 'btn btn-success me-1'
                     },
                 });
             }

@@ -4,16 +4,13 @@ namespace App\Services\Tenants\HallTypes;
 
 interface HallTypeInterface
 {
-    public function getAll($relationships = []);
+    public function get($ignore = null, $with_tree = false, $relationships = []);
 
-    public function getById($id, $relationships = []);
-
-    public function getWithTree($relationships = []);
+    public function find($id, $relationships = []);
 
     public function store($inputs);
 
     public function update($id, $inputs);
 
-    public function destroy($ids);
-
+    public function destroy($inputs);
 }

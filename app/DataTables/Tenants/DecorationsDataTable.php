@@ -34,6 +34,9 @@ class DecorationsDataTable extends DataTable
                 $image = $decoration->getFirstMedia('decorations');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';
             })
+            ->editColumn('price', function ($decoration) {
+                return editCurrencyColumn($decoration->price, symbol: 'Rs');
+            })
             ->editColumn('description', function ($decoration) {
                 return strlen($decoration->description) > 0 ? Str::of($decoration->description)->ucfirst()->words(15) : '-';
             })
@@ -144,7 +147,8 @@ class DecorationsDataTable extends DataTable
         $columns = [
             $checkColumn,
             Column::make('image')->addClass('text-nowrap text-center align-middle'),
-            Column::make('name')->title('Type')->addClass('text-nowrap align-middle'),
+            Column::make('name')->addClass('text-nowrap align-middle'),
+            Column::make('price')->addClass('text-nowrap align-middle'),
             Column::make('description')->addClass('text-nowrap align-middle'),
             Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
             Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),

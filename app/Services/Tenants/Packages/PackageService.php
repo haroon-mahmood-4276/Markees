@@ -14,27 +14,34 @@ class PackageService implements PackageInterface
         return new Package();
     }
 
-    // Get
-    public function getAll($relationships = [])
+    public function get($ignore = null, $with_tree = false, $relationships = [])
     {
-        return $this->model()->with($relationships)->get();
+        $model = $this->model();
+        if (is_array($ignore)) {
+            $model = $model->whereNotIn('id', $ignore);
+        } else if (is_string($ignore)) {
+            $model = $model->where('id', '!=', $ignore);
+        }
+        $model = $model->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->get();
+
+        if ($with_tree) {
+            return getTreeData(collect($model), $this->model());
+        }
+        return $model;
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
-        return $this->model()->with($relationships)->find($id);
+        return $this->model()->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->find($id);
     }
 
-    public function getAllWithTree($relationships = [])
-    {
-        $menus = $this->model()->all();
-        return getTreeData(collect($menus), $this->model());
-    }
-
-    // Store
     public function store($inputs)
     {
-        $returnData = DB::transaction(function () use ($inputs) {
+        return DB::transaction(function () use ($inputs) {
             $data = [
                 'name' => $inputs['name'],
                 'description' => $inputs['description'],
@@ -46,16 +53,14 @@ class PackageService implements PackageInterface
 
             $packages = $this->model()->create($data);
 
-            if (isset($inputs['attachment'])) {
-                foreach ($inputs['attachment'] as $attachment) {
-                    $packages->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('packages');
-                }
-            }
+            // if (isset($inputs['attachment'])) {
+            //     foreach ($inputs['attachment'] as $attachment) {
+            //         $packages->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('packages');
+            //     }
+            // }
 
             return $packages;
         });
-
-        return $returnData;
     }
 
     public function update($id, $inputs)
@@ -74,13 +79,13 @@ class PackageService implements PackageInterface
 
             $package->update($data);
 
-            $package->clearMediaCollection('packages');
+            // $package->clearMediaCollection('packages');
 
-            if (isset($inputs['attachment'])) {
-                foreach ($inputs['attachment'] as $attachment) {
-                    $package->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('packages');
-                }
-            }
+            // if (isset($inputs['attachment'])) {
+            //     foreach ($inputs['attachment'] as $attachment) {
+            //         $package->addMedia($attachment)->usingFileName($attachment->hashName())->toMediaCollection('packages');
+            //     }
+            // }
 
             return $package;
         });
@@ -90,15 +95,10 @@ class PackageService implements PackageInterface
 
     public function destroy($id)
     {
-        $returnData = DB::transaction(function () use ($id) {
-
-            $packages = $this->model()->whereIn('id', $id)->get()->each(function ($package) {
+        return DB::transaction(function () use ($id) {
+            return $this->model()->whereIn('id', $id)->get()->each(function ($package) {
                 $package->delete();
             });
-
-            return $packages;
         });
-
-        return $returnData;
     }
 }

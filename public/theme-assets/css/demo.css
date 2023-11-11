@@ -786,3 +786,14 @@ span.input-group-text.is-valid {
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     top: .15rem !important;
 }
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
