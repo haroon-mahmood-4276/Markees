@@ -14,31 +14,38 @@ class HallTypeService implements HallTypeInterface
         return new HallType();
     }
 
-    // Get
-    public function getAll($relationships = [])
+    public function get($ignore = null, $with_tree = false, $relationships = [])
     {
-        return $this->model()->with($relationships)->get();
+        $model = $this->model();
+        if (is_array($ignore)) {
+            $model = $model->whereNotIn('id', $ignore);
+        } else if (is_string($ignore)) {
+            $model = $model->where('id', '!=', $ignore);
+        }
+        $model = $model->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->get();
+
+        if ($with_tree) {
+            return getTreeData(collect($model), $this->model());
+        }
+        return $model;
     }
 
-    public function getById($id, $relationships = [])
+    public function find($id, $relationships = [])
     {
-        return $this->model()->with($relationships)->find($id);
+        return $this->model()->when($relationships, function ($query, $relationships) {
+            return $query->with($relationships);
+        })->find($id);
     }
 
-    public function getWithTree($relationships = [])
-    {
-        $hallTypes = $this->model()->all();
-        return getTreeData(collect($hallTypes), $this->model());
-    }
-
-    // Store
     public function store($inputs)
     {
         return DB::transaction(function () use ($inputs) {
             return $this->model()->create([
                 'name' => $inputs['name'],
-                'description' => $inputs['description'],
-                'parent_id' => $inputs['parent_hall_type'],
+                'guard_name' => $inputs['guard_name'],
+                'parent_id' => $inputs['parent_id'],
             ]);
         });
     }
@@ -48,17 +55,17 @@ class HallTypeService implements HallTypeInterface
         return DB::transaction(function () use ($id, $inputs) {
             return $this->model()->find($id)->update([
                 'name' => $inputs['name'],
-                'description' => $inputs['description'],
-                'parent_id' => $inputs['parent_hall_type'],
+                'guard_name' => $inputs['guard_name'],
+                'parent_id' => $inputs['parent_id'],
             ]);
         });
     }
 
-    public function destroy($id)
+    public function destroy($inputs)
     {
-        return DB::transaction(function () use ($id) {
-            return $this->model()->whereIn('id', $id)->get()->each(function ($hallType) {
-                $hallType->delete();
+        return DB::transaction(function () use ($inputs) {
+            return $this->model()->whereIn('id', $inputs)->get()->each(function ($model) {
+                $model->delete();
             });
         });
     }

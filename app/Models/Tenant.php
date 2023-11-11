@@ -11,12 +11,7 @@ use Stancl\Tenancy\Database\Concerns\HasDomains;
 
 class Tenant extends BaseTenant implements TenantWithDatabase
 {
-    use HasDatabase, HasDomains, LogsActivity;
+    use HasDatabase, HasDomains;
 
     protected $dateFormat = 'U';
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->useLogName(self::class)->logFillable();
-    }
 }

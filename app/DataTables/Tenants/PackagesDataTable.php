@@ -3,6 +3,7 @@
 namespace App\DataTables\Tenants;
 
 use App\Models\Tenants\Package;
+use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;
@@ -14,80 +15,72 @@ use Illuminate\Support\Str;
 
 class PackagesDataTable extends DataTable
 {
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
+    use DataTableTrait;
+
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
         return (new EloquentDataTable($query))
             ->setRowId('id')
+            ->editColumn('check', function ($package) {
+                return $package;
+            })
             ->editColumn('image', function ($menu) {
                 $image = $menu->getFirstMedia('packages');
                 return !is_null($image) ? editImageColumn($image->getUrl(), $image->name) : '-';
             })
-            ->editColumn('created_at', function ($package) {
-                return editDateColumn($package->created_at);
+            ->editColumn('price', function ($package) {
+                return editCurrencyColumn($package->price, symbol: 'Rs');
             })
             ->editColumn('updated_at', function ($package) {
-                return editDateColumn($package->updated_at);
+                return editDateTimeColumn($package->updated_at);
             })
             ->editColumn('actions', function ($package) {
-                return view('tenant.app.packages.actions', ['id' => $package->id]);
-            })
-            ->editColumn('check', function ($package) {
-                return $package;
+                return view('tenant.app.packages.actions', ['package' => $package]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Package $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Package $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('hall_type');
     }
 
     public function html(): HtmlBuilder
     {
         $buttons = [];
 
-        if (auth('tenant')->user()->can('tenant.packages.create')) {
+        if (auth()->user('tenant')->can('tenant.packages.create')) {
             $buttons[] = Button::raw('add-new')
-                ->addClass('btn btn-primary ')
-                ->text('<i class="bi bi-plus"></i> Add New')
+                ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
+                ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
                 ->attr([
                     'onclick' => 'addNew()',
                 ]);
         }
 
-        if (auth('tenant')->user()->can('tenant.packages.export')) {
-            $buttons[] =  Button::make('export')->addClass('btn btn-secondary  dropdown-toggle')->buttons([
-                Button::make('print')->addClass('dropdown-item'),
-                Button::make('copy')->addClass('dropdown-item'),
-                Button::make('csv')->addClass('dropdown-item'),
-                Button::make('excel')->addClass('dropdown-item'),
-                Button::make('pdf')->addClass('dropdown-item'),
-            ]);
+        if (auth()->user('tenant')->can('tenant.packages.export')) {
+            $buttons[] = Button::make('export')
+                ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
+                ->buttons([
+                    Button::make('print')->addClass('dropdown-item')->text('<i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print'),
+                    Button::make('copy')->addClass('dropdown-item')->text('<i class="fa-solid fa-copy"></i>&nbsp;&nbsp;Copy'),
+                    Button::make('csv')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;CSV'),
+                    Button::make('excel')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel'),
+                    Button::make('pdf')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;PDF'),
+                ]);
         }
 
         $buttons = array_merge($buttons, [
-            Button::make('reset')->addClass('btn btn-danger '),
-            Button::make('reload')->addClass('btn btn-primary '),
+            Button::make('reset')->addClass('btn btn-danger waves-effect waves-float waves-light m-1'),
+            Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('tenant')->user()->can('tenant.packages.destroy')) {
+        if (auth()->user('tenant')->can('tenant.packages.destroy')) {
             $buttons[] = Button::raw('delete-selected')
-                ->addClass('btn btn-danger ')
-                ->text('<i class="bi bi-trash3-fill"></i> Delete Selected')
+                ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
+                ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
                 ->attr([
                     'onclick' => 'deleteSelected()',
                 ]);
@@ -100,7 +93,6 @@ class PackagesDataTable extends DataTable
             ->minifiedAjax()
             ->serverSide()
             ->processing()
-            ->select()
             ->deferRender()
             ->scrollX()
             ->lengthMenu([10, 20, 30, 50, 70, 100])
@@ -133,50 +125,24 @@ class PackagesDataTable extends DataTable
             ]);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns(): array
     {
 
-        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60)->addClass('text-nowarp');
+        $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap align-middle');
         if (auth('tenant')->user()->can('tenant.packages.destroy')) {
             $checkColumn->addClass('disabled');
         }
 
         $columns = [
             $checkColumn,
-            Column::computed('image')->title('Image')->addClass('text-nowarp'),
-            Column::make('name')->addClass('text-nowarp'),
-            Column::make('description')->addClass('text-nowarp'),
-            Column::make('price')->addClass('text-nowarp'),
-            Column::make('created_at')->addClass('text-nowarp'),
-            Column::make('updated_at')->addClass('text-nowarp'),
-            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-center text-nowrap'),
+            // Column::computed('image')->title('Image')->addClass('text-nowrap align-middle'),
+            Column::make('name')->addClass('text-nowrap align-middle'),
+            Column::make('description')->addClass('text-nowrap align-middle'),
+            Column::make('hall_type.name')->title('Hall Type')->addClass('text-nowrap align-middle'),
+            Column::make('price')->addClass('text-nowrap text-center align-middle'),
+            Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
+            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap align-middle'),
         ];
         return $columns;
-    }
-
-    /**
-     * Get filename for export.
-     *
-     * @return string
-     */
-    protected function filename(): string
-    {
-        return 'Packages_' . date('YmdHis');
-    }
-
-    /**
-     * Export PDF using DOMPDF
-     * @return mixed
-     */
-    public function pdf()
-    {
-        $data = $this->getDataForPrint();
-        $pdf = Pdf::loadView($this->printPreview, ['data' => $data])->setOption(['defaultFont' => 'sans-serif']);
-        return $pdf->download($this->filename() . '.pdf');
     }
 }

@@ -6,6 +6,7 @@ use App\DataTables\Tenants\PackagesDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Packages\{storeRequest, updateRequest};
+use App\Models\Tenants\Package;
 use App\Services\Tenants\Cuisines\CuisineInterface;
 use App\Services\Tenants\Decorations\DecorationInterface;
 use App\Services\Tenants\Packages\PackageInterface;
@@ -29,7 +30,7 @@ class PackageController extends Controller
         $this->cuisineInterface = $cuisineInterface;
     }
 
-    public function index(Request $request, PackagesDataTable $dataTable)
+    public function index(PackagesDataTable $dataTable)
     {
         if (request()->ajax()) {
             return $dataTable->ajax();
@@ -38,14 +39,14 @@ class PackageController extends Controller
         return $dataTable->render('tenant.app.packages.index');
     }
 
-    public function create(Request $request)
+    public function create()
     {
         abort_if(request()->ajax(), 403);
 
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getAll(),
-            'decorations' => $this->decorationInterface->getAll(),
-            'cuisines' => $this->cuisineInterface->getAll(),
+            'hallTypes' => $this->hallTypeInterface->get(),
+            'decorations' => $this->decorationInterface->get(),
+            'cuisines' => $this->cuisineInterface->get(),
         ];
 
         return view('tenant.app.packages.create', $data);
@@ -55,51 +56,37 @@ class PackageController extends Controller
     {
         try {
             abort_if(request()->ajax(), 403);
-
             $inputs = $request->validated();
-
-            $record = $this->packageInterface->store($inputs);
+            $this->packageInterface->store($inputs);
             return redirect()->route('tenant.packages.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Package $package)
     {
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         $data = [
-            'hallTypes' => $this->hallTypeInterface->getAll(),
-            'decorations' => $this->decorationInterface->getAll(),
-            'cuisines' => $this->cuisineInterface->getAll(),
-            'package' => $this->packageInterface->getById($id),
+            'hallTypes' => $this->hallTypeInterface->get(),
+            'decorations' => $this->decorationInterface->get(),
+            'cuisines' => $this->cuisineInterface->get(),
+            'package' => $package,
         ];
 
-        // dd($data);
         return view('tenant.app.packages.edit', $data);
     }
 
-    public function update(updateRequest $request, $id)
+    public function update(updateRequest $request, Package $package)
     {
         try {
             abort_if(request()->ajax(), 403);
-
-            $id = decryptParams($id);
-
             $inputs = $request->validated();
-
-            $record = $this->packageInterface->update($id, $inputs);
-
+            $this->packageInterface->update($package->id, $inputs);
             return redirect()->route('tenant.packages.index')->withSuccess(__('lang.commons.data_saved'));
-        } catch (GeneralException $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         } catch (Exception $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 

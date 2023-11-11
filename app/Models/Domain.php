@@ -8,12 +8,5 @@ use Stancl\Tenancy\Database\Models\Domain as BaseDomain;
 
 class Domain extends BaseDomain
 {
-    use LogsActivity;
-
     protected $dateFormat = 'U';
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()->useLogName(self::class)->logFillable();
-    }
 }
