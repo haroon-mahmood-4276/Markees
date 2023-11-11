@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-cetner align-items-center">
-    @if(auth('tenant')->user()->can('tenant.roles.edit'))
+    @if(auth('tenant')->user()->can('tenant.roles.edit')
         <a class="btn btn-warning m-1"
             data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Role"
             href="{{ route('tenant.roles.edit', [$role]) }}">
