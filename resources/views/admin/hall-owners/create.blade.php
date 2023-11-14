@@ -10,7 +10,7 @@
 @endsection
 
 @section('page-css')
-    {{ view('admin.layout.libs.filepond.css') }}
+    @include('admin.layout.libs.filepond.css')
 @endsection
 
 @section('custom-css')
@@ -18,7 +18,7 @@
 
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
-        <h2 class="content-header-title float-start mb-0 mx-3">Create Subscriptions</h2>
+        <h2 class="content-header-title float-start mb-0 mx-3">Create Owner</h2>
         {{ Breadcrumbs::render('admin.hall-owners.create') }}
     </div>
 @endsection
@@ -113,12 +113,12 @@
 @endsection
 
 @section('vendor-js')
-    {{ view('admin.layout.libs.filepond.js') }}
+    @include('admin.layout.libs.filepond.js')
 @endsection
 
 @section('page-js')
 @endsection
 
 @section('custom-js')
-    {{ view('admin.hall-owners.form-fields-js', ['from' => 'create']) }}
+    @include('admin.hall-owners.form-fields-js', ['from' => 'create'])
 @endsection

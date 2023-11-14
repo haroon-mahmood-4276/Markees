@@ -67,6 +67,7 @@ class HallOwnerController extends Controller
 
         try {
             $inputs = $request->validated();
+            dd($inputs);
             $record = $this->hallOwnerInterface->store($inputs);
             return redirect()->route('admin.hall-owners.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {

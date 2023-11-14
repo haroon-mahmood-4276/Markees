@@ -36,7 +36,6 @@ class HallOwnerService implements HallOwnerInterface
             $data = [
                 'subscription_id' => $inputs['subscription'],
                 'name' => $inputs['name'],
-                'subdomain' => $inputs['subdomain'],
                 'email' => $inputs['email'],
                 'phone' => $inputs['phone'],
                 'cnic' => $inputs['cnic'],
@@ -57,36 +56,6 @@ class HallOwnerService implements HallOwnerInterface
                 $attachment = $inputs['owner_ntn_attachment'];
                 $hallOwner->addMedia($attachment)->toMediaCollection('owner_ntn_attachment');
             }
-
-            if (isset($inputs['subdomain'])) {
-
-                $domain = parse_url(env('APP_URL'));
-                $tenant = (new Tenant())->create(['id' => $inputs['subdomain']]);
-                $tenant->domains()->create(['domain' => $inputs['subdomain'] . '.' . $domain['host']]);
-
-                $tenant->run(function () use ($hallOwner, $inputs) {
-
-                    $subscription = (new TenantSubscription())->create([
-                        'name' => $hallOwner->subscription->name,
-                        'no_of_days' => $hallOwner->subscription->no_of_days,
-                        'price' => $hallOwner->subscription->price,
-                        'no_of_halls' => $hallOwner->subscription->no_of_halls,
-                        'active' => $hallOwner->subscription->active,
-                    ]);
-
-                    (new TenantUser())->create([
-                        'tenant_subscription_id' => $subscription->id,
-                        'name' => $hallOwner->name,
-                        'subdomain' => $hallOwner->subdomain,
-                        'email' => $hallOwner->email,
-                        'password' => Hash::make($inputs['password']),
-                        'phone' => $hallOwner->phone,
-                        'cnic' => $hallOwner->cnic,
-                        'ntn' => $hallOwner->ntn,
-                        'active' => $hallOwner->active,
-                    ]);
-                });
-            }
         });
     }
 
@@ -98,7 +67,6 @@ class HallOwnerService implements HallOwnerInterface
             $data = [
                 'subscription_id' => $inputs['subscription'],
                 'name' => $inputs['name'],
-                // 'subdomain' => $inputs['subdomain'],
                 // 'email' => $inputs['email'],
                 'phone' => $inputs['phone'],
                 'cnic' => $inputs['cnic'],

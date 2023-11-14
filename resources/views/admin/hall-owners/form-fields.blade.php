@@ -2,102 +2,96 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="name">Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                    id="name" name="name" placeholder="Name"
-                    value="{{ isset($hallOwner) ? $hallOwner->name : old('name') }}" />
-                @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="name-help" class="form-text">Enter name of Owner.</div>
-                @enderror
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="ntn">NTN <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('ntn') is-invalid @enderror"
-                    id="ntn" name="ntn" placeholder="NTN"
-                    value="{{ isset($hallOwner) ? $hallOwner->ntn : old('ntn') }}" />
-                @error('ntn')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="ntn-help" class="form-text">Enter NTN of Owner.</div>
-                @enderror
-            </div>
-        </div>
-
-        <div class="row mb-3">
-
-            <div class="col-lg-12 col-md-12 col-sm-12 position-relative">
-                <label class="form-label" style="font-size: 15px" for="subdomain">Sub Domain <span class="text-danger">*</span></label>
-                <div class="input-group">
-                    <span class="input-group-text" id="basic-addon2">{{ $domain['scheme'] }}://</span>
-                    <input type="text" class="form-control @error('subdomain') is-invalid @enderror"
-                        id="subdomain" name="subdomain" placeholder="Sub Domain"
-                        {{ isset($hallOwner) ? 'readonly' : '' }}
-                        value="{{ isset($hallOwner) ? $hallOwner->subdomain : old('subdomain') }}" />
-                    <span class="input-group-text"
-                        id="basic-addon2">.{{ $domain['host'] . (isset($domain['port']) ? ':' . $domain['port'] : null) }}</span>
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                        name="name" placeholder="Ex. Usama Riaz"
+                        value="{{ isset($hallOwner) ? $hallOwner->name : old('name') }}" aria-describedby="nameHelp">
+                    <label for="name">Name <span class="text-danger">*</span></label>
+                    @error('name')
+                        <div id="nameHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="nameHelp" class="form-text">Enter name of Owner.</div>
+                    @enderror
                 </div>
-                @error('subdomain')
-                    <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
-                @else
-                    <div id="subdomain-help" class="form-text">Enter Subdomain for the owner.</div>
-                @enderror
+            </div>
+
+
+            <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('ntn') is-invalid @enderror" id="ntn"
+                        name="ntn" placeholder="1234567-1"
+                        value="{{ isset($hallOwner) ? $hallOwner->ntn : old('ntn') }}" aria-describedby="ntnHelp">
+                    <label for="name">NTN <span class="text-danger">*</span></label>
+                    @error('ntn')
+                        <div id="ntnHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="ntnHelp" class="form-text">Enter NTN of Owner.</div>
+                    @enderror
+                </div>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="email">Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control @error('email') is-invalid @enderror"
-                    id="email" name="email" placeholder="Email"
-                    value="{{ isset($hallOwner) ? $hallOwner->email : old('email') }}" />
-                @error('email')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="email-help" class="form-text">Enter email of Owner.</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" placeholder="abc@example.com"
+                        value="{{ isset($hallOwner) ? $hallOwner->email : old('email') }}" aria-describedby="emailHelp">
+                    <label for="email">Email <span class="text-danger">*</span></label>
+                    @error('email')
+                        <div id="emailHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="emailHelp" class="form-text">Enter Email of Owner.</div>
+                    @enderror
+                </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="password">Password <span class="text-danger">*</span></label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror"
-                    id="password" name="password"
-                    placeholder="{{ isset($hallOwner) ? 'Leave empty for unchanged' : null }} Password"
-                    value="" />
-                @error('password')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="password-help" class="form-text">The password must be at least 8 characters and contain at
-                        least one
-                        uppercase character, one number, and one special character.</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" aria-describedby="passwordHelp"
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        value="{{ isset($hallOwner) ? $hallOwner->password : old('password') }}">
+                    <label for="password">Password <span class="text-danger">*</span></label>
+                    @error('password')
+                        <div id="passwordHelp" class="form-text invalid-feedback">The password must be at least 8 characters
+                            and contain at least one uppercase character, one number, and one special character.</div>
+                    @else
+                        <div id="passwordHelp" class="form-text">Enter Password for the owner login.</div>
+                    @enderror
+                </div>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="phone">Phone Number <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                    id="phone" name="phone" placeholder="Phone Number"
-                    value="{{ isset($hallOwner) ? $hallOwner->phone : old('phone') }}" />
-                @error('phone')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="phone-help" class="form-text">Phone of Owner.</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
+                        name="phone" aria-describedby="phoneHelp"
+                        placeholder="+92 123 456 7890"
+                        value="{{ isset($hallOwner) ? $hallOwner->phone : old('phone') }}">
+                    <label for="phone">Phone <span class="text-danger">*</span></label>
+                    @error('phone')
+                        <div id="phoneHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="phoneHelp" class="form-text">Enter phone number of the owner.</div>
+                    @enderror
+                </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="cnic">CNIC <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('cnic') is-invalid @enderror"
-                    id="cnic" name="cnic" placeholder="CNIC"
-                    value="{{ isset($hallOwner) ? $hallOwner->cnic : old('cnic') }}" />
-                @error('cnic')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                @else
-                    <div id="cnic-help" class="form-text">CNIC of Owner.</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('cnic') is-invalid @enderror" id="cnic"
+                        name="cnic" aria-describedby="cnicHelp"
+                        placeholder="12345-1234567-1"
+                        value="{{ isset($hallOwner) ? $hallOwner->cnic : old('cnic') }}">
+                    <label for="cnic">CNIC <span class="text-danger">*</span></label>
+                    @error('cnic')
+                        <div id="cnicHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="cnicHelp" class="form-text">Enter cnic number of the owner.</div>
+                    @enderror
+                </div>
             </div>
         </div>
 

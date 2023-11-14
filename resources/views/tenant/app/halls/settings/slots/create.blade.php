@@ -10,8 +10,8 @@
 @endsection
 
 @section('page-css')
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper.css">
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper.css">
 @endsection
 
 @section('custom-css')
@@ -85,8 +85,8 @@
 @endsection
 
 @section('vendor-js')
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper-jquery.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/feligx/timedropper/timedropper-jquery.js"></script>
 @endsection
 
 @section('page-js')

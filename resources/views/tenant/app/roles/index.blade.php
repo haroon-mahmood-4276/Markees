@@ -37,27 +37,27 @@
                             <ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ global_asset('theme-assets') }}/img/avatars/5.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/5.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Allen Rieske" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ global_asset('theme-assets') }}/img/avatars/12.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/12.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Julee Rossignol" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ global_asset('theme-assets') }}/img/avatars/6.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/6.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="Kaith D'souza" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ global_asset('theme-assets') }}/img/avatars/3.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/3.png"
                                         alt="Avatar">
                                 </li>
                                 <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
                                     title="John Doe" class="avatar avatar-sm pull-up">
-                                    <img class="rounded-circle" src="{{ global_asset('theme-assets') }}/img/avatars/1.png"
+                                    <img class="rounded-circle" src="{{ asset('theme-assets') }}/img/avatars/1.png"
                                         alt="Avatar">
                                 </li>
                             </ul>
@@ -83,7 +83,7 @@
                     <div class="row h-100">
                         <div class="col-sm-5">
                             <div class="d-flex align-items-end h-100 justify-content-center mt-sm-0 mt-3">
-                                <img src="{{ global_asset('theme-assets') }}/img/illustrations/add-new-roles.png"
+                                <img src="{{ asset('theme-assets') }}/img/illustrations/add-new-roles.png"
                                     class="img-fluid mt-sm-4 mt-md-0" alt="add-new-roles" width="83">
                             </div>
                         </div>

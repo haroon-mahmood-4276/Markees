@@ -19,7 +19,7 @@
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="{{ global_asset('theme-assets') }}/images/banner/banner-2.jpg" class="d-block w-100"
+                        <img src="{{ asset('theme-assets') }}/images/banner/banner-2.jpg" class="d-block w-100"
                             alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>First slide label</h5>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ global_asset('theme-assets') }}/images/banner/banner-3.jpg" class="d-block w-100"
+                        <img src="{{ asset('theme-assets') }}/images/banner/banner-3.jpg" class="d-block w-100"
                             alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>First slide label</h5>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="{{ global_asset('theme-assets') }}/images/banner/banner-4.jpg" class="d-block w-100"
+                        <img src="{{ asset('theme-assets') }}/images/banner/banner-4.jpg" class="d-block w-100"
                             alt="...">
                         <div class="carousel-caption d-none d-md-block">
                             <h5>First slide label</h5>
@@ -63,7 +63,7 @@
                 <div class="col-xl-6 col-lg-6 col-md-6">
                     <a href="{{ route('tenant.users.bookings.create', ['hall_id' => $hall->id]) }}">
                         <div class="card">
-                            <img src="{{ global_asset('theme-assets') }}/images/banner/banner-7.jpg"
+                            <img src="{{ asset('theme-assets') }}/images/banner/banner-7.jpg"
                                 class="img-fluid card-img rounded-start" alt="...">
                             <div class="card-img-overlay text-dark">
                                 <h5 class="card-title">{{ $hall->name }}</h5>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <html class="light-style layout-navbar-fixed layout-menu-fixed" lang="en" dir="ltr" data-theme="theme-default"
-    data-assets-path="{{ global_asset('theme-assets') }}/" data-template="vertical-menu-template">
+    data-assets-path="{{ asset('theme-assets') }}/" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
@@ -17,7 +17,7 @@
     @yield('seo-breadcrumb')
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="{{ global_asset('theme-assets') }}/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="{{ asset('theme-assets') }}/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,32 +27,32 @@
         rel="stylesheet">
 
     <!-- Icons -->
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/fonts/fontawesome.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/fonts/tabler-icons.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/fonts/flag-icons.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/fonts/fontawesome.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/fonts/tabler-icons.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/fonts/flag-icons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/css/rtl/core.min.css"
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/css/rtl/core.min.css"
         class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/css/rtl/theme-default.css"
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/css/rtl/theme-default.css"
         class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/css/demo.min.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/css/demo.min.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/node-waves/node-waves.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/animate-css/animate.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/select2/select2.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/toastr/toastr.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/flatpickr/flatpickr.css" />
-    <link rel="stylesheet" href="{{ global_asset('theme-assets') }}/vendor/libs/load-awesome/fire.min.css">
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/node-waves/node-waves.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/animate-css/animate.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/sweetalert2/sweetalert2.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/flatpickr/flatpickr.css" />
+    <link rel="stylesheet" href="{{ asset('theme-assets') }}/vendor/libs/load-awesome/fire.min.css">
     @yield('page-vendor')
 
-    <script src="{{ global_asset('theme-assets') }}/vendor/js/helpers.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/js/template-customizer.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/js/config.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/js/helpers.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/js/template-customizer.min.js"></script>
+    <script src="{{ asset('theme-assets') }}/js/config.js"></script>
     @yield('page-css')
     <style>
         .dataTables_scroll {
@@ -132,25 +132,25 @@
     </div>
     <!-- End Layout wrapper -->
 
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/jquery/jquery.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/popper/popper.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/js/bootstrap.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/block-ui/block-ui.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/node-waves/node-waves.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/hammer/hammer.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/typeahead-js/typeahead.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/js/menu.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/jquery/jquery.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/popper/popper.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/js/bootstrap.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/block-ui/block-ui.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/node-waves/node-waves.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/hammer/hammer.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/js/menu.js"></script>
 
-    <script src="{{ global_asset('theme-assets') }}/js/main.js"></script>
+    <script src="{{ asset('theme-assets') }}/js/main.js"></script>
 
     <!-- Vendors JS -->
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/sweetalert2/sweetalert2.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/select2/select2.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/toastr/toastr.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/moment/moment.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/moment/moment-timezone.min.js"></script>
-    <script src="{{ global_asset('theme-assets') }}/vendor/libs/flatpickr/flatpickr.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/sweetalert2/sweetalert2.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/select2/select2.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/toastr/toastr.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/moment/moment.min.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/moment/moment-timezone.min.js"></script>
+    <script src="{{ asset('theme-assets') }}/vendor/libs/flatpickr/flatpickr.js"></script>
     @yield('vendor-js')
 
     <!-- Main JS -->
