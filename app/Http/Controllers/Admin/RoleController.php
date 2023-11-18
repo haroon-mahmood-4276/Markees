@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\Admin\RolesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Roles\{storeRequest, updateRequest};
-use App\Models\Role;
+use App\Models\Admin\Role;
 use App\Services\Admin\Roles\RoleInterface;
 use Illuminate\Http\Request;
 use Exception;
@@ -19,11 +19,6 @@ class RoleController extends Controller
         $this->roleInterface = $roleInterface;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(RolesDataTable $dataTable)
     {
         if (request()->ajax()) {
@@ -35,11 +30,6 @@ class RoleController extends Controller
         return $dataTable->render('admin.roles.index', ['roles' => $roles]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         abort_if(request()->ajax(), 403);
@@ -51,12 +41,6 @@ class RoleController extends Controller
         return view('admin.roles.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(storeRequest $request)
     {
         abort_if(request()->ajax(), 403);
@@ -71,23 +55,11 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         abort(403);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Role $role)
     {
         abort_if(request()->ajax(), 403);
@@ -104,13 +76,6 @@ class RoleController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(updateRequest $request, Role $role)
     {
         abort_if(request()->ajax(), 403);

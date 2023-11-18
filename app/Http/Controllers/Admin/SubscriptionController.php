@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\Admin\SubscriptionsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Subscriptions\{storeRequest, updateRequest};
-use App\Models\Subscription;
+use App\Models\Admin\Subscription;
 use App\Services\Admin\Subscriptions\SubscriptionInterface;
 use Exception;
 use Illuminate\Http\Request;

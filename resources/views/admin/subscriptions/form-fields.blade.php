@@ -2,53 +2,61 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="name">Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                    name="name" placeholder="Name"
-                    value="{{ isset($subscription) ? $subscription->name : old('name') }}" />
-                @error('name')
-                    <div class="invalid-tooltip">{{ $message }}</div>
-                @else
-                    <div id="name-help" class="form-text">Enter name of subscription</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                        name="name" aria-describedby="nameHelp" placeholder="Ex. Sliver Subscription"
+                        value="{{ isset($subscription) ? $subscription->name : old('name') }}" />
+                    <label for="name">Name <span class="text-danger">*</span></label>
+                    @error('name')
+                        <div id="nameHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="nameHelp" class="form-text">Enter name of subscription</div>
+                    @enderror
+                </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="valid_days">Validity (Days) <span class="text-danger">*</span></label>
-                <input type="number" class="form-control @error('no_of_days') is-invalid @enderror" id="valid_days"
-                    name="no_of_days" placeholder="Validity (Days)"
-                    value="{{ isset($subscription) ? $subscription->no_of_days : old('no_of_days') }}" />
-                @error('no_of_days')
-                    <div class="invalid-tooltip">{{ $message }}</div>
-                @else
-                    <div id="no_of_days-help" class="form-text">Enter name of days for subscription to be valid.</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('no_of_days') is-invalid @enderror" id="valid_days"
+                        name="no_of_days" aria-describedby="no_of_daysHelp" placeholder="Like. 25"
+                        value="{{ isset($subscription) ? $subscription->no_of_days : old('no_of_days') }}" />
+                    <label for="valid_days">Validity <span class="text-danger">*</span></label>
+                    @error('no_of_days')
+                        <div id="no_of_daysHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="no_of_daysHelp" class="form-text">Enter number of days for subscription to be valid.</div>
+                    @enderror
+                </div>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="price">Price (Rs) <span class="text-danger">*</span></label>
-                <input type="number" class="form-control @error('price') is-invalid @enderror" id="price"
-                    name="price" placeholder="Price (Rs)"
-                    value="{{ isset($subscription) ? $subscription->price : old('price') }}" />
-                @error('price')
-                    <div class="invalid-tooltip">{{ $message }}</div>
-                @else
-                    <div id="price-help" class="form-text">Enter price charge for the subscription</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('price') is-invalid @enderror" id="price"
+                        name="price" aria-describedby="priceHelp" placeholder="Like. 24500"
+                        value="{{ isset($subscription) ? $subscription->price : old('price') }}" />
+                    <label for="price">Price (Rs) <span class="text-danger">*</span></label>
+                    @error('price')
+                        <div id="priceHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="priceHelp" class="form-text">Enter price charge for the subscription</div>
+                    @enderror
+                </div>
             </div>
 
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
-                <label class="form-label" style="font-size: 15px" for="halls_count">No of Halls <span class="text-danger">*</span></label>
-                <input type="number" class="form-control @error('no_of_halls') is-invalid @enderror" id="halls_count"
-                    name="no_of_halls" placeholder="No of Halls"
-                    value="{{ isset($subscription) ? $subscription->no_of_halls : old('no_of_halls') }}" />
-                @error('no_of_halls')
-                    <div class="invalid-tooltip">{{ $message }}</div>
-                @else
-                    <div id="price-help" class="form-text">Enter number of hall allowed against the subscription</div>
-                @enderror
+                <div class="form-floating">
+                    <input type="text" class="form-control @error('no_of_halls') is-invalid @enderror" id="no_of_halls"
+                        name="no_of_halls" aria-describedby="no_of_hallsHelp" placeholder="Like. 2"
+                        value="{{ isset($subscription) ? $subscription->no_of_halls : old('no_of_halls') }}" />
+                    <label for="no_of_halls">No of Halls <span class="text-danger">*</span></label>
+                    @error('no_of_halls')
+                        <div id="no_of_hallsHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="no_of_hallsHelp" class="form-text">Enter number of hall allowed against the subscription</div>
+                    @enderror
+                </div>
             </div>
         </div>
 

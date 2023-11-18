@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\Subscription;
+use App\Models\Admin\Subscription;
 use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;

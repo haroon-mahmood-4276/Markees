@@ -1,4 +1,4 @@
-@extends('errors::layout')
+@extends('admin.errors.layout')
 
 @section('page-title', __('Not Authorized'))
 

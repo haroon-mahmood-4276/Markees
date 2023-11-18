@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\Role;
+use App\Models\Admin\Role;
 use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
@@ -36,12 +36,6 @@ class RolesDataTable extends DataTable
             ->rawColumns(array_column($this->getColumns(), 'data'));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Role $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Role $model): QueryBuilder
     {
         return $model->newQuery();

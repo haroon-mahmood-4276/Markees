@@ -27,18 +27,5 @@ class AdminSeeder extends Seeder
         ]);
 
         $admin->assignRole($roles[0]);
-
-        $admin = (new Admin())->create([
-            'name' => 'Manager',
-            'email' => 'manager@markees.com',
-            'phone_no' => '0310-0177771',
-            'email_verified_at' => now()->timestamp,
-            'password' => Hash::make('password'),
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
-
-        $admin->assignRole($roles[1]);
     }
 }

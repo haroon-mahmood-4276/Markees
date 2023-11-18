@@ -1,11 +1,11 @@
-@extends('errors::layout')
+@extends('admin.errors.layout')
 
-@section('page-title', __('Server Error'))
+@section('page-title', __('Not Found'))
 
 @section('content')
     <div class="container-xxl">
         <div class="misc-wrapper">
-            <h2 class="mb-1 mx-2">Server Maintenance!</h2>
+            <h2 class="mb-1 mx-2">Under Maintenance!</h2>
             <p class="mb-4 mx-2">
                 Sorry for the inconvenience but we're performing some maintenance at the moment
             </p>

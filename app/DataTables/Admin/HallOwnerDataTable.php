@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\HallOwner;
+use App\Models\Admin\HallOwner;
 use App\Utils\Traits\DataTableTrait;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;

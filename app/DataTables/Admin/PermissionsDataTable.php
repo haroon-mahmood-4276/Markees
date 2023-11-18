@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models\{Role, Permission};
+use App\Models\Admin\{Role, Permission};
 use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\{Button, Column};
 use Yajra\DataTables\EloquentDataTable;
