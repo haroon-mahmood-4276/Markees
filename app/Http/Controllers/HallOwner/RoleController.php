@@ -33,7 +33,7 @@ class RoleController extends Controller
 
         $roles = (new Role())->inRandomOrder()->withCount('users')->limit(5)->get();
 
-        return $dataTable->render('tenant.app.roles.index', ['roles' => $roles]);
+        return $dataTable->render('hall_owner.roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -49,7 +49,7 @@ class RoleController extends Controller
             'roles' => $this->roleInterface->get(with_tree: true),
             'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
         ];
-        return view('tenant.app.roles.create', $data);
+        return view('hall_owner.roles.create', $data);
     }
 
     /**
@@ -66,9 +66,9 @@ class RoleController extends Controller
             $inputs = $request->validated();
             $this->roleInterface->store($inputs);
 
-            return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -100,9 +100,9 @@ class RoleController extends Controller
                 'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
             ];
 
-            return view('tenant.app.roles.edit', $data);
+            return view('hall_owner.roles.edit', $data);
         } catch (Exception $ex) {
-            return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -119,9 +119,9 @@ class RoleController extends Controller
         try {
             $inputs = $request->validated();
             $this->roleInterface->update($role->id, $inputs);
-            return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.roles.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -135,9 +135,9 @@ class RoleController extends Controller
                 $record = $this->roleInterface->destroy($request->checkForDelete);
             }
 
-            return redirect()->route('tenant.roles.index')->withSuccess(__('lang.commons.data_deleted'));
+            return redirect()->route('hall_owner.roles.index')->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.roles.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\DataTables\HallOwner;
 
-use App\Models\HallOwner\Cuisine;
+use App\Models\Cuisine;
 use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -38,7 +38,7 @@ class CuisinesDataTable extends DataTable
                 return editDateTimeColumn($cuisine->updated_at);
             })
             ->editColumn('actions', function ($cuisine) {
-                return view('tenant.app.cuisines.actions', ['cuisine' => $cuisine]);
+                return view('hall_owner.cuisines.actions', ['cuisine' => $cuisine]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
@@ -53,7 +53,7 @@ class CuisinesDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth()->user('tenant')->can('tenant.cuisines.create')) {
+        if (auth()->user('hall-owner')->can('hall_owner.cuisines.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
@@ -62,7 +62,7 @@ class CuisinesDataTable extends DataTable
                 ]);
         }
 
-        if (auth()->user('tenant')->can('tenant.cuisines.export')) {
+        if (auth()->user('hall-owner')->can('hall_owner.cuisines.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -79,7 +79,7 @@ class CuisinesDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth()->user('tenant')->can('tenant.cuisines.destroy')) {
+        if (auth()->user('hall-owner')->can('hall_owner.cuisines.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -129,7 +129,7 @@ class CuisinesDataTable extends DataTable
     protected function getColumns(): array
     {
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
-        if (auth('tenant')->user()->can('tenant.cuisines.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.cuisines.destroy')) {
             $checkColumn->addClass('disabled');
         }
 

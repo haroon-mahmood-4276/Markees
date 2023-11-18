@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\HallOwners;
 
-use App\Models\Admin\HallOwner;
+use App\Models;
 use App\Services\Admin\HallOwners\HallOwnerInterface;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

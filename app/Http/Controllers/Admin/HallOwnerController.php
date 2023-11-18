@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\Admin\HallOwnerDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HallOwners\{storeRequest, updateRequest};
-use App\Models\HallOwner;
+use App\Models;
 use App\Services\Admin\{
     Subscriptions\SubscriptionInterface,
     HallOwners\HallOwnerInterface,

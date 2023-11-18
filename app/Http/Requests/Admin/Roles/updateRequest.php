@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Roles;
 
-use App\Models\Admin\Role;
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 
 class updateRequest extends FormRequest

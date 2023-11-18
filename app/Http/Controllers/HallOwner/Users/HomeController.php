@@ -28,6 +28,6 @@ class HomeController extends Controller
             'halls' => $this->tenantHallInterface->getAll(relationships: ['slots']),
         ];
 
-        return view('tenant.users.app.home', $data);
+        return view('hall_owner.users.app.home', $data);
     }
 }

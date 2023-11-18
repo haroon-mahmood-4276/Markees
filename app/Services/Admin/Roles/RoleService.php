@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Roles;
 
-use App\Models\Admin\Role;
+use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
 class RoleService implements RoleInterface

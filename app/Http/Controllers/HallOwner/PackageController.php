@@ -6,7 +6,7 @@ use App\DataTables\HallOwner\PackagesDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Packages\{storeRequest, updateRequest};
-use App\Models\HallOwner\Package;
+use App\Models\Package;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use App\Services\HallOwner\Decorations\DecorationInterface;
 use App\Services\HallOwner\Packages\PackageInterface;
@@ -36,7 +36,7 @@ class PackageController extends Controller
             return $dataTable->ajax();
         }
 
-        return $dataTable->render('tenant.app.packages.index');
+        return $dataTable->render('hall_owner.packages.index');
     }
 
     public function create()
@@ -49,7 +49,7 @@ class PackageController extends Controller
             'cuisines' => $this->cuisineInterface->get(),
         ];
 
-        return view('tenant.app.packages.create', $data);
+        return view('hall_owner.packages.create', $data);
     }
 
     public function store(storeRequest $request)
@@ -58,9 +58,9 @@ class PackageController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->packageInterface->store($inputs);
-            return redirect()->route('tenant.packages.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.packages.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -75,7 +75,7 @@ class PackageController extends Controller
             'package' => $package,
         ];
 
-        return view('tenant.app.packages.edit', $data);
+        return view('hall_owner.packages.edit', $data);
     }
 
     public function update(updateRequest $request, Package $package)
@@ -84,9 +84,9 @@ class PackageController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->packageInterface->update($package->id, $inputs);
-            return redirect()->route('tenant.packages.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.packages.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.packages.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -100,13 +100,13 @@ class PackageController extends Controller
                 $record = $this->packageInterface->destroy($request->checkForDelete);
 
                 if ($record) {
-                    return redirect()->route('tenant.packages.index')->withSuccess(__('lang.commons.data_deleted'));
+                    return redirect()->route('hall_owner.packages.index')->withSuccess(__('lang.commons.data_deleted'));
                 } else {
-                    return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.data_not_found'));
+                    return redirect()->route('hall_owner.packages.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
         } catch (Exception $ex) {
-            return redirect()->route('tenant.packages.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('hall_owner.packages.index')->withDanger(__('lang.commons.something_went_wrong'));
         }
     }
 }

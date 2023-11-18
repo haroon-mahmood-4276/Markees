@@ -4,7 +4,7 @@ namespace Database\Seeders\Admin;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Admin\{Role, Permission};
+use App\Models\{Role, Permission};
 use Illuminate\Support\Facades\Artisan;
 
 class PermissionSeeder extends Seeder

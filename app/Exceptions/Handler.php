@@ -24,22 +24,25 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->reportable(function (Throwable $exception) {
-            if (auth()->check()) {
-                $exceptionCode = $exception->getCode();
-                $exceptionCode = $exceptionCode > 0 ? $exceptionCode : 500;
-
-                if (in_array($exceptionCode, [401, 402, 403, 404, 419, 500, 503])) {
-                    $view = match (request()->segment(1)) {
-                        'admin' => 'admin.errors.',
-                        'hall-owner' => 'hall_owner.errors.',
-                        default => 'user.errors.',
-                    } . $exceptionCode;
-
-                    // dd($view);
-
-                    return response()->view($view);
-                }
-            }
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception->getCode() === 0)
+            return parent::render($request, $exception);
+        $exceptionCode = $exception->getCode() > 0 ? $exception->getCode() : 500;
+
+        if (in_array($exceptionCode, [401, 402, 403, 404, 419, 500, 503])) {
+            $view = match ($request->segment(1)) {
+                'admin' => 'admin.errors.',
+                'hall-owner' => 'hall_owner.errors.',
+                default => 'user.errors.',
+            }
+                . $exceptionCode;
+            return response()->view($view);
+        }
+
+        return parent::render($request, $exception);
     }
 }

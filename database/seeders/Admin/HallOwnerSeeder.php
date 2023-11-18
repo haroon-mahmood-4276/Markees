@@ -2,17 +2,15 @@
 
 namespace Database\Seeders\Admin;
 
-use App\Models\Admin\{HallOwner, Subscription};
+use App\Models\{HallOwner, Subscription};
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class HallOwnerSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    use WithoutModelEvents;
+
     public function run()
     {
         $data = [

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\Admin\PermissionsDataTable;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\{Role, Permission};
+use App\Models\{Role, Permission};
 use Exception;
 use Illuminate\Http\Request;
 

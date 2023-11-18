@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Admin;
 
-use App\Models\Admin\{Admin, Role};
+use App\Models\{Admin, Role};
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;

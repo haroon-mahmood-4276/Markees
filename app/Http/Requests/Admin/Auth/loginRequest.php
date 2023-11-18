@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Auth;
 
-use App\Models\Admin\Admin;
+use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
 
 class loginRequest extends FormRequest

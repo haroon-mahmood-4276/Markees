@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin\Subscriptions;
 
-use App\Models\Admin\Subscription;
+use App\Models\Subscription;
 use App\Services\Admin\Subscriptions\SubscriptionInterface;
 use Illuminate\Support\Facades\DB;
 

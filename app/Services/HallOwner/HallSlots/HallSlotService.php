@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\HallSlots;
 
-use App\Models\HallOwner\HallSlot;
+use App\Models\HallSlot;
 use App\Services\HallOwner\HallSlots\HallSlotInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\HallOwner;
 use App\DataTables\HallOwner\HallSlotsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\HallSlots\{storeRequest, updateRequest};
-use App\Models\HallOwner\Hall;
-use App\Models\HallOwner\HallSlot;
+use App\Models\Hall;
+use App\Models\HallSlot;
 use App\Services\HallOwner\HallSlots\HallSlotInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class HallSlotController extends Controller
             return $dataTable->with($data)->ajax();
         }
 
-        return $dataTable->with($data)->render('tenant.app.halls.settings.slots.index', $data);
+        return $dataTable->with($data)->render('hall_owner.halls.settings.slots.index', $data);
     }
 
     public function create(Hall $hall)
@@ -38,7 +38,7 @@ class HallSlotController extends Controller
 
         $data = ['hall' => $hall];
 
-        return view('tenant.app.halls.settings.slots.create', $data);
+        return view('hall_owner.halls.settings.slots.create', $data);
     }
 
     public function store(storeRequest $request, Hall $hall)
@@ -48,9 +48,9 @@ class HallSlotController extends Controller
 
             $inputs = $request->validated();
             $record = $this->hallSlotInterface->store($hall->id, $inputs);
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ class HallSlotController extends Controller
             'slot' => $slot,
         ];
 
-        return view('tenant.app.halls.settings.slots.edit', $data);
+        return view('hall_owner.halls.settings.slots.edit', $data);
     }
 
     public function update(updateRequest $request, Hall $hall, HallSlot $slot)
@@ -72,9 +72,9 @@ class HallSlotController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $record = $this->hallSlotInterface->update($hall->id, $slot->id, $inputs);
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -85,9 +85,9 @@ class HallSlotController extends Controller
             if ($request->has('checkForDelete')) {
                 $this->hallSlotInterface->destroy($hall->id, $request->checkForDelete);
             }
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_deleted'));
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.slots.index', ['hall' => $hall->id])->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

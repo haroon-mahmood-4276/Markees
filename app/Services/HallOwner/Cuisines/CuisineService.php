@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\Cuisines;
 
-use App\Models\HallOwner\Cuisine;
+use App\Models\Cuisine;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use Illuminate\Support\Facades\DB;
 

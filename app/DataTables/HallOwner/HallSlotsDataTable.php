@@ -2,8 +2,8 @@
 
 namespace App\DataTables\HallOwner;
 
-use App\Models\HallOwner\Hall;
-use App\Models\HallOwner\HallSlot;
+use App\Models\Hall;
+use App\Models\HallSlot;
 use App\Services\HallOwner\Halls\HallInterface;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
@@ -50,7 +50,7 @@ class HallSlotsDataTable extends DataTable
                 return editDateTimeColumn($hallSlot->updated_at);
             })
             ->editColumn('actions', function ($hallSlot) {
-                return view('tenant.app.halls.settings.slots.actions', ['hall' => $this->hall, 'slot' => $hallSlot]);
+                return view('hall_owner.halls.settings.slots.actions', ['hall' => $this->hall, 'slot' => $hallSlot]);
             })
             ->editColumn('check', function ($hallSlot) {
                 return $hallSlot;
@@ -68,8 +68,8 @@ class HallSlotsDataTable extends DataTable
     {
         $buttons = [];
 
-        // auth('tenant')->user()->tenantSubscription->no_of_halls
-        if (auth('tenant')->user()->can('tenant.halls.slots.create')) {
+        // auth('hall-owner')->user()->tenantSubscription->no_of_halls
+        if (auth('hall-owner')->user()->can('hall_owner.halls.slots.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
@@ -78,7 +78,7 @@ class HallSlotsDataTable extends DataTable
                 ]);
         }
 
-        if (auth('tenant')->user()->can('tenant.halls.slots.export')) {
+        if (auth('hall-owner')->user()->can('hall_owner.halls.slots.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -95,7 +95,7 @@ class HallSlotsDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth()->user()->can('tenant.halls.slots.destroy')) {
+        if (auth()->user()->can('hall_owner.halls.slots.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -145,7 +145,7 @@ class HallSlotsDataTable extends DataTable
     {
 
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
-        if (auth('tenant')->user()->can('tenant.halls.slots.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.halls.slots.destroy')) {
             $checkColumn->addClass('disabled');
         }
 

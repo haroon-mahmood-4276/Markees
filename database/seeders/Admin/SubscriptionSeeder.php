@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Admin;
 
-use App\Models\Admin\Subscription;
+use App\Models\Subscription;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

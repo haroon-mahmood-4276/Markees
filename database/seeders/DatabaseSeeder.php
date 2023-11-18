@@ -11,16 +11,16 @@ use Database\Seeders\Admin\{
     SubscriptionSeeder
 };
 use Illuminate\Database\Seeder;
-// use Database\Seeders\Tenants\{
-//     RoleSeeder as TenantRoleSeeder,
-//     PermissionSeeder as TenantPermissionSeeder,
-//     HallTypeSeeder as TenantHallTypeSeeder,
-//     HallSeeder as TenantHallSeeder,
-//     DecorationSeeder as TenantDecorationSeeder,
-//     CuisineSeeder as TenantCuisineSeeder,
-//     MenuSeeder as TenantMenuSeeder,
-//     HallSlotSeeder as TenantHallSlotSeeder,
-// };
+use Database\Seeders\HallOwner\{
+    RoleSeeder as TenantRoleSeeder,
+    PermissionSeeder as TenantPermissionSeeder,
+    HallTypeSeeder as TenantHallTypeSeeder,
+    HallSeeder as TenantHallSeeder,
+    DecorationSeeder as TenantDecorationSeeder,
+    CuisineSeeder as TenantCuisineSeeder,
+    MenuSeeder as TenantMenuSeeder,
+    HallSlotSeeder as TenantHallSlotSeeder,
+};
 
 class DatabaseSeeder extends Seeder
 {

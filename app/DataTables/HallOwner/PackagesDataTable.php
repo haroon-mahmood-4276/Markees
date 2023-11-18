@@ -2,7 +2,7 @@
 
 namespace App\DataTables\HallOwner;
 
-use App\Models\HallOwner\Package;
+use App\Models\Package;
 use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -36,7 +36,7 @@ class PackagesDataTable extends DataTable
                 return editDateTimeColumn($package->updated_at);
             })
             ->editColumn('actions', function ($package) {
-                return view('tenant.app.packages.actions', ['package' => $package]);
+                return view('hall_owner.packages.actions', ['package' => $package]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
@@ -51,7 +51,7 @@ class PackagesDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth()->user('tenant')->can('tenant.packages.create')) {
+        if (auth()->user('hall-owner')->can('hall_owner.packages.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
@@ -60,7 +60,7 @@ class PackagesDataTable extends DataTable
                 ]);
         }
 
-        if (auth()->user('tenant')->can('tenant.packages.export')) {
+        if (auth()->user('hall-owner')->can('hall_owner.packages.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -77,7 +77,7 @@ class PackagesDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth()->user('tenant')->can('tenant.packages.destroy')) {
+        if (auth()->user('hall-owner')->can('hall_owner.packages.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -129,7 +129,7 @@ class PackagesDataTable extends DataTable
     {
 
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap align-middle');
-        if (auth('tenant')->user()->can('tenant.packages.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.packages.destroy')) {
             $checkColumn->addClass('disabled');
         }
 

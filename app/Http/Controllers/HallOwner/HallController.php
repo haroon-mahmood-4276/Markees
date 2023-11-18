@@ -5,7 +5,7 @@ namespace App\Http\Controllers\HallOwner;
 use App\DataTables\HallOwner\HallsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Halls\{storeRequest, updateRequest};
-use App\Models\HallOwner\Hall;
+use App\Models\Hall;
 use App\Services\HallOwner\Halls\HallInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,20 +25,20 @@ class HallController extends Controller
             return $dataTable->ajax();
         }
 
-        return $dataTable->render('tenant.app.halls.index');
+        return $dataTable->render('hall_owner.halls.index');
     }
 
     public function create(Request $request)
     {
         abort_if(request()->ajax(), 403);
 
-        if (($this->hallInterface->get(onlyCount: true) >= auth('tenant')->user()->tenantSubscription->no_of_halls)) {
-            return redirect()->route('tenant.halls.index')->withWarning('You have reached the maximum number of halls allowed for your subscription plan.');
+        if (($this->hallInterface->get(onlyCount: true) >= auth('hall-owner')->user()->tenantSubscription->no_of_halls)) {
+            return redirect()->route('hall_owner.halls.index')->withWarning('You have reached the maximum number of halls allowed for your subscription plan.');
         }
 
         $data = [];
 
-        return view('tenant.app.halls.create', $data);
+        return view('hall_owner.halls.create', $data);
     }
 
     public function store(storeRequest $request)
@@ -48,9 +48,9 @@ class HallController extends Controller
 
             $inputs = $request->validated();
             $this->hallInterface->store($inputs);
-            return redirect()->route('tenant.halls.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.halls.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -63,7 +63,7 @@ class HallController extends Controller
             'images' => $hall->getMedia('halls'),
         ];
 
-        return view('tenant.app.halls.edit', $data);
+        return view('hall_owner.halls.edit', $data);
     }
 
     public function update(updateRequest $request, $id)
@@ -72,9 +72,9 @@ class HallController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->hallInterface->update($id, $inputs);
-            return redirect()->route('tenant.halls.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.halls.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -88,14 +88,14 @@ class HallController extends Controller
                 $record = $this->hallInterface->destroy($request->checkForDelete);
 
                 if ($record) {
-                    return redirect()->route('tenant.halls.index')->withSuccess(__('lang.commons.data_deleted'));
+                    return redirect()->route('hall_owner.halls.index')->withSuccess(__('lang.commons.data_deleted'));
                 } else {
-                    return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.data_not_found'));
+                    return redirect()->route('hall_owner.halls.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
+            return redirect()->route('hall_owner.halls.index')->withDanger(__('lang.commons.something_went_wrong'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.halls.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

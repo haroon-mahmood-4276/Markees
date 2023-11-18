@@ -2,7 +2,7 @@
 
 namespace App\DataTables\HallOwner;
 
-use App\Models\HallOwner\Decoration;
+use App\Models\Decoration;
 use App\Utils\Traits\DataTableTrait;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -44,7 +44,7 @@ class DecorationsDataTable extends DataTable
                 return editDateTimeColumn($decoration->updated_at);
             })
             ->editColumn('actions', function ($decoration) {
-                return view('tenant.app.decorations.actions', ['decoration' => $decoration]);
+                return view('hall_owner.decorations.actions', ['decoration' => $decoration]);
             })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
@@ -59,7 +59,7 @@ class DecorationsDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth('tenant')->user()->can('tenant.decorations.create')) {
+        if (auth('hall-owner')->user()->can('hall_owner.decorations.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
@@ -68,7 +68,7 @@ class DecorationsDataTable extends DataTable
                 ]);
         }
 
-        if (auth('tenant')->user()->can('tenant.decorations.export')) {
+        if (auth('hall-owner')->user()->can('hall_owner.decorations.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -85,7 +85,7 @@ class DecorationsDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('tenant')->user()->can('tenant.decorations.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.decorations.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -140,7 +140,7 @@ class DecorationsDataTable extends DataTable
     {
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
 
-        if (auth('tenant')->user()->can('tenant.decorations.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.decorations.destroy')) {
             $checkColumn->addClass('disabled');
         }
 

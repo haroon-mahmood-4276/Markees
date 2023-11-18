@@ -5,7 +5,7 @@ namespace App\Http\Controllers\HallOwner;
 use App\DataTables\HallOwner\DecorationsDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Decorations\{storeRequest, updateRequest};
-use App\Models\HallOwner\Decoration;
+use App\Models\Decoration;
 use App\Services\HallOwner\Decorations\DecorationInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class DecorationController extends Controller
             return $dataTable->ajax();
         }
 
-        return $dataTable->render('tenant.app.decorations.index');
+        return $dataTable->render('hall_owner.decorations.index');
     }
 
     public function create()
@@ -36,7 +36,7 @@ class DecorationController extends Controller
             'images' => [],
         ];
 
-        return view('tenant.app.decorations.create', $data);
+        return view('hall_owner.decorations.create', $data);
     }
 
     public function store(storeRequest $request)
@@ -45,9 +45,9 @@ class DecorationController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->decorationInterface->store($inputs);
-            return redirect()->route('tenant.decorations.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.decorations.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -60,7 +60,7 @@ class DecorationController extends Controller
             'images' => $decoration->getMedia('decorations'),
         ];
 
-        return view('tenant.app.decorations.edit', $data);
+        return view('hall_owner.decorations.edit', $data);
     }
 
     public function update(updateRequest $request, $id)
@@ -69,9 +69,9 @@ class DecorationController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->decorationInterface->update($id, $inputs);
-            return redirect()->route('tenant.decorations.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.decorations.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -85,13 +85,13 @@ class DecorationController extends Controller
                 $record = $this->decorationInterface->destroy($request->checkForDelete);
 
                 if ($record) {
-                    return redirect()->route('tenant.decorations.index')->withSuccess(__('lang.commons.data_deleted'));
+                    return redirect()->route('hall_owner.decorations.index')->withSuccess(__('lang.commons.data_deleted'));
                 } else {
-                    return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.data_not_found'));
+                    return redirect()->route('hall_owner.decorations.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
         } catch (Exception $ex) {
-            return redirect()->route('tenant.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.decorations.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

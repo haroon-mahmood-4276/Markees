@@ -39,7 +39,7 @@ class AjaxController extends Controller
         }
 
         if ($request->has('need') && $request->need == 'view') {
-            $view = view('tenant.users.app.bookings.partials.select', $data)->render();
+            $view = view('hall_owner.users.app.bookings.partials.select', $data)->render();
             return apiSuccessResponse($view);
         }
 

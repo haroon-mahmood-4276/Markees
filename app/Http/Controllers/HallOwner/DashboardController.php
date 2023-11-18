@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function dashboard(Request $request)
     {
-        return view('tenant.app.dashboard');
+        return view('hall_owner.dashboard');
     }
 
     // public function cacheFlush(Request $request)

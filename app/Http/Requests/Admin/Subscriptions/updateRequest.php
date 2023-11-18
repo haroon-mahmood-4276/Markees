@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\Subscriptions;
 
-use App\Models\Admin\Subscription;
+use App\Models\Subscription;
 use Illuminate\Foundation\Http\FormRequest;
 
 class updateRequest extends FormRequest

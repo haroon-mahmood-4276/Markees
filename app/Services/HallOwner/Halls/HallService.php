@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\Halls;
 
-use App\Models\HallOwner\Hall;
+use App\Models\Hall;
 use App\Services\HallOwner\Halls\HallInterface;
 use Illuminate\Support\Facades\DB;
 

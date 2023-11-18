@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Admin\Admin;
-
 return [
 
     /*
@@ -47,9 +45,9 @@ return [
             'provider' => 'admins',
         ],
 
-        'tenant' => [
+        'hall-owner' => [
             'driver' => 'session',
-            'provider' => 'tenants',
+            'provider' => 'hall-owners',
         ],
     ],
 
@@ -78,12 +76,12 @@ return [
 
         'admins' => [
             'driver' => 'eloquent',
-            'model' => Admin::class,
+            'model' => App\Models\Admin::class,
         ],
 
-        'tenants' => [
+        'hall-owners' => [
             'driver' => 'eloquent',
-            'model' => App\Models\HallOwner\TenantUser::class,
+            'model' => App\Models\HallOwner::class,
         ],
 
         // 'users' => [
@@ -122,8 +120,8 @@ return [
             'throttle' => 60,
         ],
 
-        'tenants' => [
-            'provider' => 'tenants',
+        'hall-owners' => [
+            'provider' => 'hall-owners',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

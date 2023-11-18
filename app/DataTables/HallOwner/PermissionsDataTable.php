@@ -55,7 +55,7 @@ class PermissionsDataTable extends DataTable
         $buttons = [];
 
 
-        if (auth('tenant')->user()->can('tenant.permissions.export')) {
+        if (auth('hall-owner')->user()->can('hall_owner.permissions.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -72,7 +72,7 @@ class PermissionsDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('tenant')->user()->can('tenant.permissions.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.permissions.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="icon material-icons md-delete"></i><span id="delete_selected_count" style="display:none">0</span> Delete Selected')
@@ -125,7 +125,7 @@ class PermissionsDataTable extends DataTable
 
         foreach ($roles as $key => $role) {
 
-            if ($role['guard_name'] != 'tenant')
+            if ($role['guard_name'] != 'hall-owner')
                 continue;
 
             $colArray[] = Column::computed('roles')

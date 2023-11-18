@@ -16,7 +16,7 @@ class PermissionController extends Controller
         if (request()->ajax()) {
             return $dataTable->ajax();
         }
-        return $dataTable->render('tenant.app.permissions.index');
+        return $dataTable->render('hall_owner.permissions.index');
     }
 
     public function assignPermissionToRole(Request $request)

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\HallOwner;
 use App\DataTables\HallOwner\CuisinesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenants\Cuisines\{storeRequest, updateRequest};
-use App\Models\HallOwner\Cuisine;
+use App\Models\Cuisine;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use Exception;
 use Illuminate\Http\Request;
@@ -25,7 +25,7 @@ class CuisineController extends Controller
             return $dataTable->ajax();
         }
 
-        return $dataTable->render('tenant.app.cuisines.index');
+        return $dataTable->render('hall_owner.cuisines.index');
     }
 
     public function create()
@@ -36,7 +36,7 @@ class CuisineController extends Controller
             'images' => [],
         ];
 
-        return view('tenant.app.cuisines.create', $data);
+        return view('hall_owner.cuisines.create', $data);
     }
 
     public function store(storeRequest $request)
@@ -45,9 +45,9 @@ class CuisineController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->cuisineInterface->store($inputs);
-            return redirect()->route('tenant.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -55,7 +55,7 @@ class CuisineController extends Controller
     {
         abort_if(request()->ajax(), 403);
         $data = ['cuisine' => $cuisine, 'images' => $cuisine->getMedia('cuisines')];
-        return view('tenant.app.cuisines.edit', $data);
+        return view('hall_owner.cuisines.edit', $data);
     }
 
     public function update(updateRequest $request, $id)
@@ -64,9 +64,9 @@ class CuisineController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $record = $this->cuisineInterface->update($id, $inputs);
-            return redirect()->route('tenant.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('hall_owner.cuisines.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -80,13 +80,13 @@ class CuisineController extends Controller
                 $record = $this->cuisineInterface->destroy($request->checkForDelete);
 
                 if ($record) {
-                    return redirect()->route('tenant.cuisines.index')->withSuccess(__('lang.commons.data_deleted'));
+                    return redirect()->route('hall_owner.cuisines.index')->withSuccess(__('lang.commons.data_deleted'));
                 } else {
-                    return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.data_not_found'));
+                    return redirect()->route('hall_owner.cuisines.index')->withDanger(__('lang.commons.data_not_found'));
                 }
             }
         } catch (Exception $ex) {
-            return redirect()->route('tenant.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('hall_owner.cuisines.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

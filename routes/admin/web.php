@@ -22,6 +22,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::get('admin', fn () => redirect()->route('admin.login'));
+
 // Route::group(['prefix' => LaravelLocalization::setLocale() . '/admin', 'as' => 'admin.', 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::controller(AuthController::class)->middleware(['guest:admin'])->group(function () {

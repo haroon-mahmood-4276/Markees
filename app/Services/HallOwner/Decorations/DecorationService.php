@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\Decorations;
 
-use App\Models\HallOwner\Decoration;
+use App\Models\Decoration;
 use App\Services\HallOwner\Decorations\DecorationInterface;
 use Illuminate\Support\Facades\DB;
 

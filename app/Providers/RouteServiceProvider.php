@@ -28,6 +28,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () {
             $this->mapAdminRoutes();
+            $this->mapHallOwnerRoutes();
         });
     }
 
@@ -39,6 +40,16 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('api')
             ->middleware('api')
             ->group(base_path('routes/admin/api.php'));
+    }
+
+    protected function mapHallOwnerRoutes()
+    {
+        Route::middleware('web')
+            ->group(base_path('routes/hall_owner/web.php'));
+
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(base_path('routes/hall_owner/api.php'));
     }
 
     protected function configureRateLimiting()

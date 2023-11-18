@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\Packages;
 
-use App\Models\HallOwner\Package;
+use App\Models\Package;
 use App\Services\HallOwner\Packages\PackageInterface;
 use Illuminate\Support\Facades\DB;
 

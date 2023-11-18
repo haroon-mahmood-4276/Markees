@@ -30,7 +30,7 @@ class RolesDataTable extends DataTable
             })
             ->editColumn('actions', function ($model) {
                 if ($model->name != 'Admin')
-                    return view('tenant.app.roles.actions', ['role' => $model]);
+                    return view('hall_owner.roles.actions', ['role' => $model]);
             })
             ->setRowId('id')
             ->rawColumns(array_column($this->getColumns(), 'data'));
@@ -51,7 +51,7 @@ class RolesDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth('tenant')->user()->can('tenant.roles.export')) {
+        if (auth('hall-owner')->user()->can('hall_owner.roles.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -68,7 +68,7 @@ class RolesDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('tenant')->user()->can('tenant.roles.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.roles.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
@@ -131,7 +131,7 @@ class RolesDataTable extends DataTable
     {
 
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(60);
-        if (auth('tenant')->user()->can('tenant.roles.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.roles.destroy')) {
             $checkColumn->addClass('disabled');
         }
 

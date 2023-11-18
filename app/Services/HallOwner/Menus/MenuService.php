@@ -2,7 +2,7 @@
 
 namespace App\Services\HallOwner\Menus;
 
-use App\Models\HallOwner\Menu;
+use App\Models\Menu;
 use App\Services\HallOwner\Menus\MenuInterface;
 use Illuminate\Support\Facades\DB;
 

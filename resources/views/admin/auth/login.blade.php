@@ -9,7 +9,7 @@
 
                 @csrf
 
-                {{ view('admin.layout.alerts') }}
+                @include('admin.layout.alerts')
 
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
