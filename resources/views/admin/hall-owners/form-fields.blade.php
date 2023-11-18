@@ -5,7 +5,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                         name="name" placeholder="Ex. Usama Riaz"
-                        value="{{ isset($hallOwner) ? $hallOwner->name : old('name') }}" aria-describedby="nameHelp">
+                        value="{{ isset($hall_owner) ? $hall_owner->name : old('name') }}" aria-describedby="nameHelp">
                     <label for="name">Name <span class="text-danger">*</span></label>
                     @error('name')
                         <div id="nameHelp" class="form-text invalid-feedback">{{ $message }}</div>
@@ -20,7 +20,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control @error('ntn') is-invalid @enderror" id="ntn"
                         name="ntn" placeholder="1234567-1"
-                        value="{{ isset($hallOwner) ? $hallOwner->ntn : old('ntn') }}" aria-describedby="ntnHelp">
+                        value="{{ isset($hall_owner) ? $hall_owner->ntn : old('ntn') }}" aria-describedby="ntnHelp">
                     <label for="name">NTN <span class="text-danger">*</span></label>
                     @error('ntn')
                         <div id="ntnHelp" class="form-text invalid-feedback">{{ $message }}</div>
@@ -36,7 +36,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
                         name="email" placeholder="abc@example.com"
-                        value="{{ isset($hallOwner) ? $hallOwner->email : old('email') }}" aria-describedby="emailHelp">
+                        value="{{ isset($hall_owner) ? $hall_owner->email : old('email') }}" aria-describedby="emailHelp">
                     <label for="email">Email <span class="text-danger">*</span></label>
                     @error('email')
                         <div id="emailHelp" class="form-text invalid-feedback">{{ $message }}</div>
@@ -50,8 +50,7 @@
                 <div class="form-floating">
                     <input type="text" class="form-control @error('password') is-invalid @enderror" id="password"
                         name="password" aria-describedby="passwordHelp"
-                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                        value="{{ isset($hallOwner) ? $hallOwner->password : old('password') }}">
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;">
                     <label for="password">Password <span class="text-danger">*</span></label>
                     @error('password')
                         <div id="passwordHelp" class="form-text invalid-feedback">The password must be at least 8 characters
@@ -67,9 +66,8 @@
             <div class="col-lg-6 col-md-6 col-sm-6 position-relative">
                 <div class="form-floating">
                     <input type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                        name="phone" aria-describedby="phoneHelp"
-                        placeholder="+92 123 456 7890"
-                        value="{{ isset($hallOwner) ? $hallOwner->phone : old('phone') }}">
+                        name="phone" aria-describedby="phoneHelp" placeholder="0123 4567890"
+                        value="{{ isset($hall_owner) ? $hall_owner->phone : old('phone') }}">
                     <label for="phone">Phone <span class="text-danger">*</span></label>
                     @error('phone')
                         <div id="phoneHelp" class="form-text invalid-feedback">{{ $message }}</div>
@@ -84,7 +82,7 @@
                     <input type="text" class="form-control @error('cnic') is-invalid @enderror" id="cnic"
                         name="cnic" aria-describedby="cnicHelp"
                         placeholder="12345-1234567-1"
-                        value="{{ isset($hallOwner) ? $hallOwner->cnic : old('cnic') }}">
+                        value="{{ isset($hall_owner) ? $hall_owner->cnic : old('cnic') }}">
                     <label for="cnic">CNIC <span class="text-danger">*</span></label>
                     @error('cnic')
                         <div id="cnicHelp" class="form-text invalid-feedback">{{ $message }}</div>
@@ -103,7 +101,7 @@
                     <option value="">Select Subscription</option>
                     @forelse ($subscriptions as $row)
                         <option value="{{ $row->id }}"
-                            {{ (isset($hallOwner) ? $hallOwner->subscription_id : old('subscription')) == $row['id'] ? 'selected' : '' }}>
+                            {{ (isset($hall_owner) ? $hall_owner->subscription_id : old('subscription')) == $row['id'] ? 'selected' : '' }}>
                             {{ $loop->index + 1 }} - {{ $row->name }} ({{ $row->no_of_days }} Days)</option>
                     @empty
                     @endforelse
@@ -121,7 +119,7 @@
                 <div class="form-check form-check-inline">
                     <input type="hidden" name="active" value="0">
                     <input class="form-check-input" type="checkbox" id="active" name="active" value="1"
-                        {{ isset($hallOwner) ? ($hallOwner->active ? 'checked' : null) : (old('active') ? 'checked' : null) }}>
+                        {{ isset($hall_owner) ? ($hall_owner->active ? 'checked' : null) : (old('active') ? 'checked' : null) }}>
                     <label class="form-check-label" for="active">Active</label>
                 </div>
                 @error('active')

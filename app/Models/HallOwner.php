@@ -44,7 +44,7 @@ class HallOwner extends Model implements HasMedia
         'email' => 'email|unique:hall_owners,email',
         'phone' => 'unique:hall_owners,phone',
         'cnic' => 'alpha_dash|min:15|max:15|unique:hall_owners,cnic',
-        'ntn' => 'string|numeric|unique:hall_owners,ntn',
+        'ntn' => 'string|unique:hall_owners,ntn',
         'active' => 'boolean',
         'owner_ntn_attachment' => 'image|mimes:jpeg,png,jpg|max:536',
         'owner_cnic_attachments' => 'array|size:2',

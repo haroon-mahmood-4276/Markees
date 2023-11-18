@@ -56,7 +56,7 @@ Breadcrumbs::for('admin.hall-owners.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Owner');
 });
 
-Breadcrumbs::for('admin.hall-owners.edit', function (BreadcrumbTrail $trail, $hallOwner_id) {
+Breadcrumbs::for('admin.hall-owners.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.hall-owners.index');
     $trail->push('Edit Owner');
 });

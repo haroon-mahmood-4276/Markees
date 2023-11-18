@@ -24,17 +24,14 @@
 @endsection
 
 @section('content')
-    <form action="{{ route('admin.hall-owners.update', encryptParams($hallOwner->id)) }}" method="POST"
+    <form action="{{ route('admin.hall-owners.update', [$hall_owner]) }}" method="POST"
         enctype="multipart/form-data">
         @method('PUT')
         @csrf
 
         <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
-                {{ view('admin.app.hall-owners.form-fields', [
-                    'subscriptions' => $subscriptions,
-                    'domain' => $domain,
-                ]) }}
+                @include('admin.hall-owners.form-fields')
             </div>
 
             <div class="col-lg-3 col-md-3 col-sm-12 position-relative">
@@ -124,5 +121,5 @@
 @endsection
 
 @section('custom-js')
-    @include('admin.hall-owners.form-fields-js', ['from' => 'create'])
+    @include('admin.hall-owners.form-fields-js', ['from' => 'edit'])
 @endsection
