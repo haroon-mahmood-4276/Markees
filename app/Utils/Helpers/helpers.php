@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\{Role};
-use App\Models\Tenants\{HallType};
+use App\Models\HallOwner\{HallType};
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\{Collection};
 

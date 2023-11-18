@@ -3,6 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\Admin\{
+    AdminSeeder,
+    HallOwnerSeeder,
+    PermissionSeeder,
+    RoleSeeder,
+    SubscriptionSeeder
+};
 use Illuminate\Database\Seeder;
 // use Database\Seeders\Tenants\{
 //     RoleSeeder as TenantRoleSeeder,
@@ -26,11 +33,11 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionSeeder::class,
             AdminSeeder::class,
-            // UserSeeder::class,
             SubscriptionSeeder::class,
+            HallOwnerSeeder::class,
+            // UserSeeder::class,
             // ContinentSeeder::class,
             // CountrySeeder::class,
-            HallOwnerSeeder::class,
             // TenantRoleSeeder::class,
             // TenantPermissionSeeder::class,
             // TenantHallTypeSeeder::class,

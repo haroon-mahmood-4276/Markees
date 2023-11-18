@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\HallTypes;
 
-use App\Models\Tenants\HallType;
+use App\Models\HallOwner\HallType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class storeRequest extends FormRequest

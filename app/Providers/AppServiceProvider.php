@@ -7,15 +7,15 @@ use App\Services\Admin\Permissions\{PermissionInterface, PermissionService};
 use App\Services\Admin\Roles\{RoleInterface, RoleService};
 use App\Services\Admin\Subscriptions\{SubscriptionInterface, SubscriptionService};
 
-use App\Services\Tenants\Roles\{RoleInterface as TenantRoleInterface, RoleService as TenantRoleService};
-use App\Services\Tenants\Permissions\{PermissionInterface as TenantPermissionInterface, PermissionService as TenantPermissionService};
-use App\Services\Tenants\HallTypes\{HallTypeInterface as TenantHallTypeInterface, HallTypeService as TenantHallTypeService};
-use App\Services\Tenants\Decorations\{DecorationInterface as TenantDecorationInterface, DecorationService as TenantDecorationService};
-use App\Services\Tenants\Cuisines\{CuisineInterface as TenantCuisineInterface, CuisineService as TenantCuisineService};
-use App\Services\Tenants\Menus\{MenuInterface as TenantMenuInterface, MenuService as TenantMenuService};
-use App\Services\Tenants\Packages\{PackageInterface as TenantPackageInterface, PackageService as TenantPackageService};
-use App\Services\Tenants\Halls\{HallInterface as TenantHallInterface, HallService as TenantHallService};
-use App\Services\Tenants\HallSlots\{HallSlotInterface as TenantHallSlotInterface, HallSlotService as TenantHallSlotService};
+use App\Services\HallOwner\Roles\{RoleInterface as TenantRoleInterface, RoleService as TenantRoleService};
+use App\Services\HallOwner\Permissions\{PermissionInterface as TenantPermissionInterface, PermissionService as TenantPermissionService};
+use App\Services\HallOwner\HallTypes\{HallTypeInterface as TenantHallTypeInterface, HallTypeService as TenantHallTypeService};
+use App\Services\HallOwner\Decorations\{DecorationInterface as TenantDecorationInterface, DecorationService as TenantDecorationService};
+use App\Services\HallOwner\Cuisines\{CuisineInterface as TenantCuisineInterface, CuisineService as TenantCuisineService};
+use App\Services\HallOwner\Menus\{MenuInterface as TenantMenuInterface, MenuService as TenantMenuService};
+use App\Services\HallOwner\Packages\{PackageInterface as TenantPackageInterface, PackageService as TenantPackageService};
+use App\Services\HallOwner\Halls\{HallInterface as TenantHallInterface, HallService as TenantHallService};
+use App\Services\HallOwner\HallSlots\{HallSlotInterface as TenantHallSlotInterface, HallSlotService as TenantHallSlotService};
 
 use Illuminate\Support\ServiceProvider;
 

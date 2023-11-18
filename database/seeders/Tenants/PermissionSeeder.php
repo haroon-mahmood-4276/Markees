@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\Tenants;
 
-use App\Models\Tenants\TenantUser;
+use App\Models\HallOwner\TenantUser;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\{Tenant, Role, Permission};

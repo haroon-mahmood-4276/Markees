@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\Decorations;
 
-use App\Models\Tenants\Decoration;
+use App\Models\HallOwner\Decoration;
 use Illuminate\Foundation\Http\FormRequest;
 
 class storeRequest extends FormRequest

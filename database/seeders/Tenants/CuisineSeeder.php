@@ -3,7 +3,7 @@
 namespace Database\Seeders\Tenants;
 
 use App\Models\Tenant;
-use App\Models\Tenants\Cuisine;
+use App\Models\HallOwner\Cuisine;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\HallSlots;
 
-use App\Models\Tenants\HallSlot;
+use App\Models\HallOwner\HallSlot;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
