@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::get('delete', 'destroy')->name('destroy');
 
-            Route::group(['prefix' => '/{hall-owner}', 'middleware' => 'permission:admin.hall-owners.edit'], function () {
+            Route::group(['prefix' => '/{hall_owner}', 'middleware' => 'permission:admin.hall-owners.edit'], function () {
                 Route::get('edit', 'edit')->name('edit');
                 Route::put('update', 'update')->name('update');
             });

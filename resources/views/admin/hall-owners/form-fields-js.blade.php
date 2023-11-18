@@ -56,14 +56,8 @@
     });
 
     new Cleave($("#phone"), {
-        prefix: "+92",
-        blocks: [3, 3, 3, 4],
+        blocks: [4, 7],
         numericOnly: !0,
-    });
-
-    new Cleave($("#phone"), {
-        phone: !0,
-        phoneRegionCode: "PK"
     });
 
     new Cleave($("#cnic"), {

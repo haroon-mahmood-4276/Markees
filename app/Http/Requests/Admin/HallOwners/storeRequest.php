@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\HallOwners;
 
-use App\Models\HallOwner;
+use App\Models\Admin\HallOwner;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 

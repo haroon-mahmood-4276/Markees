@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\Cuisines;
 
-use App\Models\Tenants\Cuisine;
+use App\Models\HallOwner\Cuisine;
 use Illuminate\Foundation\Http\FormRequest;
 
 class updateRequest extends FormRequest

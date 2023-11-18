@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\Packages;
 
-use App\Models\Tenants\Package;
+use App\Models\HallOwner\Package;
 use Illuminate\Foundation\Http\FormRequest;
 
 class updateRequest extends FormRequest

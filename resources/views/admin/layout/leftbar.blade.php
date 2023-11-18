@@ -8,7 +8,6 @@
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            {{-- <i class="ti ti-chevrons-left  d-none d-xl-block ti-sm align-middle"></i> --}}
             <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
             <i class="ti ti-chevrons-right d-block d-xl-none ti-sm align-middle"></i>
         </a>
@@ -69,7 +68,6 @@
 
         {{-- subscriptions --}}
         @canany(['admin.subscriptions.index', 'admin.subscriptions.create'])
-
             <li
                 class="menu-item {{ in_array(request()->route()->getName(),['admin.subscriptions.index', 'admin.subscriptions.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">

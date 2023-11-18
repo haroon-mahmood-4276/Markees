@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\Halls;
 
-use App\Models\Tenants\Hall;
+use App\Models\HallOwner\Hall;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 

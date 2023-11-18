@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Media;
+use App\Models\Admin\Media;
 use App\Utils\Classes\TenantAwareUrlGenerator;
 
 return [

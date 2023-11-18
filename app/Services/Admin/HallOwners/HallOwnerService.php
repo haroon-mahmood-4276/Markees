@@ -2,15 +2,10 @@
 
 namespace App\Services\Admin\HallOwners;
 
-use App\Models\HallOwner;
-use App\Models\Tenant;
-use App\Models\Tenants\TenantSubscription;
-use App\Models\Tenants\TenantUser;
+use App\Models\Admin\HallOwner;
 use App\Services\Admin\HallOwners\HallOwnerInterface;
-use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use stdClass;
 
 class HallOwnerService implements HallOwnerInterface
 {

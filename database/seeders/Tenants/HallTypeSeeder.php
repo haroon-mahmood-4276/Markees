@@ -3,7 +3,7 @@
 namespace Database\Seeders\Tenants;
 
 use App\Models\Tenant;
-use App\Models\Tenants\HallType;
+use App\Models\HallOwner\HallType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use stdClass;

@@ -39,8 +39,8 @@ return [
 
     'files' => [
         base_path('routes/admin/breadcrumbs.php'),
-        base_path('routes/tenants/breadcrumbs.php'),
-        base_path('routes/breadcrumbs.php')
+        // base_path('routes/tenants/breadcrumbs.php'),
+        // base_path('routes/breadcrumbs.php')
     ],
 
     /*

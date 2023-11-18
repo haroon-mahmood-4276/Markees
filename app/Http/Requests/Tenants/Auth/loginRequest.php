@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Tenants\Auth;
 
-use App\Models\Tenants\TenantUser;
+use App\Models\HallOwner\TenantUser;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 

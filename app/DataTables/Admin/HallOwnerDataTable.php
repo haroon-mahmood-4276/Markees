@@ -34,9 +34,9 @@ class HallOwnerDataTable extends DataTable
             ->editColumn('updated_at', function ($row) {
                 return editDateTimeColumn($row->updated_at);
             })
-            // ->editColumn('actions', function ($row) {
-            //     return view('admin.hall-owners.actions', ['hall_owner' => $row]);
-            // })
+            ->editColumn('actions', function ($row) {
+                return view('admin.hall-owners.actions', ['hall_owner' => $row]);
+            })
             ->setRowId('id')
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
@@ -140,14 +140,13 @@ class HallOwnerDataTable extends DataTable
         $columns = [
             // $checkColumn,
             Column::make('name')->addClass('text-nowrap text-center align-middle'),
-            Column::make('subdomain')->addClass('text-nowrap text-center align-middle'),
             Column::make('email')->addClass('text-nowrap text-center align-middle'),
             Column::make('cnic')->addClass('text-nowrap text-center align-middle'),
             Column::make('phone')->addClass('text-nowrap text-center align-middle'),
             Column::make('ntn')->addClass('text-nowrap text-center align-middle'),
             Column::make('active')->addClass('text-nowrap text-center align-middle'),
             Column::make('updated_at')->addClass('text-nowrap text-center align-middle'),
-            // Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
+            Column::computed('actions')->exportable(false)->printable(false)->width(60)->addClass('text-nowrap text-center align-middle'),
         ];
         return $columns;
     }
