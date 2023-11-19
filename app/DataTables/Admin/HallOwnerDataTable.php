@@ -2,9 +2,8 @@
 
 namespace App\DataTables\Admin;
 
-use App\Models;
+use App\Models\HallOwner;
 use App\Utils\Traits\DataTableTrait;
-use Illuminate\Support\Str;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\EloquentDataTable;

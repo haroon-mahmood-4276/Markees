@@ -95,29 +95,6 @@
             </ul>
         </li>
 
-        {{-- Hall types Menu --}}
-        <li
-            class="menu-item {{ in_array(request()->route()->getName(),['hall_owner.hallTypes.index', 'hall_owner.hallTypes.create'])? 'open active': null }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="fa-solid fa-hotel menu-icon"></i>
-                <div>Hall Types</div>
-            </a>
-            <ul class="menu-sub">
-
-                <li class="menu-item {{ request()->routeIs('hall_owner.hallTypes.index') ? 'active' : null }}">
-                    <a href="{{ route('hall_owner.hallTypes.index') }}" class="menu-link">
-                        <div>View All</div>
-                    </a>
-                </li>
-
-                <li class="menu-item {{ request()->routeIs('hall_owner.hallTypes.create') ? 'active' : null }}">
-                    <a href="{{ route('hall_owner.hallTypes.create') }}" class="menu-link">
-                        <div>Add New</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Catering</span>
         </li>

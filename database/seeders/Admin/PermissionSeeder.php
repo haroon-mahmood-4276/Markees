@@ -119,6 +119,33 @@ class PermissionSeeder extends Seeder
                 'guard_name' => 'admin',
                 'show_name' => 'Hall Owners - Can Export',
             ],
+
+            // Hall Types Routes
+            [
+                'name' => 'admin.hall-types.index',
+                'guard_name' => 'admin',
+                'show_name' => 'Hall Types - Can View',
+            ],
+            [
+                'name' => 'admin.hall-types.create',
+                'guard_name' => 'admin',
+                'show_name' => 'Hall Types - Can Create',
+            ],
+            [
+                'name' => 'admin.hall-types.edit',
+                'guard_name' => 'admin',
+                'show_name' => 'Hall Types - Can Edit',
+            ],
+            [
+                'name' => 'admin.hall-types.destroy',
+                'guard_name' => 'admin',
+                'show_name' => 'Hall Types - Can Delete Selected',
+            ],
+            [
+                'name' => 'admin.hall-types.export',
+                'guard_name' => 'admin',
+                'show_name' => 'Hall Types - Can Export',
+            ],
         ];
         Artisan::call('cache:clear');
         Permission::truncate();

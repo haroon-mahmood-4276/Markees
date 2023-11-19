@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\HallOwner\HallTypes;
+namespace App\Services\Admin\HallTypes;
 
 use App\Models\HallType;
-use App\Services\HallOwner\HallTypes\HallTypeInterface;
+use App\Services\Admin\HallTypes\HallTypeInterface;
 use Illuminate\Support\Facades\DB;
 
 class HallTypeService implements HallTypeInterface

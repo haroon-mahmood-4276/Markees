@@ -1,13 +1,13 @@
-@extends('hall_owner.layout.layout')
+@extends('admin.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'hall_owner.hallTypes.index') }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'admin.hall-types.index') }}
 @endsection
 
 @section('page-title', 'Hall Types')
 
 @section('page-vendor')
-    @include('hall_owner.layout.libs.datatables.css')
+    @include('admin.layout.libs.datatables.css')
 @endsection
 
 @section('page-css')
@@ -19,7 +19,7 @@
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
         <h2 class="content-header-title float-start mb-0 mx-3">Hall Types</h2>
-        {{ Breadcrumbs::render('hall_owner.hallTypes.index') }}
+        {{ Breadcrumbs::render('admin.hall-types.index') }}
     </div>
 @endsection
 
@@ -28,7 +28,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('hall_owner.hallTypes.destroy') }}" id="hall-types-table-form" method="get">
+                    <form action="{{ route('admin.hall-types.destroy') }}" id="hall-types-table-form" method="get">
                         {{ $dataTable->table() }}
                     </form>
                 </div>
@@ -38,7 +38,7 @@
 @endsection
 
 @section('vendor-js')
-    @include('hall_owner.layout.libs.datatables.js')
+    @include('admin.layout.libs.datatables.js')
 @endsection
 
 @section('page-js')
@@ -84,7 +84,7 @@
         }
 
         function addNew() {
-            location.href = "{{ route('hall_owner.hallTypes.create') }}";
+            location.href = "{{ route('admin.hall-types.create') }}";
         }
     </script>
 @endsection

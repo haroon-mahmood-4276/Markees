@@ -280,7 +280,7 @@
                                 </div>
 
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">{{ auth('hall-owner')->user()->name }}</span>
+                                    <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
                                     {{-- <small
                                         class="text-muted">{{ implode(', ',auth('hall-owner')->user()->roles->pluck('name')->toArray()) }}</small> --}}
                                 </div>

@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Services\Admin\HallOwners\{HallOwnerInterface, HallOwnerService};
 use App\Services\Admin\Permissions\{PermissionInterface, PermissionService};
 use App\Services\Admin\Roles\{RoleInterface, RoleService};
 use App\Services\Admin\Subscriptions\{SubscriptionInterface, SubscriptionService};
+use App\Services\Admin\HallOwners\{HallOwnerInterface, HallOwnerService};
+use App\Services\Admin\HallTypes\{HallTypeInterface, HallTypeService};
 
 use App\Services\HallOwner\Roles\{RoleInterface as TenantRoleInterface, RoleService as TenantRoleService};
 use App\Services\HallOwner\Permissions\{PermissionInterface as TenantPermissionInterface, PermissionService as TenantPermissionService};
-use App\Services\HallOwner\HallTypes\{HallTypeInterface as TenantHallTypeInterface, HallTypeService as TenantHallTypeService};
 use App\Services\HallOwner\Decorations\{DecorationInterface as TenantDecorationInterface, DecorationService as TenantDecorationService};
 use App\Services\HallOwner\Cuisines\{CuisineInterface as TenantCuisineInterface, CuisineService as TenantCuisineService};
 use App\Services\HallOwner\Menus\{MenuInterface as TenantMenuInterface, MenuService as TenantMenuService};
@@ -30,11 +30,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(SubscriptionInterface::class, SubscriptionService::class);
         $this->app->bind(HallOwnerInterface::class, HallOwnerService::class);
+        $this->app->bind(HallTypeInterface::class, HallTypeService::class);
 
         // Tenant Services
         $this->app->bind(TenantRoleInterface::class, TenantRoleService::class);
         $this->app->bind(TenantPermissionInterface::class, TenantPermissionService::class);
-        $this->app->bind(TenantHallTypeInterface::class, TenantHallTypeService::class);
         $this->app->bind(TenantDecorationInterface::class, TenantDecorationService::class);
         $this->app->bind(TenantCuisineInterface::class, TenantCuisineService::class);
         $this->app->bind(TenantMenuInterface::class, TenantMenuService::class);

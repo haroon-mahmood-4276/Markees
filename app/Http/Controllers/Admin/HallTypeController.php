@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\HallOwner;
+namespace App\Http\Controllers\Admin;
 
-use App\DataTables\HallOwner\HallTypesDataTable;
+use App\DataTables\Admin\HallTypesDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HallOwner\HallTypes\{storeRequest, updateRequest};
+use App\Http\Requests\Admin\HallTypes\{storeRequest, updateRequest};
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
-use App\Services\HallOwner\HallTypes\HallTypeInterface;
 use App\Models\HallType;
+use App\Services\Admin\HallTypes\HallTypeInterface;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -26,7 +26,7 @@ class HallTypeController extends Controller
             return $dataTable->ajax();
         }
 
-        return $dataTable->render('hall_owner.hallTypes.index');
+        return $dataTable->render('admin.hall-types.index');
     }
 
     public function create(Request $request)
@@ -38,7 +38,7 @@ class HallTypeController extends Controller
             'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection())
         ];
 
-        return view('hall_owner.hallTypes.create', $data);
+        return view('admin.hall-types.create', $data);
     }
 
     public function store(storeRequest $request)
@@ -48,9 +48,9 @@ class HallTypeController extends Controller
 
             $inputs = $request->validated();
             $this->hallTypeInterface->store($inputs);
-            return redirect()->route('hall_owner.hallTypes.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('admin.hall-types.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('hall_owner.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('admin.hall-types.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ class HallTypeController extends Controller
             'dir' => getIconDirection(LaravelLocalization::getCurrentLocaleDirection()),
         ];
 
-        return view('hall_owner.hallTypes.edit', $data);
+        return view('admin.hall-types.edit', $data);
     }
 
     public function update(updateRequest $request, HallType $hall_type)
@@ -73,9 +73,9 @@ class HallTypeController extends Controller
             abort_if(request()->ajax(), 403);
             $inputs = $request->validated();
             $this->hallTypeInterface->update($hall_type->id, $inputs);
-            return redirect()->route('hall_owner.hallTypes.index')->withSuccess(__('lang.commons.data_saved'));
+            return redirect()->route('admin.hall-types.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
-            return redirect()->route('hall_owner.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('admin.hall-types.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 
@@ -86,9 +86,9 @@ class HallTypeController extends Controller
             if ($request->has('checkForDelete')) {
                 $this->hallTypeInterface->destroy($request->checkForDelete);
             }
-            return redirect()->route('hall_owner.hallTypes.index')->withSuccess(__('lang.commons.data_deleted'));
+            return redirect()->route('admin.hall-types.index')->withSuccess(__('lang.commons.data_deleted'));
         } catch (Exception $ex) {
-            return redirect()->route('hall_owner.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
+            return redirect()->route('admin.hall-types.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());
         }
     }
 }

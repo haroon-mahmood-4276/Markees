@@ -122,5 +122,34 @@
                 </ul>
             </li>
         @endcanany
+
+        {{-- Hall types Menu --}}
+        @canany(['admin.hall-types.index', 'admin.hall-types.create'])
+            <li
+                class="menu-item {{ in_array(request()->route()->getName(),['admin.hall-types.index', 'admin.hall-types.create'])? 'open active': null }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="fa-solid fa-hotel menu-icon"></i>
+                    <div>Hall Types</div>
+                </a>
+                <ul class="menu-sub">
+
+                    @can('admin.hall-types.index')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-types.index') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-types.index') }}" class="menu-link">
+                                <div>View All</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('admin.hall-types.create')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-types.create') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-types.create') }}" class="menu-link">
+                                <div>Add New</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcanany
     </ul>
 </aside>

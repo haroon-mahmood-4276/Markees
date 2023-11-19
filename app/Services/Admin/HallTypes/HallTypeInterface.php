@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\HallOwner\HallTypes;
+namespace App\Services\Admin\HallTypes;
 
 interface HallTypeInterface
 {

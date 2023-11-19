@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Database\Seeders\Admin\{
     AdminSeeder,
     HallOwnerSeeder,
+    HallTypeSeeder,
     PermissionSeeder,
     RoleSeeder,
     SubscriptionSeeder
@@ -15,7 +16,6 @@ use Database\Seeders\HallOwner\{
     HallSeeder as HallOwnerHallSeeder,
     RoleSeeder as HallOwnerRoleSeeder,
     PermissionSeeder as HallOwnerPermissionSeeder,
-    HallTypeSeeder as HallOwnerHallTypeSeeder,
     DecorationSeeder as HallOwnerDecorationSeeder,
     CuisineSeeder as HallOwnerCuisineSeeder,
     MenuSeeder as HallOwnerMenuSeeder,
@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             SubscriptionSeeder::class,
             HallOwnerSeeder::class,
-            HallOwnerHallTypeSeeder::class,
+            HallTypeSeeder::class,
             // UserSeeder::class,
             // ContinentSeeder::class,
             // CountrySeeder::class,

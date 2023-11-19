@@ -66,23 +66,6 @@ Route::group([
             //     Route::post('revoke-permission', 'revokePermissionToRole')->middleware('permission:hall-owner.permissions.assign-permission')->name('revoke-permission');
             // });
 
-            //HallTypes Routes
-            Route::controller(HallTypeController::class)->name('hallTypes.')->prefix('hall-types')->group(function () {
-                Route::get('/', 'index')->name('index');
-
-                Route::group([], function () {
-                    Route::get('create', 'create')->name('create');
-                    Route::post('store', 'store')->name('store');
-                });
-
-                Route::get('delete', 'destroy')->name('destroy');
-
-                Route::group(['prefix' => '/{hall_type}'], function () {
-                    Route::get('edit', 'edit')->name('edit');
-                    Route::put('update', 'update')->name('update');
-                });
-            });
-
             //Decorations Routes
             Route::controller(DecorationController::class)->name('decorations.')->prefix('decorations')->group(function () {
                 Route::get('/', 'index')->name('index');

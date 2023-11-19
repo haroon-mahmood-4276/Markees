@@ -1,10 +1,10 @@
-@extends('hall_owner.layout.layout')
+@extends('admin.layout.layout')
 
 @section('seo-breadcrumb')
-    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'hall_owner.hallTypes.edit') }}
+    {{ Breadcrumbs::view('breadcrumbs::json-ld', 'admin.hall-types.create') }}
 @endsection
 
-@section('page-title', 'Edit Hall Type')
+@section('page-title', 'Create Hall Type')
 
 @section('page-vendor')
 @endsection
@@ -17,20 +17,20 @@
 
 @section('breadcrumbs')
     <div class="d-flex justify-content-start align-items-center mb-3">
-        <h2 class="content-header-title float-start mb-0 mx-3">Edit Hall Type</h2>
-        {{ Breadcrumbs::render('hall_owner.hallTypes.edit') }}
+        <h2 class="content-header-title float-start mb-0 mx-3">Create Hall Types</h2>
+        {{ Breadcrumbs::render('admin.hall-types.create') }}
     </div>
 @endsection
 
 @section('content')
-    <form class="form form-vertical" action="{{ route('hall_owner.hallTypes.update', [$hallType]) }}" method="POST">
+    <form class="form form-vertical" action="{{ route('admin.hall-types.store') }}" method="POST"
+        enctype="multipart/form-data">
 
         <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
-                @method('PUT')
                 @csrf
-                @include('hall_owner.hallTypes.form-fields')
+                @include('admin.hall-types.form-fields')
 
             </div>
 
@@ -42,11 +42,11 @@
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success w-100  buttonToBlockUI me-1">
                                         <i class="fa-solid fa-floppy-disk icon mx-2"></i>
-                                        Update Hall Types
+                                        Save Hall Types
                                     </button>
                                 </div>
                                 <div class="col-md-12">
-                                    <a href="{{ route('hall_owner.hallTypes.index') }}" class="btn btn-danger w-100 ">
+                                    <a href="{{ route('admin.hall-types.index') }}" class="btn btn-danger w-100 ">
                                         <i class="fa-solid fa-xmark icon mx-2"></i>
                                         {{ __('lang.commons.cancel') }}
                                     </a>
@@ -60,6 +60,7 @@
                             <div class="alert alert-primary alert-dismissible fade show" role="alert">
                                 <h4 class="alert-heading"><i data-feather="info" class="me-50"></i>Information!</h4>
                                 <div class="alert-body">
+
                                     <span class="text-danger">*</span> means required field. <br>
                                     <span class="text-danger">**</span> means required field and must be unique.
                                 </div>
@@ -81,5 +82,5 @@
 @endsection
 
 @section('custom-js')
-    @include('hall_owner.hallTypes.form-fields-js', ['from' => 'edit'])
+    @include('admin.hall-types.form-fields-js', ['from' => 'create'])
 @endsection

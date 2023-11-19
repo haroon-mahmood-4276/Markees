@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables\HallOwner;
+namespace App\DataTables\Admin;
 
 use App\Models\HallType;
 use App\Utils\Traits\DataTableTrait;
@@ -31,7 +31,7 @@ class HallTypesDataTable extends DataTable
                 return editDateTimeColumn($row->updated_at);
             })
             ->editColumn('actions', function ($row) {
-                return view('hall_owner.hallTypes.actions', ['hall_type' => $row]);
+                return view('admin.hall-types.actions', ['hall_type' => $row]);
             })
             ->editColumn('check', function ($row) {
                 return $row;
@@ -40,12 +40,6 @@ class HallTypesDataTable extends DataTable
             ->rawColumns(array_merge($columns, ['action', 'check']));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\HallType $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(HallType $model): QueryBuilder
     {
         return $model->newQuery();
@@ -55,16 +49,16 @@ class HallTypesDataTable extends DataTable
     {
         $buttons = [];
 
-        // if (auth()->user()->can('hall_owner.hallTypes.create')) {
+        if (auth()->user()->can('admin.hall-types.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
                 ->attr([
                     'onclick' => 'addNew()',
                 ]);
-        // }
+        }
 
-        // if (auth()->user()->can('hall_owner.hallTypes.export')) {
+        if (auth()->user()->can('admin.hall-types.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -74,21 +68,21 @@ class HallTypesDataTable extends DataTable
                     Button::make('excel')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel'),
                     Button::make('pdf')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;PDF'),
                 ]);
-        // }
+        }
 
         $buttons = array_merge($buttons, [
             Button::make('reset')->addClass('btn btn-danger waves-effect waves-float waves-light m-1'),
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        // if (auth()->user()->can('hall_owner.hallTypes.destroy')) {
+        if (auth()->user()->can('admin.hall-types.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
                 ->attr([
                     'onclick' => 'deleteSelected()',
                 ]);
-        // }
+        }
 
         return $this->builder()
             ->setTableId('hall-types-table')
@@ -133,18 +127,13 @@ class HallTypesDataTable extends DataTable
             ]);
     }
 
-    /**
-     * Get columns.
-     *
-     * @return array
-     */
     protected function getColumns(): array
     {
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
 
-        // if (auth('hall-owner')->user()->can('hall_owner.hallTypes.destroy')) {
+        if (auth()->user()->can('admin.hall-types.destroy')) {
             $checkColumn->addClass('disabled');
-        // }
+        }
 
         $columns = [
             $checkColumn,

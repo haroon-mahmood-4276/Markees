@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Seeders\HallOwner;
+namespace Database\Seeders\Admin;
 
 use App\Models\HallType;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

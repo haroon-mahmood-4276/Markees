@@ -39,22 +39,6 @@ Breadcrumbs::for('hall_owner.permissions.edit', function (BreadcrumbTrail $trail
     $trail->push(__('lang.permissions.edit_permission'),  route('hall_owner.permissions.edit', ['id' => $permission_id]));
 });
 
-// HallTypes Breadcrumbs
-Breadcrumbs::for('hall_owner.hallTypes.index', function (BreadcrumbTrail $trail) {
-    $trail->parent('hall_owner.dashboard');
-    $trail->push('Hall Types', route('hall_owner.hallTypes.index'));
-});
-
-Breadcrumbs::for('hall_owner.hallTypes.create', function (BreadcrumbTrail $trail) {
-    $trail->parent('hall_owner.hallTypes.index');
-    $trail->push('Create Hall Type');
-});
-
-Breadcrumbs::for('hall_owner.hallTypes.edit', function (BreadcrumbTrail $trail) {
-    $trail->parent('hall_owner.hallTypes.index');
-    $trail->push('Edit Hall Type');
-});
-
 // Decorations Breadcrumbs
 Breadcrumbs::for('hall_owner.decorations.index', function (BreadcrumbTrail $trail) {
     $trail->parent('hall_owner.dashboard');

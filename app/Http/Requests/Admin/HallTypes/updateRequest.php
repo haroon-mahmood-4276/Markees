@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\HallOwner\HallTypes;
+namespace App\Http\Requests\Admin\HallTypes;
 
 use App\Models\HallType;
 use Illuminate\Foundation\Http\FormRequest;
 
-class storeRequest extends FormRequest
+class updateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

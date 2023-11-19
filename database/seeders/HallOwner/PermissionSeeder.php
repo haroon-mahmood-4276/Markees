@@ -56,27 +56,27 @@ class PermissionSeeder extends Seeder
 
             // HallType Routes
             [
-                'name' => 'hall_owner.hallTypes.index',
+                'name' => 'admin.hall-types.index',
                 'guard_name' => 'hall-owner',
                 'show_name' => 'Hall Types - Can View',
             ],
             [
-                'name' => 'hall_owner.hallTypes.create',
+                'name' => 'admin.hall-types.create',
                 'guard_name' => 'hall-owner',
                 'show_name' => 'Hall Types - Can Create',
             ],
             [
-                'name' => 'hall_owner.hallTypes.edit',
+                'name' => 'admin.hall-types.edit',
                 'guard_name' => 'hall-owner',
                 'show_name' => 'Hall Types - Can Edit',
             ],
             [
-                'name' => 'hall_owner.hallTypes.destroy',
+                'name' => 'admin.hall-types.destroy',
                 'guard_name' => 'hall-owner',
                 'show_name' => 'Hall Types - Can Delete',
             ],
             [
-                'name' => 'hall_owner.hallTypes.export',
+                'name' => 'admin.hall-types.export',
                 'guard_name' => 'hall-owner',
                 'show_name' => 'Hall Types - Can Export',
             ],
