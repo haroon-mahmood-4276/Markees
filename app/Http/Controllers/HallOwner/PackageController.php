@@ -10,7 +10,7 @@ use App\Models\Package;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use App\Services\HallOwner\Decorations\DecorationInterface;
 use App\Services\HallOwner\Packages\PackageInterface;
-use App\Services\HallOwner\HallTypes\HallTypeInterface;
+use App\Services\Admin\HallTypes\HallTypeInterface;
 use Exception;
 use Illuminate\Http\Request;
 

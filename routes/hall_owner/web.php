@@ -7,7 +7,6 @@ use App\Http\Controllers\HallOwner\{
     DecorationController,
     HallController,
     HallSlotController,
-    HallTypeController,
     MenuController,
     PackageController,
     RoleController,
