@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HallOwner;
 
 use App\DataTables\HallOwner\MenusDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Menus\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\Menus\{storeRequest, updateRequest};
 use App\Models\Menu;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use App\Services\HallOwner\Menus\MenuInterface;

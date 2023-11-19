@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HallOwner;
 
 use App\DataTables\HallOwner\HallSlotsDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\HallSlots\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\HallSlots\{storeRequest, updateRequest};
 use App\Models\Hall;
 use App\Models\HallSlot;
 use App\Services\HallOwner\HallSlots\HallSlotInterface;

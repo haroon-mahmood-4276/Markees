@@ -8,7 +8,7 @@
             <h2 class="mb-1 mx-2">You are not authorized!</h2>
             <p class="mb-4 mx-2">You do not have permission to view this page using the credentials that you have
                 provided while login. <br> Please contact your site administrator.</p>
-            <a href="{{ redirect()->back() }}" class="btn btn-primary mb-4">Back to dashboard</a>
+            <a href="{{ redirect()->route('hall_owner.dashboard') }}" class="btn btn-primary mb-4">Back to dashboard</a>
             <div class="mt-4">
                 <img src="{{ asset('theme-assets') }}/img/illustrations/page-misc-you-are-not-authorized.png"
                     alt="page-misc-not-authorized" width="170" class="img-fluid">

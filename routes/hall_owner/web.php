@@ -52,7 +52,7 @@ Route::group([
 
             //     Route::get('delete', 'destroy')->middleware('permission:hall-owner.roles.destroy')->name('destroy');
 
-            //     Route::group(['prefix' => '/{role}', 'middleware' => 'permission:hall-owner.roles.edit'], function () {
+            //     Route::group(['prefix' => '/{role}'], function () {
             //         Route::get('edit', 'edit')->name('edit');
             //         Route::put('update', 'update')->name('update');
             //     });
@@ -77,7 +77,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{hall_type}', 'middleware' => 'permission:hall-owner.hallTypes.edit'], function () {
+                Route::group(['prefix' => '/{hall_type}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });
@@ -94,7 +94,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{decoration}', 'middleware' => 'permission:hall-owner.decorations.edit'], function () {
+                Route::group(['prefix' => '/{decoration}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });
@@ -111,7 +111,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{cuisine}', 'middleware' => 'permission:hall-owner.cuisines.edit'], function () {
+                Route::group(['prefix' => '/{cuisine}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });
@@ -128,7 +128,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{menu}', 'middleware' => 'permission:hall-owner.menus.edit'], function () {
+                Route::group(['prefix' => '/{menu}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });
@@ -145,7 +145,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{hall}', 'middleware' => 'permission:hall-owner.halls.edit'], function () {
+                Route::group(['prefix' => '/{hall}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });
@@ -164,7 +164,7 @@ Route::group([
 
                         Route::get('delete', 'destroy')->name('destroy');
 
-                        Route::group(['prefix' => '/{slot}', 'middleware' => 'permission:hall-owner.halls.slots.edit'], function () {
+                        Route::group(['prefix' => '/{slot}'], function () {
                             Route::get('edit', 'edit')->name('edit');
                             Route::put('update', 'update')->name('update');
                         });
@@ -183,7 +183,7 @@ Route::group([
 
                 Route::get('delete', 'destroy')->name('destroy');
 
-                Route::group(['prefix' => '/{package}', 'middleware' => 'permission:hall-owner.packages.edit'], function () {
+                Route::group(['prefix' => '/{package}'], function () {
                     Route::get('edit', 'edit')->name('edit');
                     Route::put('update', 'update')->name('update');
                 });

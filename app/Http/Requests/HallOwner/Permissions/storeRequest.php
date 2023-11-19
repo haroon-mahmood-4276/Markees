@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\Permissions;
+namespace App\Http\Requests\HallOwner\Permissions;
 
 use Illuminate\Foundation\Http\FormRequest;
 

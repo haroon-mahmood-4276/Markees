@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\Menus;
+namespace App\Http\Requests\HallOwner\Menus;
 
 use Illuminate\Foundation\Http\FormRequest;
 

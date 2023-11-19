@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\Cuisines;
+namespace App\Http\Requests\HallOwner\Cuisines;
 
 use App\Models\Cuisine;
 use Illuminate\Foundation\Http\FormRequest;

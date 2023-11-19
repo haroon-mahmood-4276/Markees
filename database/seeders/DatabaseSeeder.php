@@ -12,14 +12,14 @@ use Database\Seeders\Admin\{
 };
 use Illuminate\Database\Seeder;
 use Database\Seeders\HallOwner\{
-    RoleSeeder as TenantRoleSeeder,
-    PermissionSeeder as TenantPermissionSeeder,
-    HallTypeSeeder as TenantHallTypeSeeder,
-    HallSeeder as TenantHallSeeder,
-    DecorationSeeder as TenantDecorationSeeder,
-    CuisineSeeder as TenantCuisineSeeder,
-    MenuSeeder as TenantMenuSeeder,
-    HallSlotSeeder as TenantHallSlotSeeder,
+    HallSeeder as HallOwnerHallSeeder,
+    RoleSeeder as HallOwnerRoleSeeder,
+    PermissionSeeder as HallOwnerPermissionSeeder,
+    HallTypeSeeder as HallOwnerHallTypeSeeder,
+    DecorationSeeder as HallOwnerDecorationSeeder,
+    CuisineSeeder as HallOwnerCuisineSeeder,
+    MenuSeeder as HallOwnerMenuSeeder,
+    HallSlotSeeder as HallOwnerHallSlotSeeder,
 };
 
 class DatabaseSeeder extends Seeder
@@ -35,17 +35,17 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             SubscriptionSeeder::class,
             HallOwnerSeeder::class,
+            HallOwnerHallTypeSeeder::class,
             // UserSeeder::class,
             // ContinentSeeder::class,
             // CountrySeeder::class,
-            // TenantRoleSeeder::class,
-            // TenantPermissionSeeder::class,
-            // TenantHallTypeSeeder::class,
-            // TenantDecorationSeeder::class,
-            // TenantCuisineSeeder::class,
-            // TenantMenuSeeder::class,
-            // TenantHallSeeder::class,
-            // TenantHallSlotSeeder::class,
+            // HallOwnerRoleSeeder::class,
+            // HallOwnerPermissionSeeder::class,
+            // HallOwnerDecorationSeeder::class,
+            // HallOwnerCuisineSeeder::class,
+            // HallOwnerMenuSeeder::class,
+            // HallOwnerHallSeeder::class,
+            // HallOwnerHallSlotSeeder::class,
         ]);
     }
 }

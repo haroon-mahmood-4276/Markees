@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\Roles;
+namespace App\Http\Requests\HallOwner\Roles;
 
 use Illuminate\Foundation\Http\FormRequest;
 

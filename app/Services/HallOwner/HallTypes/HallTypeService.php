@@ -44,8 +44,8 @@ class HallTypeService implements HallTypeInterface
         return DB::transaction(function () use ($inputs) {
             return $this->model()->create([
                 'name' => $inputs['name'],
-                'guard_name' => $inputs['guard_name'],
-                'parent_id' => $inputs['parent_id'],
+                'description' => $inputs['description'],
+                'parent_id' => $inputs['parent_hall_type'] === env('ZERO_UUID') ? null : $inputs['parent_hall_type'],
             ]);
         });
     }
@@ -55,8 +55,8 @@ class HallTypeService implements HallTypeInterface
         return DB::transaction(function () use ($id, $inputs) {
             return $this->model()->find($id)->update([
                 'name' => $inputs['name'],
-                'guard_name' => $inputs['guard_name'],
-                'parent_id' => $inputs['parent_id'],
+                'description' => $inputs['description'],
+                'parent_id' => $inputs['parent_hall_type'] === env('ZERO_UUID') ? null : $inputs['parent_hall_type'],
             ]);
         });
     }

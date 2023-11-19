@@ -9,7 +9,7 @@
             <p class="mb-4 mx-2">
                 Sorry for the inconvenience but we're performing some maintenance at the moment
             </p>
-            <a href="{{ redirect()->back() }}" class="btn btn-primary mb-4">Back to dashboard</a>
+            <a href="{{ redirect()->route('hall_owner.dashboard') }}" class="btn btn-primary mb-4">Back to dashboard</a>
             <div class="mt-4">
                 <img src="{{ asset('theme-assets') }}/img/illustrations/page-misc-under-maintenance.png"
                     alt="page-misc-under-maintenance" width="550" class="img-fluid">

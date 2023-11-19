@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HallOwner;
 
 use App\DataTables\HallOwner\CuisinesDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Cuisines\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\Cuisines\{storeRequest, updateRequest};
 use App\Models\Cuisine;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use Exception;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\HallSlots;
+namespace App\Http\Requests\HallOwner\HallSlots;
 
 use App\Models\HallSlot;
 use Carbon\Carbon;

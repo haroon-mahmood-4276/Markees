@@ -5,7 +5,7 @@ namespace App\Http\Controllers\HallOwner;
 use App\Models\Role;
 use App\DataTables\HallOwner\RolesDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Roles\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\Roles\{storeRequest, updateRequest};
 use App\Services\HallOwner\Roles\RoleInterface;
 use Illuminate\Http\Request;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;

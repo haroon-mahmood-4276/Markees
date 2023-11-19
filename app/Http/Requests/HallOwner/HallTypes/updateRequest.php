@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\HallTypes;
+namespace App\Http\Requests\HallOwner\HallTypes;
 
 use App\Models\HallType;
 use Illuminate\Foundation\Http\FormRequest;

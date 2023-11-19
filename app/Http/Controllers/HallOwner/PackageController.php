@@ -5,7 +5,7 @@ namespace App\Http\Controllers\HallOwner;
 use App\DataTables\HallOwner\PackagesDataTable;
 use App\Exceptions\GeneralException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Packages\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\Packages\{storeRequest, updateRequest};
 use App\Models\Package;
 use App\Services\HallOwner\Cuisines\CuisineInterface;
 use App\Services\HallOwner\Decorations\DecorationInterface;

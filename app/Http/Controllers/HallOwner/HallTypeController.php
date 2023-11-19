@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HallOwner;
 
 use App\DataTables\HallOwner\HallTypesDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\HallTypes\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\HallTypes\{storeRequest, updateRequest};
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Services\HallOwner\HallTypes\HallTypeInterface;
 use App\Models\HallType;
@@ -67,13 +67,12 @@ class HallTypeController extends Controller
         return view('hall_owner.hallTypes.edit', $data);
     }
 
-    public function update(updateRequest $request, HallType $hallType)
+    public function update(updateRequest $request, HallType $hall_type)
     {
         try {
             abort_if(request()->ajax(), 403);
-
             $inputs = $request->validated();
-            $this->hallTypeInterface->update($hallType->id, $inputs);
+            $this->hallTypeInterface->update($hall_type->id, $inputs);
             return redirect()->route('hall_owner.hallTypes.index')->withSuccess(__('lang.commons.data_saved'));
         } catch (Exception $ex) {
             return redirect()->route('hall_owner.hallTypes.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());

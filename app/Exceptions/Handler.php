@@ -29,8 +29,8 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
-        if ($exception->getCode() === 0)
-            return parent::render($request, $exception);
+        return parent::render($request, $exception);
+
         $exceptionCode = $exception->getCode() > 0 ? $exception->getCode() : 500;
 
         if (in_array($exceptionCode, [401, 402, 403, 404, 419, 500, 503])) {

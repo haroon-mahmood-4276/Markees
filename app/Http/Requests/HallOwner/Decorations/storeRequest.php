@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Tenants\Decorations;
+namespace App\Http\Requests\HallOwner\Decorations;
 
 use App\Models\Decoration;
 use Illuminate\Foundation\Http\FormRequest;

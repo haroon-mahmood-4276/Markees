@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\HallOwner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Auth\loginRequest;
+use App\Http\Requests\HallOwner\Auth\loginRequest;
 use Illuminate\Http\Request;
 
 

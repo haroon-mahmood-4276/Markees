@@ -55,7 +55,7 @@
                             </button>
                         </div>
                     </div>
-                {{-- @elseif ($errors->any())
+                @elseif ($errors->any())
                     <div class="alert alert-danger alert-dismissible d-flex align-items-baseline show fade"
                         role="alert">
                         <span class="alert-icon alert-icon-lg text-danger me-2">
@@ -71,7 +71,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                             </button>
                         </div>
-                    </div> --}}
+                    </div>
                 @endif
             </div>
         </div>

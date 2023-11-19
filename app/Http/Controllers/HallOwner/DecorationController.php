@@ -4,7 +4,7 @@ namespace App\Http\Controllers\HallOwner;
 
 use App\DataTables\HallOwner\DecorationsDataTable;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Tenants\Decorations\{storeRequest, updateRequest};
+use App\Http\Requests\HallOwner\Decorations\{storeRequest, updateRequest};
 use App\Models\Decoration;
 use App\Services\HallOwner\Decorations\DecorationInterface;
 use Exception;
