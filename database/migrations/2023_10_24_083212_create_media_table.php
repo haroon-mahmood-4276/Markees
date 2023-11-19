@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('media', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
 
             $table->uuidMorphs('model');
             $table->uuid('uuid')->nullable()->unique();
@@ -26,7 +26,9 @@ return new class extends Migration
             $table->json('responsive_images');
             $table->unsignedInteger('order_column')->nullable()->index();
 
-            $table->nullableTimestamps();
+            $table->integer('created_at')->nullable();
+            $table->integer('updated_at')->nullable();
+            $table->integer('deleted_at')->nullable();
         });
     }
 };

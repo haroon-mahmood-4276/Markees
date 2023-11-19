@@ -71,10 +71,8 @@ class CuisineSeeder extends Seeder
             ],
         ];
 
-        Tenant::all()->runForEach(function () use ($data) {
-            foreach ($data as $key => $value) {
-                (new Cuisine())->create($value);
-            }
-        });
+        foreach ($data as $key => $value) {
+            (new Cuisine())->create($value);
+        }
     }
 }

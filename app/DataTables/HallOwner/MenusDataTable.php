@@ -51,7 +51,7 @@ class MenusDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth()->user('hall-owner')->can('hall_owner.menus.create')) {
+        if (auth('hall-owner')->user()->can('hall_owner.menus.create')) {
             $buttons[] = Button::raw('add-new')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
@@ -60,7 +60,7 @@ class MenusDataTable extends DataTable
                 ]);
         }
 
-        if (auth()->user('hall-owner')->can('hall_owner.menus.export')) {
+        if (auth('hall-owner')->user()->can('hall_owner.menus.export')) {
             $buttons[] = Button::make('export')
                 ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
                 ->buttons([
@@ -77,7 +77,7 @@ class MenusDataTable extends DataTable
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth()->user('hall-owner')->can('hall_owner.menus.destroy')) {
+        if (auth('hall-owner')->user()->can('hall_owner.menus.destroy')) {
             $buttons[] = Button::raw('delete-selected')
                 ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
                 ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')

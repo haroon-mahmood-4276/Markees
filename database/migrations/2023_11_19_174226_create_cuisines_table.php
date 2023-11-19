@@ -8,16 +8,16 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('hall_types', function (Blueprint $table) {
+        Schema::create('cuisines', function (Blueprint $table) {
             $table->uuid('id')->primary();
+
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->uuid('parent_id')->nullable()->default(null);
+            $table->float('price')->default(0);
+
             $table->integer('created_at')->nullable();
             $table->integer('updated_at')->nullable();
             $table->integer('deleted_at')->nullable();
@@ -26,11 +26,9 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('hall_types');
+        Schema::dropIfExists('cuisines');
     }
 };
