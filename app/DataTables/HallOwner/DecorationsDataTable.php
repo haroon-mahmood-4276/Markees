@@ -16,12 +16,6 @@ class DecorationsDataTable extends DataTable
 {
     use DataTableTrait;
 
-    /**
-     * Build DataTable class.
-     *
-     * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
-     */
     public function dataTable(QueryBuilder $query)
     {
         $columns = array_column($this->getColumns(), 'data');
@@ -59,40 +53,34 @@ class DecorationsDataTable extends DataTable
     {
         $buttons = [];
 
-        if (auth('hall-owner')->user()->can('hall_owner.decorations.create')) {
-            $buttons[] = Button::raw('add-new')
-                ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
-                ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
-                ->attr([
-                    'onclick' => 'addNew()',
-                ]);
-        }
+        $buttons[] = Button::raw('add-new')
+            ->addClass('btn btn-primary waves-effect waves-float waves-light m-1')
+            ->text('<i class="fa-solid fa-plus"></i>&nbsp;&nbsp;Add New')
+            ->attr([
+                'onclick' => 'addNew()',
+            ]);
 
-        if (auth('hall-owner')->user()->can('hall_owner.decorations.export')) {
-            $buttons[] = Button::make('export')
-                ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
-                ->buttons([
-                    Button::make('print')->addClass('dropdown-item')->text('<i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print'),
-                    Button::make('copy')->addClass('dropdown-item')->text('<i class="fa-solid fa-copy"></i>&nbsp;&nbsp;Copy'),
-                    Button::make('csv')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;CSV'),
-                    Button::make('excel')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel'),
-                    Button::make('pdf')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;PDF'),
-                ]);
-        }
+        $buttons[] = Button::make('export')
+            ->addClass('btn btn-primary waves-effect waves-float waves-light dropdown-toggle m-1')
+            ->buttons([
+                Button::make('print')->addClass('dropdown-item')->text('<i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print'),
+                Button::make('copy')->addClass('dropdown-item')->text('<i class="fa-solid fa-copy"></i>&nbsp;&nbsp;Copy'),
+                Button::make('csv')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-csv"></i>&nbsp;&nbsp;CSV'),
+                Button::make('excel')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-excel"></i>&nbsp;&nbsp;Excel'),
+                Button::make('pdf')->addClass('dropdown-item')->text('<i class="fa-solid fa-file-pdf"></i>&nbsp;&nbsp;PDF'),
+            ]);
 
         $buttons = array_merge($buttons, [
             Button::make('reset')->addClass('btn btn-danger waves-effect waves-float waves-light m-1'),
             Button::make('reload')->addClass('btn btn-primary waves-effect waves-float waves-light m-1'),
         ]);
 
-        if (auth('hall-owner')->user()->can('hall_owner.decorations.destroy')) {
-            $buttons[] = Button::raw('delete-selected')
-                ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
-                ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
-                ->attr([
-                    'onclick' => 'deleteSelected()',
-                ]);
-        }
+        $buttons[] = Button::raw('delete-selected')
+            ->addClass('btn btn-danger waves-effect waves-float waves-light m-1')
+            ->text('<i class="fa-solid fa-minus"></i>&nbsp;&nbsp;Delete Selected')
+            ->attr([
+                'onclick' => 'deleteSelected()',
+            ]);
 
         return $this->builder()
             ->setTableId('decorations-table')
@@ -139,10 +127,6 @@ class DecorationsDataTable extends DataTable
     protected function getColumns(): array
     {
         $checkColumn = Column::computed('check')->exportable(false)->printable(false)->width(10)->addClass('text-nowrap text-center align-middle');
-
-        if (auth('hall-owner')->user()->can('hall_owner.decorations.destroy')) {
-            $checkColumn->addClass('disabled');
-        }
 
         $columns = [
             $checkColumn,

@@ -95,12 +95,12 @@
             </ul>
         </li>
 
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Catering</span>
-        </li>
+        </li> --}}
 
         {{-- Cuisines Menu --}}
-        <li
+        {{-- <li
             class="menu-item {{ in_array(request()->route()->getName(),['hall_owner.cuisines.index', 'hall_owner.cuisines.create'])? 'open active': null }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-plate-wheat menu-icon"></i>
@@ -120,10 +120,10 @@
                 </li>
 
             </ul>
-        </li>
+        </li> --}}
 
         {{-- Menus Menu --}}
-        <li
+        {{-- <li
             class="menu-item {{ in_array(request()->route()->getName(),['hall_owner.menus.index', 'hall_owner.menus.create'])? 'open active': null }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-list-check menu-icon"></i>
@@ -143,14 +143,14 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
 
-        <li class="menu-header small text-uppercase">
+        {{-- <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Others</span>
-        </li>
+        </li> --}}
 
         {{-- Decorations Menu --}}
-        <li
+        {{-- <li
             class="menu-item {{ in_array(request()->route()->getName(),['hall_owner.decorations.index', 'hall_owner.decorations.create'])? 'open active': null }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-holly-berry menu-icon"></i>
@@ -169,10 +169,10 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
 
         {{-- Packages Menu --}}
-        <li
+        {{-- <li
             class="menu-item {{ in_array(request()->route()->getName(),['hall_owner.packages.index', 'hall_owner.packages.create'])? 'open active': null }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="fa-solid fa-cubes menu-icon"></i>
@@ -191,6 +191,6 @@
                     </a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
     </ul>
 </aside>
