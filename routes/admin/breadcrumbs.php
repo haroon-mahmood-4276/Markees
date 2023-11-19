@@ -56,7 +56,23 @@ Breadcrumbs::for('admin.hall-owners.create', function (BreadcrumbTrail $trail) {
     $trail->push('Create Owner');
 });
 
-Breadcrumbs::for('admin.hall-owners.edit', function (BreadcrumbTrail $trail, $hallOwner_id) {
+Breadcrumbs::for('admin.hall-owners.edit', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.hall-owners.index');
     $trail->push('Edit Owner');
+});
+
+// Hall Types Breadcrumbs
+Breadcrumbs::for('admin.hall-types.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Hall Types', route('admin.hall-types.index'));
+});
+
+Breadcrumbs::for('admin.hall-types.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.hall-types.index');
+    $trail->push('Create Hall Type');
+});
+
+Breadcrumbs::for('admin.hall-types.edit', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.hall-types.index');
+    $trail->push('Edit Hall Type');
 });

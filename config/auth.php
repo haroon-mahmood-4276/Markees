@@ -45,9 +45,9 @@ return [
             'provider' => 'admins',
         ],
 
-        'tenant' => [
+        'hall-owner' => [
             'driver' => 'session',
-            'provider' => 'tenants',
+            'provider' => 'hall-owners',
         ],
     ],
 
@@ -79,9 +79,9 @@ return [
             'model' => App\Models\Admin::class,
         ],
 
-        'tenants' => [
+        'hall-owners' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Tenants\TenantUser::class,
+            'model' => App\Models\HallOwner::class,
         ],
 
         // 'users' => [
@@ -120,8 +120,8 @@ return [
             'throttle' => 60,
         ],
 
-        'tenants' => [
-            'provider' => 'tenants',
+        'hall-owners' => [
+            'provider' => 'hall-owners',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

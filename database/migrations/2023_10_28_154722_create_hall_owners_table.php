@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->foreignUuid('subscription_id')->constrained();
             $table->string('name')->nullable();
-            $table->string('subdomain')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('phone')->unique();
             $table->string('cnic', 15)->unique();

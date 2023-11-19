@@ -1,5 +1,16 @@
+<script src="{{ asset('theme-assets') }}/vendor/libs/cleavejs/cleave.js"></script>
 <script>
+    var files = [];
+
+    @forelse($owner_cnic_attachments ?? [] as $image)
+        files.push({
+            source: '{{ $image->getUrl() }}',
+        });
+    @empty
+    @endforelse
+
     FilePond.create(document.getElementById('owner_cnic_attachments'), {
+        files: files,
         styleButtonRemoveItemPosition: 'right',
         imageCropAspectRatio: '1:1',
         acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
@@ -15,14 +26,21 @@
         }
     });
 
+    files = [];
+    @if (isset($owner_ntn_attachment))
+        files.push({
+            source: '{{ $owner_ntn_attachment->getUrl() }}',
+        });
+    @endif
+
     FilePond.create(document.getElementById('owner_ntn_attachment'), {
+        files: files,
         styleButtonRemoveItemPosition: 'right',
         imageCropAspectRatio: '1:1',
         acceptedFileTypes: ['image/png', 'image/jpeg', 'image/jpg'],
         maxFileSize: '536KB',
         ignoredFiles: ['.ds_store', 'thumbs.db', 'desktop.ini'],
         storeAsFile: true,
-        // allowMultiple: true,
         maxFiles: 1,
         checkValidity: true,
         credits: {
@@ -31,31 +49,21 @@
         }
     });
 
-    // let phone = $("#phone");
-    // phone.length && new Cleave(phone, {
-    //     prefix: "+92",
-    //     blocks: [3, 3, 3, 4],
-    //     numericOnly: !0,
-    // });
+    new Cleave($("#ntn"), {
+        delimiter: '-',
+        numericOnly: !0,
+        blocks: [7, 1],
+    });
 
-    // let phone = $("#phone");
-    // phone.length && new Cleave(phone, {
-    //     phone: !0,
-    //     phoneRegionCode: "PK"
-    // });
+    new Cleave($("#phone"), {
+        blocks: [4, 7],
+        numericOnly: !0,
+    });
 
-    // let cnic = $("#cnic");
-    // cnic.length && new Cleave(cnic, {
-    //     delimiter: '-',
-    //     numericOnly: !0,
-    //     blocks: [5, 7, 1],
-    // });
-
-    $('#subdomain').on('keyup blur', function() {
-        let permalink = $(this).val().toLowerCase()
-            .trim().replace(/[\/\\]/g, '').replace(/\s+/g, ' ').replace(/[^a-z0-9- ]/gi, '').replace(/-+/g, '-')
-            .replace(/\s/g, '-');
-        $('#subdomain').val(permalink);
+    new Cleave($("#cnic"), {
+        delimiter: '-',
+        numericOnly: !0,
+        blocks: [5, 7, 1],
     });
 </script>
 

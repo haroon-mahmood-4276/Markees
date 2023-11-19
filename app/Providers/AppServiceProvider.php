@@ -2,20 +2,20 @@
 
 namespace App\Providers;
 
-use App\Services\Admin\HallOwners\{HallOwnerInterface, HallOwnerService};
 use App\Services\Admin\Permissions\{PermissionInterface, PermissionService};
 use App\Services\Admin\Roles\{RoleInterface, RoleService};
 use App\Services\Admin\Subscriptions\{SubscriptionInterface, SubscriptionService};
+use App\Services\Admin\HallOwners\{HallOwnerInterface, HallOwnerService};
+use App\Services\Admin\HallTypes\{HallTypeInterface, HallTypeService};
 
-use App\Services\Tenants\Roles\{RoleInterface as TenantRoleInterface, RoleService as TenantRoleService};
-use App\Services\Tenants\Permissions\{PermissionInterface as TenantPermissionInterface, PermissionService as TenantPermissionService};
-use App\Services\Tenants\HallTypes\{HallTypeInterface as TenantHallTypeInterface, HallTypeService as TenantHallTypeService};
-use App\Services\Tenants\Decorations\{DecorationInterface as TenantDecorationInterface, DecorationService as TenantDecorationService};
-use App\Services\Tenants\Cuisines\{CuisineInterface as TenantCuisineInterface, CuisineService as TenantCuisineService};
-use App\Services\Tenants\Menus\{MenuInterface as TenantMenuInterface, MenuService as TenantMenuService};
-use App\Services\Tenants\Packages\{PackageInterface as TenantPackageInterface, PackageService as TenantPackageService};
-use App\Services\Tenants\Halls\{HallInterface as TenantHallInterface, HallService as TenantHallService};
-use App\Services\Tenants\HallSlots\{HallSlotInterface as TenantHallSlotInterface, HallSlotService as TenantHallSlotService};
+use App\Services\HallOwner\Roles\{RoleInterface as TenantRoleInterface, RoleService as TenantRoleService};
+use App\Services\HallOwner\Permissions\{PermissionInterface as TenantPermissionInterface, PermissionService as TenantPermissionService};
+use App\Services\HallOwner\Decorations\{DecorationInterface as TenantDecorationInterface, DecorationService as TenantDecorationService};
+use App\Services\HallOwner\Cuisines\{CuisineInterface as TenantCuisineInterface, CuisineService as TenantCuisineService};
+use App\Services\HallOwner\Menus\{MenuInterface as TenantMenuInterface, MenuService as TenantMenuService};
+use App\Services\HallOwner\Packages\{PackageInterface as TenantPackageInterface, PackageService as TenantPackageService};
+use App\Services\HallOwner\Halls\{HallInterface as TenantHallInterface, HallService as TenantHallService};
+use App\Services\HallOwner\HallSlots\{HallSlotInterface as TenantHallSlotInterface, HallSlotService as TenantHallSlotService};
 
 use Illuminate\Support\ServiceProvider;
 
@@ -30,11 +30,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PermissionInterface::class, PermissionService::class);
         $this->app->bind(SubscriptionInterface::class, SubscriptionService::class);
         $this->app->bind(HallOwnerInterface::class, HallOwnerService::class);
+        $this->app->bind(HallTypeInterface::class, HallTypeService::class);
 
         // Tenant Services
         $this->app->bind(TenantRoleInterface::class, TenantRoleService::class);
         $this->app->bind(TenantPermissionInterface::class, TenantPermissionService::class);
-        $this->app->bind(TenantHallTypeInterface::class, TenantHallTypeService::class);
         $this->app->bind(TenantDecorationInterface::class, TenantDecorationService::class);
         $this->app->bind(TenantCuisineInterface::class, TenantCuisineService::class);
         $this->app->bind(TenantMenuInterface::class, TenantMenuService::class);

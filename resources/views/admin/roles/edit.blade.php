@@ -23,8 +23,8 @@
 @endsection
 
 @section('content')
-    <form class="form form-vertical" action="{{ route('admin.roles.update', $role) }}"
-        method="POST" enctype="multipart/form-data">
+    <form class="form form-vertical" action="{{ route('admin.roles.update', $role) }}" method="POST"
+        enctype="multipart/form-data">
 
         <div class="row g-3">
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
@@ -84,25 +84,5 @@
 @endsection
 
 @section('custom-js')
-    <script>
-        $(document).ready(function() {
-            e = $("#roles");
-            e.wrap('<div class="position-relative"></div>');
-            e.select2({
-                dropdownAutoWidth: !0,
-                dropdownParent: e.parent(),
-                width: "100%",
-                containerCssClass: "select-lg",
-                templateResult: c,
-                templateSelection: c,
-                escapeMarkup: function(e) {
-                    return e
-                }
-            });
-        });
-
-        function c(e) {
-            return e.id ? "<i class='" + $(e.element).data("icon") + " me-2'></i>" + e.text : e.text
-        }
-    </script>
+    @include('admin.roles.form-fields-js', ['from' => 'edit'])
 @endsection

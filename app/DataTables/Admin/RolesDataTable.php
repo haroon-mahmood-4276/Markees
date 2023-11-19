@@ -36,12 +36,6 @@ class RolesDataTable extends DataTable
             ->rawColumns(array_column($this->getColumns(), 'data'));
     }
 
-    /**
-     * Get query source of dataTable.
-     *
-     * @param \App\Models\Role $model
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
     public function query(Role $model): QueryBuilder
     {
         return $model->newQuery();

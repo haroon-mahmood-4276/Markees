@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\{
     AuthController,
     DashboardController,
     HallOwnerController,
+    HallTypeController,
     PermissionController,
     RoleController,
     SubscriptionController,
@@ -21,6 +22,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('admin', fn () => redirect()->route('admin.login'));
 
 // Route::group(['prefix' => LaravelLocalization::setLocale() . '/admin', 'as' => 'admin.', 'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']], function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
@@ -88,7 +91,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
 
             Route::get('delete', 'destroy')->name('destroy');
 
-            Route::group(['prefix' => '/{hall-owner}', 'middleware' => 'permission:admin.hall-owners.edit'], function () {
+            Route::group(['prefix' => '/{hall_owner}', 'middleware' => 'permission:admin.hall-owners.edit'], function () {
+                Route::get('edit', 'edit')->name('edit');
+                Route::put('update', 'update')->name('update');
+            });
+        });
+
+        //Hall Types Routes
+        Route::controller(HallTypeController::class)->name('hall-types.')->prefix('hall-types')->group(function () {
+            Route::get('/', 'index')->middleware('permission:admin.hall-types.index')->name('index');
+
+            Route::group(['middleware' => 'permission:admin.hall-types.create'], function () {
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+            });
+
+            Route::get('delete', 'destroy')->middleware('permission:admin.hall-types.destroy')->name('destroy');
+
+            Route::group(['prefix' => '/{hall_type}', 'middleware' => 'permission:admin.hall-types.edit'], function () {
                 Route::get('edit', 'edit')->name('edit');
                 Route::put('update', 'update')->name('update');
             });

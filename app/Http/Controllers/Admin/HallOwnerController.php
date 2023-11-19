@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\Admin\HallOwnerDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HallOwners\{storeRequest, updateRequest};
+use App\Models\HallOwner;
 use App\Services\Admin\{
     Subscriptions\SubscriptionInterface,
     HallOwners\HallOwnerInterface,
@@ -22,11 +23,6 @@ class HallOwnerController extends Controller
         $this->subscriptionInterface = $subscriptionInterface;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(HallOwnerDataTable $dataTable)
     {
         if (request()->ajax()) {
@@ -38,11 +34,6 @@ class HallOwnerController extends Controller
         return $dataTable->with($data)->render('admin.hall-owners.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         abort_if(request()->ajax(), 403);
@@ -55,12 +46,6 @@ class HallOwnerController extends Controller
         return view('admin.hall-owners.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(storeRequest $request)
     {
         abort_if(request()->ajax(), 403);
@@ -74,54 +59,29 @@ class HallOwnerController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(HallOwner $hall_owner)
     {
-        $id = decryptParams($id);
         try {
-            $hallOwner = $this->hallOwnerInterface->getById($id);
-
-            if ($hallOwner && !empty($hallOwner)) {
-                $data = [
-                    'subscriptions' => $this->subscriptionInterface->getAllActive(),
-                    'domain' => parse_url(env('APP_URL')),
-                    'hallOwner' => $hallOwner,
-                    'owner_cnic_attachments' => $hallOwner->getMedia('owner_cnic_attachments'),
-                    'owner_ntn_attachment' => $hallOwner->getFirstMedia('owner_ntn_attachment'),
-                ];
-
-                // dd($data);
-                return view('admin.app.hall-owners.edit', $data);
-            }
-
-            return redirect()->route('admin.hall-owners.index')->withWarning(__('lang.commons.data_not_found'));
+            $data = [
+                'subscriptions' => $this->subscriptionInterface->getActive(),
+                'domain' => parse_url(env('APP_URL')),
+                'hall_owner' => $hall_owner,
+                'owner_cnic_attachments' => $hall_owner->getMedia('owner_cnic_attachments'),
+                'owner_ntn_attachment' => $hall_owner->getFirstMedia('owner_ntn_attachment'),
+            ];
+            return view('admin.hall-owners.edit', $data);
         } catch (Exception $ex) {
             return redirect()->route('admin.hall-owners.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . sqlErrorMessagesByCode($ex->getCode()));
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(updateRequest $request, $id)
     {
         abort_if(request()->ajax(), 403);
 
-        $id = decryptParams($id);
-
         try {
             $inputs = $request->validated();
-            $record = $this->hallOwnerInterface->update($id, $inputs);
-
+            $this->hallOwnerInterface->update($id, $inputs);
             return redirect()->route('admin.hall-owners.index')->withSuccess(__('lang.commons.data_updated'));
         } catch (Exception $ex) {
             return redirect()->route('admin.hall-owners.index')->withDanger(__('lang.commons.something_went_wrong') . ' ' . $ex->getMessage());

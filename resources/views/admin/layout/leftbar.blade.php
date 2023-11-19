@@ -8,7 +8,6 @@
         </a>
 
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-            {{-- <i class="ti ti-chevrons-left  d-none d-xl-block ti-sm align-middle"></i> --}}
             <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
             <i class="ti ti-chevrons-right d-block d-xl-none ti-sm align-middle"></i>
         </a>
@@ -69,7 +68,6 @@
 
         {{-- subscriptions --}}
         @canany(['admin.subscriptions.index', 'admin.subscriptions.create'])
-
             <li
                 class="menu-item {{ in_array(request()->route()->getName(),['admin.subscriptions.index', 'admin.subscriptions.create'])? 'open active': null }}">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
@@ -117,6 +115,35 @@
                     @can('admin.hall-owners.create')
                         <li class="menu-item {{ request()->routeIs('admin.hall-owners.create') ? 'active' : null }}">
                             <a href="{{ route('admin.hall-owners.create') }}" class="menu-link">
+                                <div>Add New</div>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcanany
+
+        {{-- Hall types Menu --}}
+        @canany(['admin.hall-types.index', 'admin.hall-types.create'])
+            <li
+                class="menu-item {{ in_array(request()->route()->getName(),['admin.hall-types.index', 'admin.hall-types.create'])? 'open active': null }}">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="fa-solid fa-hotel menu-icon"></i>
+                    <div>Hall Types</div>
+                </a>
+                <ul class="menu-sub">
+
+                    @can('admin.hall-types.index')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-types.index') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-types.index') }}" class="menu-link">
+                                <div>View All</div>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('admin.hall-types.create')
+                        <li class="menu-item {{ request()->routeIs('admin.hall-types.create') ? 'active' : null }}">
+                            <a href="{{ route('admin.hall-types.create') }}" class="menu-link">
                                 <div>Add New</div>
                             </a>
                         </li>

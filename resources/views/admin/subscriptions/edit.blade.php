@@ -80,4 +80,5 @@
 @endsection
 
 @section('custom-js')
+    @include('admin.subscriptions.form-fields-js', ['from' => 'edit'])
 @endsection

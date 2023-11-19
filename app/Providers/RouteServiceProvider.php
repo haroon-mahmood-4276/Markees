@@ -24,50 +24,38 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
-        });
+        $this->configureRateLimiting();
 
         $this->routes(function () {
             $this->mapAdminRoutes();
-            $this->mapApiRoutes();
-            $this->mapWebRoutes();
+            $this->mapHallOwnerRoutes();
         });
     }
 
     protected function mapAdminRoutes()
     {
-        foreach ($this->centralDomains() as $domain) {
-            Route::middleware('web')
-                ->domain($domain)
-                ->namespace($this->namespace)
-                ->group(base_path('routes/admin/web.php'));
-        }
+        Route::middleware('web')
+            ->group(base_path('routes/admin/web.php'));
+
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(base_path('routes/admin/api.php'));
     }
 
-    protected function mapWebRoutes()
+    protected function mapHallOwnerRoutes()
     {
-        foreach ($this->centralDomains() as $domain) {
-            Route::middleware('web')
-                ->domain($domain)
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
-        }
+        Route::middleware('web')
+            ->group(base_path('routes/hall_owner/web.php'));
+
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(base_path('routes/hall_owner/api.php'));
     }
 
-    protected function mapApiRoutes()
+    protected function configureRateLimiting()
     {
-        foreach ($this->centralDomains() as $domain) {
-            Route::prefix('api')
-                ->domain($domain)
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
-        }
-    }
-
-    protected function centralDomains(): array
-    {
-        return config('tenancy.central_domains');
+        RateLimiter::for('api', function (Request $request) {
+            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+        });
     }
 }

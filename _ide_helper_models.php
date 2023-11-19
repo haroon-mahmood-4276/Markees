@@ -99,26 +99,84 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Domain
+ * App\Models\Booking
  *
- * @property int $id
- * @property string $tenant_id
- * @property string $domain
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $deleted_at
- * @property-read \App\Models\Tenant|null $tenant
- * @method static \Illuminate\Database\Eloquent\Builder|Domain newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain query()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereDomain($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereTenantId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereUpdatedAt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Booking newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Booking newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Booking query()
  */
-	class Domain extends \Eloquent {}
+	class Booking extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\BookingDay
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder|BookingDay newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BookingDay newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|BookingDay query()
+ */
+	class BookingDay extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Cuisine
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cuisine withoutTrashed()
+ */
+	class Cuisine extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Decoration
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Decoration withoutTrashed()
+ */
+	class Decoration extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Hall
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\HallSlot> $slots
+ * @property-read int|null $slots_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Hall withoutTrashed()
+ */
+	class Hall extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
 }
 
 namespace App\Models{
@@ -128,7 +186,6 @@ namespace App\Models{
  * @property string $id
  * @property string $subscription_id
  * @property string|null $name
- * @property string $subdomain
  * @property string|null $email
  * @property string $phone
  * @property string $cnic
@@ -157,7 +214,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner whereNtn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|HallOwner whereSubdomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner whereSubscriptionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|HallOwner withTrashed()
@@ -168,11 +224,58 @@ namespace App\Models{
 
 namespace App\Models{
 /**
+ * App\Models\HallSlot
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\Hall|null $hall
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot query()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallSlot withoutTrashed()
+ */
+	class HallSlot extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\HallType
+ *
+ * @property string $id
+ * @property string|null $name
+ * @property string|null $description
+ * @property string|null $parent_id
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ * @property int|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|HallType withoutTrashed()
+ */
+	class HallType extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Media
  *
  * @property int $id
  * @property string $model_type
- * @property int $model_id
+ * @property string $model_id
  * @property string|null $uuid
  * @property string $collection_name
  * @property string $name
@@ -215,6 +318,44 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Media whereUuid($value)
  */
 	class Media extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Menu
+ *
+ * @property mixed $menu
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Menu withoutTrashed()
+ */
+	class Menu extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Package
+ *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
+ * @property-read int|null $activities_count
+ * @property-read \App\Models\HallType|null $hall_type
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
+ * @property-read int|null $media_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Package newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Package withoutTrashed()
+ */
+	class Package extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
 }
 
 namespace App\Models{
@@ -324,190 +465,10 @@ namespace App\Models{
 
 namespace App\Models{
 /**
- * App\Models\Tenant
- *
- * @property string $id
- * @property array|null $data
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Domain> $domains
- * @property-read int|null $domains_count
- * @method static \Stancl\Tenancy\Database\TenantCollection<int, static> all($columns = ['*'])
- * @method static \Stancl\Tenancy\Database\TenantCollection<int, static> get($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant query()
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereData($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Tenant whereUpdatedAt($value)
- */
-	class Tenant extends \Eloquent implements \Stancl\Tenancy\Contracts\TenantWithDatabase {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Booking
+ * App\Models\TenantSubscription
  *
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
- * @method static \Illuminate\Database\Eloquent\Builder|Booking newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Booking newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Booking query()
- */
-	class Booking extends \Eloquent {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\BookingDay
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @method static \Illuminate\Database\Eloquent\Builder|BookingDay newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BookingDay newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|BookingDay query()
- */
-	class BookingDay extends \Eloquent {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Cuisine
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
- * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine query()
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Cuisine withoutTrashed()
- */
-	class Cuisine extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Decoration
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
- * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration query()
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Decoration withoutTrashed()
- */
-	class Decoration extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Hall
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
- * @property-read int|null $media_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tenants\HallSlot> $slots
- * @property-read int|null $slots_count
- * @method static \Illuminate\Database\Eloquent\Builder|Hall newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall query()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Hall withoutTrashed()
- */
-	class Hall extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\HallSlot
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \App\Models\Tenants\Hall|null $hall
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot query()
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|HallSlot withoutTrashed()
- */
-	class HallSlot extends \Eloquent {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\HallType
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @method static \Illuminate\Database\Eloquent\Builder|HallType newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HallType newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|HallType onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|HallType query()
- * @method static \Illuminate\Database\Eloquent\Builder|HallType withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|HallType withoutTrashed()
- */
-	class HallType extends \Eloquent {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Menu
- *
- * @property mixed $menu
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
- * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|Menu newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu query()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Menu withoutTrashed()
- */
-	class Menu extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\Package
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \App\Models\Tenants\HallType|null $hallType
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \App\Models\Media> $media
- * @property-read int|null $media_count
- * @method static \Illuminate\Database\Eloquent\Builder|Package newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Package newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Package onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Package query()
- * @method static \Illuminate\Database\Eloquent\Builder|Package withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Package withoutTrashed()
- */
-	class Package extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
-}
-
-namespace App\Models\Tenants{
-/**
- * App\Models\Tenants\TenantSubscription
- *
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tenants\TenantUser> $tenantUsers
- * @property-read int|null $tenant_users_count
  * @method static \Illuminate\Database\Eloquent\Builder|TenantSubscription newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TenantSubscription newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|TenantSubscription onlyTrashed()
@@ -518,10 +479,24 @@ namespace App\Models\Tenants{
 	class TenantSubscription extends \Eloquent {}
 }
 
-namespace App\Models\Tenants{
+namespace App\Models{
 /**
- * App\Models\Tenants\TenantUser
+ * App\Models\User
  *
+ * @property string $id
+ * @property string $hall_owner_id
+ * @property string|null $name
+ * @property string $subdomain
+ * @property string|null $email
+ * @property string $phone
+ * @property string $cnic
+ * @property string $ntn
+ * @property string|null $password
+ * @property bool $active
+ * @property string|null $remember_token
+ * @property int|null $created_at
+ * @property int|null $updated_at
+ * @property int|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
  * @property-read int|null $activities_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -530,52 +505,27 @@ namespace App\Models\Tenants{
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \App\Models\Tenants\TenantSubscription|null $tenantSubscription
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
- * @property-read int|null $tokens_count
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser query()
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser withTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|TenantUser withoutTrashed()
- */
-	class TenantUser extends \Eloquent {}
-}
-
-namespace App\Models{
-/**
- * App\Models\User
- *
- * @property int $id
- * @property string|null $name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property mixed $password
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Activity> $activities
- * @property-read int|null $activities_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
  * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCnic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereHallOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereNtn($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSubdomain($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  */
 	class User extends \Eloquent {}

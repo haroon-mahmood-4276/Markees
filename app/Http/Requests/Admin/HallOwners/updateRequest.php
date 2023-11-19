@@ -27,13 +27,12 @@ class updateRequest extends FormRequest
     {
         $rules = (new HallOwner())->rules;
 
-        $id = decryptParams($this->id);
         $rules['password'] = ['nullable', Password::min(8)->letters()->mixedCase()->numbers()->symbols()];
-        $rules['subdomain'] .= ',' . $id;
-        $rules['email'] .= ',' . $id;
-        $rules['phone'] .= ',' . $id;
-        $rules['cnic'] .= ',' . $id;
-        $rules['ntn'] .= ',' . $id;
+        $rules['subdomain'] .= ',' . $this->hall_owner;
+        $rules['email'] .= ',' . $this->hall_owner;
+        $rules['phone'] .= ',' . $this->hall_owner;
+        $rules['cnic'] .= ',' . $this->hall_owner;
+        $rules['ntn'] .= ',' . $this->hall_owner;
 
         return $rules;
     }

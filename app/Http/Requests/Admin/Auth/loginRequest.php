@@ -4,7 +4,6 @@ namespace App\Http\Requests\Admin\Auth;
 
 use App\Models\Admin;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\Password;
 
 class loginRequest extends FormRequest
 {

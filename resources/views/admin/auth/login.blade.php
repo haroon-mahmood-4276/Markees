@@ -9,24 +9,33 @@
 
                 @csrf
 
-                {{ view('admin.layout.alerts') }}
+                @include('admin.layout.alerts')
 
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email or Username</label>
-                    <input type="text" class="form-control" id="email" name="email"
-                        placeholder="Enter your email or username" autofocus>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
+                        name="email" aria-describedby="emailHelp" placeholder="abc@example.com" autofocus
+                        value="{{ isset($hall_owner) ? $hall_owner->email : old('email') }}">
+                    <label for="email">Email <span class="text-danger">*</span></label>
+                    @error('email')
+                        <div id="emailHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="emailHelp" class="form-text">Enter email number of the owner.</div>
+                    @enderror
                 </div>
-                <div class="mb-3 form-password-toggle">
-                    <div class="d-flex justify-content-between">
-                        <label class="form-label" for="password">Password</label>
-                    </div>
-                    <div class="input-group input-group-merge">
-                        <input type="password" id="password" class="form-control" name="password"
-                            placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                            aria-describedby="password" />
-                        <span class="input-group-text cursor-pointer"><i class="ti ti-eye-off"></i></span>
-                    </div>
+
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
+                        name="password" aria-describedby="passwordHelp"
+                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                        value="{{ isset($hall_owner) ? $hall_owner->password : old('password') }}">
+                    <label for="password">Password <span class="text-danger">*</span></label>
+                    @error('password')
+                        <div id="passwordHelp" class="form-text invalid-feedback">{{ $message }}</div>
+                    @else
+                        <div id="passwordHelp" class="form-text">Enter password number of the owner.</div>
+                    @enderror
                 </div>
+
                 <div class="mb-3">
                     <div class="form-check">
                         <input id="remember" name="remember" type="hidden" value="0" />
@@ -36,6 +45,7 @@
                         </label>
                     </div>
                 </div>
+
                 <button class="btn btn-primary d-grid w-100">
                     Sign in
                 </button>

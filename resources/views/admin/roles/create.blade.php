@@ -29,7 +29,7 @@
             <div class="col-lg-9 col-md-9 col-sm-12 position-relative">
 
                 @csrf
-                {{ view('admin.roles.form-fields', ['roles' => $roles]) }}
+                @include('admin.roles.form-fields')
 
             </div>
 
@@ -81,25 +81,5 @@
 @endsection
 
 @section('custom-js')
-    <script>
-        $(document).ready(function() {
-            e = $("#roles");
-            e.wrap('<div class="position-relative"></div>');
-            e.select2({
-                dropdownAutoWidth: !0,
-                dropdownParent: e.parent(),
-                width: "100%",
-                containerCssClass: "select-lg",
-                templateResult: c,
-                templateSelection: c,
-                escapeMarkup: function(e) {
-                    return e
-                }
-            });
-        });
-
-        function c(e) {
-            return e.id ? "<i class='" + $(e.element).data("icon") + " me-2'></i>" + e.text : e.text
-        }
-    </script>
+    @include('admin.roles.form-fields-js', ['from' => 'create'])
 @endsection
